@@ -77,7 +77,8 @@ class StateManager {
                         returnControlDesc: { // 新增
                             mismatch: 'return_control_mismatch_desc', // "咦？我怎么会在这里..."
                             match: 'return_control_match_desc'      // "大脑中一段空白..."
-                        }
+                        },
+                        sanityLossImage: "image/CG/宋薇/失去理智.png",
                     }
 
                 },
@@ -117,7 +118,8 @@ class StateManager {
 
                 }, // 为宋欣也加上自己的ID Tag
 
-                // === 【已修正】第二章角色 ===
+                // 文件: game.js
+
                 'zhang_huili': {
                     name: initialLang['host_name_zhang_huili'],
                     stamina: 100, sanity: 100,
@@ -125,24 +127,37 @@ class StateManager {
                     expectedLocationId: 'huili_home_huili_bedroom',
                     isAiControlled: true,
                     status: 'INACTIVE',
-                    isPuppet: false, // 【新增】
+                    isPuppet: false,
                     nsfwUsedThisSegment: false,
                     wasEverPossessed: false,
                     tags: ['zhang_huili', 'public', 'guest'],
-                    portraits: { // ▼▼▼ 新增 ▼▼▼
-                        normal: "image/特写/张慧丽正常.png", // (假设的图片路径)
-                        controlled: "image/特写/张慧丽控制.png" // (假设的图片路径)
+                    portraits: {
+                        normal: "image/特写/张慧丽正常.png",
+                        controlled: "image/特写/张慧丽控制.png"
                     },
+                    // ▼▼▼ 核心修正：补全所有缺失的事件配置 ▼▼▼
                     events: {
                         reEnterEvent: 're_enter_zhang_huili',
                         initialTakeoverEvent: 'initial_takeover_zhang_huili',
                         detachImage: {
-                            // 宋欣没有normal/puppet之分，但结构要保持一致
                             normal: "image/CG/张慧丽/宿主模式/常规脱离躯体.png",
                             puppet: "image/CG/张慧丽/接管模式/永久接管脱离身体.png"
+                        },
+                        sanityLossImage: "image/CG/张慧丽/失去理智.png",
+                        // 补全缺失的 reEnterImage 数据
+                        reEnterImage: {
+                            normal: "image/CG/张慧丽/宿主模式/常规返回躯体.png",
+                            puppet: "image/CG/张慧丽/接管模式/永久接管返回躯体.png"
+                        },
+                        // 补全缺失的 returnControlDesc 数据
+                        returnControlDesc: {
+                            mismatch: 'return_control_mismatch_desc',
+                            match: 'return_control_match_desc'
                         }
                     }
-                }, // 修正：使用角色ID 'zhang_huili' 作为Tag
+                    // ▲▲▲ 修正结束 ▲▲▲
+                },
+                // 刘敏
                 'liu_min': {
                     name: initialLang['host_name_liu_min'],
                     stamina: 100, sanity: 100,
@@ -170,7 +185,8 @@ class StateManager {
                             mismatch: 'return_control_mismatch_desc', // "咦？我怎么会在这里..."
                             match: 'return_control_match_desc'      // "大脑中一段空白..."
                         }
-                    }
+                    },
+                    sanityLossImage: "image/CG/刘敏/失去理智.png"
                 }, // 修正：使用角色ID 'liu_min' 作为Tag
                 'jane': {
                     name: initialLang['host_name_jane'],
@@ -374,11 +390,12 @@ class UIManager {
         this.dom.hostManagementButton.classList.toggle('hidden', !shouldShow);
     }
 
+    // 文件: game.js
+
     renderStats(state, skillManager, activeHost, LANG) {
         if (!activeHost && state.controlState !== 'SLIME_DETACHED') return;
         let hostName, stamina, sanity;
 
-        // ▼▼▼ 【核心修改】在接管模式下，强制将理智显示为 0 ▼▼▼
         const isControlled = state.controlState === 'SLIME' || state.controlState === 'PERMANENT_SLIME';
 
         if (state.controlState === 'SLIME_DETACHED' && state.slime.detachedHostData) {
@@ -388,7 +405,7 @@ class UIManager {
         } else if (activeHost) {
             hostName = activeHost.name;
             stamina = (state.controlState === 'PERMANENT_SLIME' ? '∞' : Math.round(activeHost.stamina));
-            sanity = isControlled ? 0 : Math.round(activeHost.sanity); // 如果被控制，显示0，否则显示实际值
+            sanity = isControlled ? 0 : Math.round(activeHost.sanity);
         } else {
             hostName = "N/A"; stamina = 'N/A'; sanity = 'N/A';
         }
@@ -402,7 +419,11 @@ class UIManager {
 
         this.dom.controlStatusDisplay.classList.toggle('hidden', !isControlled);
         if (isControlled) { this.dom.controlStatusText.textContent = state.controlState === 'PERMANENT_SLIME' ? LANG['control_status_permanent'] : LANG['control_status_takeover']; }
-        const canDetach = skillManager.getSkillRank('golden_cicada_shell', 'song_wei') > 0 && (isControlled || state.controlState === 'SLIME_DETACHED');
+
+        // ▼▼▼ 核心修正：将 'song_wei' 修改为 state.activeHostId ▼▼▼
+        const canDetach = skillManager.getSkillRank('golden_cicada_shell', state.activeHostId) > 0 && (isControlled || state.controlState === 'SLIME_DETACHED');
+        // ▲▲▲ 修正结束 ▲▲▲
+
         this.dom.detachStatusDisplay.classList.toggle('hidden', !canDetach);
         if (canDetach) {
             const isDetached = state.controlState === 'SLIME_DETACHED';
@@ -582,6 +603,8 @@ class UIManager {
         this.dom.choicesContainer.appendChild(waitButton);
     }
 
+    // 文件: game.js
+
     renderSlimeMode(state, game, activeHost, LANG) {
         let storyTextContent = LANG['story_slime_mode_text'].replace('{HOST_NAME}', activeHost.name).replace('{STAMINA}', state.controlState === 'PERMANENT_SLIME' ? '∞' : Math.round(activeHost.stamina));
         if (activeHost.currentLocationId === 'home_livingroom') {
@@ -597,12 +620,20 @@ class UIManager {
         this.dom.enterHostButton.classList.add('hidden');
         this.dom.choicesTitle.textContent = LANG['choices_title_slime'];
         this.dom.choicesContainer.innerHTML = '';
+
         const actions = [
             { text: LANG['slime_action_move'], type: 'MOVE', disabled: game.skillManager.getSkillRank('basics', state.activeHostId) === 0 },
             { text: LANG['action_lust_surge'], type: 'NSFW', disabled: activeHost.nsfwUsedThisSegment },
             { text: LANG['slime_action_wait'], type: 'WAIT' }
         ];
-        if (state.controlState !== 'PERMANENT_SLIME') actions.push({ text: LANG['slime_action_return_control'], type: 'RETURN_CONTROL' });
+
+        // ▼▼▼ 核心修改部分 ▼▼▼
+        // 将判断条件从 (!=='PERMANENT_SLIME') 改为 (==='SLIME')，逻辑更清晰严谨
+        if (state.controlState === 'SLIME') {
+            actions.push({ text: LANG['slime_action_return_control'], type: 'RETURN_CONTROL' });
+        }
+        // ▲▲▲ 修改结束 ▲▲▲
+
         actions.forEach(action => {
             const button = this.createActionButton(action.disabled ? `${action.text}${LANG['action_disabled_suffix']}` : action.text, action.type === 'NSFW' ? 'bg-pink-600' : (action.type === 'RETURN_CONTROL' ? 'bg-green-600' : 'bg-purple-600'), () => game.handleSlimeAction(action.type));
             button.disabled = action.disabled;
@@ -611,8 +642,10 @@ class UIManager {
         });
     }
 
+    // 文件: game.js
 
     renderTopRightUI(state, LANG) {
+        // --- 任务显示部分保持不变 ---
         if (state.story.mainQuest && gameData.taskData[state.story.mainQuest]) {
             this.dom.taskButton.classList.remove('hidden');
             const quest = gameData.taskData[state.story.mainQuest];
@@ -621,18 +654,23 @@ class UIManager {
             this.dom.taskButton.classList.add('hidden');
         }
 
-        // ▼▼▼ 核心修改：增加 isVisible 判断 ▼▼▼
+        // ▼▼▼ 核心修正：增加对 isVisible 的判断 ▼▼▼
+        // 只有当倒计时存在，并且 isVisible 为 true 时，才显示
         if (state.story.countdown.key && state.story.countdown.isVisible) {
             const countdownData = gameData.taskData[state.story.countdown.key];
-            if (countdownData) {
+            if (countdownData && countdownData.countdownTextKey) {
                 this.dom.countdownText.textContent = `${LANG[countdownData.countdownTextKey]} ${state.story.countdown.days} ${LANG['time_unit_days']}`;
                 this.dom.countdownContainer.classList.remove('hidden');
+            } else {
+                // 如果找不到对应的倒计时文本数据，也隐藏
+                this.dom.countdownContainer.classList.add('hidden');
             }
         } else {
             this.dom.countdownContainer.classList.add('hidden');
         }
+        // ▲▲▲ 修正结束 ▲▲▲
 
-        // ... 后续的好感度条渲染逻辑保持不变 ...
+        // --- 好感度条渲染部分保持不变 ---
         this.dom.favorUiContainer.innerHTML = '';
         Object.entries(state.npcs).forEach(([npcId, npcData]) => {
             const correspondingHost = state.hosts[npcId];
@@ -767,6 +805,8 @@ class UIManager {
 
     closeEventModal() { this.dom.eventModal.classList.add('hidden'); }
 
+    // 文件: game.js
+
     toggleTakeoverScreen(show, canTakeover, activeHost) {
         const LANG = this.languageManager.getCurrentLanguageData();
         this.dom.takeoverDescription.textContent = canTakeover ? LANG['takeover_desc_opportunity'] : LANG['takeover_desc_warning'];
@@ -776,9 +816,15 @@ class UIManager {
         }
         const releaseBtnText = canTakeover ? LANG['takeover_choice_observe'] : LANG['takeover_choice_stabilize'];
         this.dom.takeoverChoices.appendChild(this.createActionButton(releaseBtnText, 'bg-blue-600', () => game.releaseControl()));
-        if (show) {
-            const state = game.stateManager.getState();
-            const img = state.activeHostId === 'song_wei' ? "image/CG/宋薇/失去理智.png" : 'https://placehold.co/400x400/c53030/ffffff?text=Insane';
+
+        if (show && activeHost) {
+            // ▼▼▼ 核心修改部分：直接从宿主数据中读取图片路径 ▼▼▼
+            let img = 'https://placehold.co/800x600/c53030/ffffff?text=Insane'; // 设置一个默认的后备图片
+            if (activeHost.events && activeHost.events.sanityLossImage) {
+                img = activeHost.events.sanityLossImage; // 如果定义了图片，就使用它
+            }
+            // ▲▲▲ 修改结束 ▲▲▲
+
             this.dom.takeoverScreen.style.backgroundImage = `url('${img}')`;
             this.dom.takeoverScreen.style.backgroundSize = 'cover';
             this.dom.takeoverScreen.style.backgroundPosition = 'center';
