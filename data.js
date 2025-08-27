@@ -292,8 +292,8 @@ const allDailyFlows = {
                 'noon-1': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_n1' },
                 'noon-2': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_n2' },
                 'afternoon-1': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_a1' },
-                'afternoon-2': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_a2' },
-                'evening-1': { locationId: 'village_square', textKey: 'daily_liumin_all_e1' },
+                'afternoon-2': { locationId: 'village_lake', textKey: 'daily_liumin_all_a2' }, // <-- 修改
+                'evening-1': { locationId: 'village_square', textKey: 'daily_liumin_all_e1' }, // <-- 修改
                 'evening-2': { locationId: 'liumin_home_bathroom', textKey: 'daily_liumin_all_e2' }
             }
         },
@@ -792,12 +792,57 @@ const allEventData = {
                     action: [
                         { type: 'setFlag', path: 'story.flags.chapter2.npc_zhang_huili.memoryPlundered', value: true },
                         { type: 'setFlag', path: 'story.countdown.isVisible', value: true },
+                        // ▼▼▼ 核心修改：切换主线任务 ▼▼▼
+                        { type: 'setFlag', path: 'story.mainQuest', value: 'scent_of_a_woman' },
                         { type: 'showMessage', key: 'toast_mem_plunder_success_zh', messageType: 'success' },
                         { type: 'advanceTime' }
                     ]
                 }]
             }
         ]
+    },
+    //初见刘敏
+    'meet_liu_min_night': {
+        titleKey: 'event_meet_liumin_title',
+        pages: [
+            {
+                textKey: 'event_meet_liumin_p1',
+                image: 'image/第二章事件/遇见刘敏/第一张.png'
+            },
+            {
+                textKey: 'event_meet_liumin_p2',
+                image: 'image/第二章事件/遇见刘敏/第二张.png'
+            },
+            {
+                textKey: 'event_meet_liumin_p3',
+                image: 'image/第二章事件/遇见刘敏/第三张.png',
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'npcs.liu_min.met', value: true },
+                        { type: 'setFlag', path: 'story.flags.chapter2.quests.footprints_owner_found', value: true },
+                        { type: 'showMessage', key: 'toast_task_list_updated', messageType: 'success' },
+                        { type: 'advanceTime' }
+                    ]
+                }]
+            }
+        ]
+    },
+    //要求前往刘敏房间
+    'request_visit_liumin_home_event': {
+        titleKey: 'event_request_visit_lm_title',
+        pages: [{
+            textKey: 'event_request_visit_lm_desc',
+            image: 'image/第二章事件/刘敏对话.png', // 假设的对话背景图
+            choices: [{
+                textKey: 'event_request_visit_lm_choice',
+                action: [
+                    { type: 'setFlag', path: 'story.flags.chapter2.quests.liumin_home_unlocked', value: true },
+                    { type: 'showMessage', key: 'toast_new_location_unlocked', messageType: 'success' },
+                    { type: 'advanceTime' }
+                ]
+            }]
+        }]
     },
 
     //===赵齐民相关事件===
@@ -901,6 +946,21 @@ const allNpcInteractions = {
                 return false;
             },
             action: { type: 'triggerEvent', eventName: 'chat_with_song_xin_generic' }
+        }
+    ],
+    // ▼▼▼ 新增刘敏的互动 ▼▼▼
+    'liu_min': [
+        {
+            id: 'liumin_request_visit',
+            buttonTextKey: 'event_request_visit_lm_btn',
+            condition: (state) => state.npcs.liu_min.favorability >= 30 && !state.story.flags.chapter2.quests.liumin_home_unlocked,
+            action: { type: 'triggerEvent', eventName: 'request_visit_liumin_home_event' }
+        },
+        {
+            id: 'liumin_generic_chat',
+            buttonTextKey: 'event_chat_with_liumin_btn',
+            condition: (state) => state.npcs.liu_min.met, // 见过面就能闲聊
+            action: { type: 'triggerEvent', eventName: 'chat_liumin_generic' } // 假设一个闲聊事件
         }
     ],
 
@@ -1194,6 +1254,15 @@ const allNsfwData = {
                 images: { HOST: "image/CG/张慧丽/宿主模式/与赵齐民MS.png", SLIME: "image/CG/张慧丽/接管模式/与赵齐民MS.png" },
                 descriptions: { HOST: "zq_nsfw_desc_zh_host_MS", SLIME: "zq_nsfw_desc_zh_slime_MS" },
                 effects: { favorability: 30, stamina: -50, baseSuspicion:10, interactionSuspicion: 35, mutationChance: 0.6, mutationPoints: 2 }
+            },
+            'liu_min_lp': {
+                npcId: 'liu_min',
+                buttonTextKey: 'nsfw_choice_huili_liumin_lp',
+                condition: (state) => state.npcs.liu_min.isPresent && state.npcs.liu_min.favorability > 30 && state.hosts.liu_min.currentLocationId === 'liumin_home_bedroom',
+                titleKey: { HOST: "nsfw_title_huili_liumin_lp_host", SLIME: "nsfw_title_huili_liumin_lp_slime" },
+                images: { HOST: "image/CG/张慧丽/宿主模式/与刘敏LP.png", SLIME: "image/CG/张慧丽/接管模式/与刘敏LP.png" },
+                descriptions: { HOST: "nsfw_desc_huili_liumin_lp_host", SLIME: "nsfw_desc_huili_liumin_lp_slime" },
+                effects: { favorability: 20, stamina: -40, baseSuspicion: 0, interactionSuspicion: 35, mutationChance: 0.4, mutationPoints: 1 }
             }
         }
     },
@@ -1244,20 +1313,35 @@ const taskData = {
     'stranger_in_a_strange_land': {
         titleKey: 'task_stranger_title',
         descriptionKey: 'task_stranger_desc',
-        // 任务清单，每个 isDone 函数都指向 story.flags 中的一个特定标记
         steps: [
-            { textKey: 'task_stranger_step1', isDone: (state) => state.story.flags.chapter2.investigation.camera_found },
-            { textKey: 'task_stranger_step2', isDone: (state) => state.story.flags.chapter2.investigation.water_system_found },
-            { textKey: 'task_stranger_step3', isDone: (state) => state.story.flags.chapter2.investigation.square_cameras_found },
-            { textKey: 'task_stranger_step4', isDone: (state) => state.story.flags.chapter2.investigation.office_met_zhao },
-            { textKey: 'task_stranger_step5', isDone: (state) => state.story.flags.chapter2.investigation.lake_found_warehouse_shadow },
-            { textKey: 'task_stranger_step6', isDone: (state) => state.story.flags.chapter2.investigation.plan_made },
+            { textKey: 'task_stranger_step1', isDone: (state) => state.story.flags.chapter2.investigation.camera_found, isVisible: (state) => true },
+            { textKey: 'task_stranger_step2', isDone: (state) => state.story.flags.chapter2.investigation.water_system_found, isVisible: (state) => true },
+            { textKey: 'task_stranger_step3', isDone: (state) => state.story.flags.chapter2.investigation.square_cameras_found, isVisible: (state) => true },
+            { textKey: 'task_stranger_step4', isDone: (state) => state.story.flags.chapter2.investigation.office_met_zhao, isVisible: (state) => true },
+            { textKey: 'task_stranger_step5', isDone: (state) => state.story.flags.chapter2.investigation.lake_found_warehouse_shadow, isVisible: (state) => true },
+            { textKey: 'task_stranger_step6', isDone: (state) => state.story.flags.chapter2.investigation.plan_made, isVisible: (state) => true },
+            { textKey: 'task_stranger_step7', isDone: (state) => state.hosts.zhang_huili.wasEverPossessed, isVisible: (state) => true },
+            // ▼▼▼ 新增/修改的步骤 ▼▼▼
+            { textKey: 'task_scent_of_woman_step1', isDone: (state) => state.story.flags.chapter2.npc_zhang_huili.memoryPlundered, isVisible: (state) => state.hosts.zhang_huili.wasEverPossessed }
         ],
-        // 游戏提示
         hintsKeys: ['task_stranger_hint1', 'task_stranger_hint2']
     },
-    'bomb_countdown': {
-        countdownTextKey: 'task_bomb_countdown',
+    'scent_of_a_woman': {
+        titleKey: 'task_scent_of_woman_title',
+        descriptionKey: 'task_scent_of_woman_desc',
+        steps: [
+            { textKey: 'task_scent_of_woman_step2', isDone: (state) => state.story.flags.chapter2.quests.footprints_owner_found, isVisible: (state) => true },
+            { textKey: 'task_scent_of_woman_step3', isDone: (state) => state.npcs.liu_min.favorability >= 80, isVisible: (state) => state.story.flags.chapter2.quests.footprints_owner_found },
+            { textKey: 'task_scent_of_woman_step4', isDone: (state) => state.hosts.liu_min.wasEverPossessed, isVisible: (state) => state.npcs.liu_min.favorability >= 80 },
+        ],
+        // ▼▼▼ 核心修改：将 hintsKeys 升级为对象数组 ▼▼▼
+        hintsKeys: [
+            {
+                key: 'task_scent_of_woman_hint1',
+                // 条件：只有在玩家已经见过刘敏之后，这条提示才会出现
+                condition: (state) => state.npcs.liu_min.met
+            }
+        ]
     },
 };
 
@@ -1400,6 +1484,35 @@ const locationEventData = {
         },
         // ▲▲▲ 修改结束 ▲▲▲
         action: (game) => { game.eventManager.startMemoryPlunderGame('zhang_huili'); }
+    },
+    //追查脚印
+    'track_footprints': {
+        location: 'village_square',
+        buttonTextKey: 'event_track_footprints_btn',
+        condition: (state) => state.story.mainQuest === 'scent_of_a_woman' && !state.story.flags.chapter2.quests.footprints_owner_found && state.activeHostId === 'zhang_huili',
+        check: (state, skillManager) => state.controlState.includes('SLIME') && skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+        action: (game) => {
+            const state = game.stateManager.getState();
+            if (state.time.segment.startsWith('evening')) {
+                game.eventManager.triggerEvent('meet_liu_min_night');
+            } else {
+                game.uiManager.showMessage('feedback_track_footprints_daytime', 'info');
+                game.timeManager.advanceSegment();
+            }
+        },
+        failAction: {
+            type: 'showMessage',
+            key: 'toast_need_socialization_control',
+            messageType: 'warning'
+        }
+    },
+    //与刘敏互动
+    'interact_with_liu_min_entry': {
+        location: ['village_square', 'village_lake','liumin_home_bedroom'],
+        npcId: 'liu_min',
+        buttonTextKey: 'event_interact_with_npc_btn',
+        condition: (state) => state.npcs.liu_min.isPresent && state.activeHostId === 'zhang_huili',
+        action: (game) => { game.openNpcInteractionModal('liu_min'); }
     },
 
 
