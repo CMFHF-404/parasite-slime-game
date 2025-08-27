@@ -625,6 +625,10 @@ const LANGS = {
         // === 【新】侵蚀张慧丽的失败反馈 ===
         "feedback_takeover_huili_not_night": "这个计划需要夜色的掩护。只能在晚上执行。",
 
+        //回归张慧丽躯壳
+        "event_reenter_zh_title": "意识回归 (张慧丽)",
+        "event_reenter_zh_desc": "史莱姆的意识重新连接上这具温顺的躯壳，她的身体如提线木偶般，再度听从你的每一个指令。",
+
         // --- 张慧丽记忆侵蚀 ---
         "event_mem_plunder_success_zh_title": "记忆深处的囚笼",
         "event_mem_plunder_success_zh_p1": "你驱使着史莱姆的意识沉入这具躯壳的更深处。无数纤细的触手沿着神经束向下探索，试图找出她为何如此“听话”的根源。当你的意识触及连接脊髓的脑干时，你“看”到了一个异物——一个冰冷的、闪着金属光泽的植入体。它像一只恶毒的寄生虫，盘踞在所有生命信号的中枢。",
@@ -646,6 +650,8 @@ const LANGS = {
         "event_request_visit_lm_title": "一次试探",
         "event_request_visit_lm_desc": "刘敏狐疑地上下打量了“张慧丽”一番，眼神在你空洞的瞳孔上停留了片刻。最终，她点了点头：‘可以。但是，只准你一个人来，不准带任何不相干的人。’",
         "event_request_visit_lm_choice": "（她似乎在防备着什么…）",
+
+
 
         //--- 第二章 NSFW 事件文本 ---
         "nsfw_choice_cost_suffix": " (体力-{COST})",
@@ -1303,6 +1309,10 @@ const LANGS = {
 
         // === [NEW] Erode Zhang Huili Failure Feedback ===
         "feedback_takeover_huili_not_night": "This plan requires the cover of darkness. It can only be executed at night.",
+
+        // 文件: language.js
+        "event_reenter_zh_title": "Consciousness Return (Zhang Huili)",
+        "event_reenter_zh_desc": "The slime's consciousness reconnects to this docile vessel. Her body, like a marionette, once again obeys your every command.",
 
         // --- Zhang Huili Memory Plunder ---
         "event_mem_plunder_success_zh_title": "The Cage in Deep Memory",
