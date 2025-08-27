@@ -2553,7 +2553,8 @@ class Game {
         else { this.uiManager.showConfirm(LANG['confirm_reset_title'], LANG['confirm_reset_text'], action); }
     }
 
-    // 在 Game 类中
+    // 文件: game.js
+
     openTaskModal() {
         const LANG = this.languageManager.getCurrentLanguageData();
         this.uiManager.openModal(LANG['modal_title_task_details'], (contentEl) => {
@@ -2561,15 +2562,16 @@ class Game {
             const quest = state.story.mainQuest ? gameData.taskData[state.story.mainQuest] : null;
             let questContentHtml = '';
 
-            // --- 1. 生成任务目标部分 (保持不变) ---
             if (!quest) {
                 questContentHtml = `<p class="text-center text-gray-400">${LANG['task_none']}</p>`;
             } else {
                 let stepsHtml = '';
                 if (quest.steps && Array.isArray(quest.steps)) {
-                    stepsHtml = quest.steps.map(step =>
-                        `<li class="mb-2 ${step.isDone(state) ? 'text-green-400 line-through' : 'text-gray-300'}">${step.isDone(state) ? '✓' : '✗'} ${LANG[step.textKey]}</li>`
-                    ).join('');
+                    stepsHtml = quest.steps
+                        .filter(step => !step.isVisible || step.isVisible(state))
+                        .map(step =>
+                            `<li class="mb-2 ${step.isDone(state) ? 'text-green-400 line-through' : 'text-gray-300'}">${step.isDone(state) ? '✓' : '✗'} ${LANG[step.textKey]}</li>`
+                        ).join('');
                 }
                 questContentHtml = `
                 <h2 class="text-2xl font-bold text-amber-400 mb-2">${LANG[quest.titleKey]}</h2>
@@ -2579,21 +2581,27 @@ class Game {
             `;
             }
 
-            // --- 2. 【核心修复】完整地生成游戏提示部分 ---
-            let allHintKeys = [];
-            // A. 添加任务专属提示
+            // ▼▼▼ 核心修正部分 ▼▼▼
+            let allVisibleHints = [];
             if (quest && quest.hintsKeys && Array.isArray(quest.hintsKeys)) {
-                allHintKeys.push(...quest.hintsKeys);
+                const questHints = quest.hintsKeys
+                    // 1. 筛选：新旧格式都能正确处理
+                    .filter(hint => {
+                        if (typeof hint === 'string') return true; // 旧格式 (字符串) 总是显示
+                        return !hint.condition || hint.condition(state); // 新格式 (对象) 按条件显示
+                    })
+                    // 2. 提取Key：新旧格式都能正确提取
+                    .map(hint => typeof hint === 'string' ? hint : hint.key);
+                allVisibleHints.push(...questHints);
             }
-            // B. 添加通用游戏提示
+
             if (gameData.generalHints && Array.isArray(gameData.generalHints)) {
-                allHintKeys.push(...gameData.generalHints);
+                allVisibleHints.push(...gameData.generalHints);
             }
 
-            // C. 将所有提示Key转换为HTML列表项
-            const hintsListHtml = allHintKeys.map(key => `<li>${LANG[key] || key}</li>`).join('');
+            const hintsListHtml = allVisibleHints.map(key => `<li>${LANG[key] || key}</li>`).join('');
+            // ▲▲▲ 修正结束 ▲▲▲
 
-            // D. 【修复点】创建包含列表的完整 "游戏提示" HTML 结构
             const hintsHtml = `
             <div class="mt-6 pt-4 border-t border-gray-600">
                 <h3 class="text-xl font-bold text-cyan-400 mb-3">${LANG['task_game_hints']}</h3>
@@ -2602,8 +2610,6 @@ class Game {
                 </ul>
             </div>
         `;
-
-            // --- 3. 【核心修复】组合并渲染最终的HTML ---
             contentEl.innerHTML = questContentHtml + hintsHtml;
         });
     }
