@@ -585,6 +585,19 @@ const allEventData = {
             }]
         }]
     },
+
+    're_enter_zhang_huili': {
+        titleKey: 'event_reenter_zh_title', // 新增文本key
+        pages: [{
+            textKey: 'event_reenter_zh_desc', // 新增文本key
+            image: '{dynamic}', // 使用动态图片
+            choices: [{
+                textKey: 'btn_continue',
+                action: [{ type: 'reEnterHost', hostId: 'zhang_huili' }]
+            }]
+        }]
+    },
+
     'permanent_takeover_song_wei': {
         titleKey: 'event_perm_takeover_title',
         pages: [{
