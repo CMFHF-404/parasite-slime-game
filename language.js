@@ -78,6 +78,7 @@ const LANGS = {
         "npc_name_zhang_huili": "张慧丽",
         "host_name_zhang_huili": "张慧丽",
         "npc_name_liu_min": "刘敏",
+        "host_name_liu_min": "刘敏",
         "npc_name_zhao_qimin": "赵齐民",
         "control_status_takeover": "接管中",
         "control_status_permanent": "永久接管",
@@ -547,6 +548,17 @@ const LANGS = {
         "daily_huili_weekend_e1": "回到家中，她走进浴室，开始重复每天的清洁仪式。水流、泡沫、镜子……这一切都熟悉而又陌生。她看着镜中那个面无表情的自己，心中没有任何感觉，仿佛在看一个与自己无关的陌生人。",
         "daily_huili_weekend_e2": "周末的夜晚和工作日的夜晚一样寂静。张慧丽躺在床上，黑暗温柔地包裹着她，也隔绝了她与这个世界最后的一丝联系。新的一天会到来，但对她而言，或许只是另一个重复的开始。",
 
+        // --- 刘敏 - 日常旁白 (占位符) ---
+        "daily_liumin_all_m1": "清晨，刘敏的房间一尘不染，所有物品都摆放得像军队宿舍一样整齐。她很早就醒了，修长的手指反复擦拭着一把精致的匕首，眼神警惕地扫过每一个角落，仿佛这间看似普通的屋子，隐藏着不为人知的致命威胁。",
+        "daily_liumin_all_m2": "她打开一个加密的笔记本电脑，屏幕上快速滚动着普通人无法理解的数据流，那是来自H市地下世界的异常动态报告。她的表情专注而冷酷，唇角紧抿，一丝紧张感在空气中弥漫。她拼命追查着各种异常，却不知道自己早已深陷泥潭。",
+        "daily_liumin_all_n1": "午餐是简单的能量棒和水。对她来说，进食只是为了维持身体机能，而不是一种享受。每一口都带着某种机械般的精确，仿佛在为接下来的行动补充燃料。她时刻准备着。",
+        "daily_liumin_all_n2": "她一遍又一遍地检查着房间里的隐藏摄像头和传感器，确保没有任何异常。她的感官被训练得极其敏锐，任何一丝微小的异动都逃不过她的法眼。她相信只有极致的谨慎才能活下来，却不知真正的危险已经近在咫尺。",
+        "daily_liumin_all_a1": "她进行着高强度的体能训练，汗水浸湿了她的背心，勾勒出她紧致而充满力量的肌肉线条。她的呼吸依旧平稳有力，但眼神深处却藏着一丝疲惫与焦虑。她必须保持最佳状态，因为她知道，一旦松懈，等待她的将是万劫不复。",
+        "daily_liumin_all_a2": "她来到湖边，一反常态地没有勘察地形。她只是静静地站着，脸上少有地露出了一丝焦虑和脆弱的神色。她的目光不停地、有些神经质地望向湖对岸远处的那个废弃棚屋，似乎在期待着什么，又像是在恐惧着什么。",
+        "daily_liumin_all_e1": "夜幕降临，刘敏像一个潜伏的幽灵，融入了村广场的阴影中。她不动声色地观察着每一个村民的动向，眼神中带着难以察觉的审视。她的身体在暗夜中若隐若现，那份危险而神秘的气质，在昏暗的灯光下显得格外迷人，却也隐藏着致命的诱惑。",
+        "daily_liumin_all_e2": "回到家，她冲了一个战斗澡，水珠顺着她光洁的皮肤滑落，短暂地洗去了一天的疲惫。随后，她再次回到她的情报世界中，紧盯着屏幕上的异动。窗外月色如水，映照着她专注的侧脸，带着一丝不自知的性感，和一丝被命运玩弄的悲剧。",
+
+
         //---史莱姆视角动态兜底文本---
         "slime_desc_default": "【数据缺失】无法分析当前环境。",
         "story_detached_host_info": "生命信号源 ({HOST_NAME}) 当前位于：{LOCATION}。",
@@ -615,6 +627,16 @@ const LANGS = {
         "event_chat_zq_generic_desc": "你和赵齐民聊了些关于村里鸡毛蒜皮的小事，他回答得滴水不漏，脸上始终挂着那副温和的、公式化的笑容。",
         "event_chat_zq_generic_choice": "（好感度+5）",
 
+        //假侵蚀赵慧丽事件
+        "event_attempt_false_takeover_zh_btn": "史莱姆（夜）：尝试侵蚀张慧丽（危险）",
+        "event_false_takeover_zh_title": "噩梦降临",
+        "event_false_takeover_zh_p1": "你钻入张慧丽的卧室，她面无表情地半睁着眼躺在床上，像一具被掏空的躯壳。你感到一丝异样，但饥渴的本能驱使你从她的耳朵钻入，直奔她的大脑。",
+        "event_false_takeover_zh_p2": "当你的触须接触到她大脑深处的一瞬间，张慧丽的身体猛地痉挛起来，发出非人的嘶吼。一股极度的痛苦穿透了你的史莱姆形态，你感受到了大脑深处有某种冰冷、坚硬的金属物体，它正在散发着恐怖的能量，不仅摧毁着宿主的神经，也撕裂着你自己的意识！",
+        "event_false_takeover_zh_p3": "在剧烈的痛苦和恐惧中，你的意识被强行抽离。当你再次“清醒”时，已经是白天，张慧丽以扭曲的姿势躺在床上，瞳孔放大，周围围着一群穿着制服的人。你听见有人低声耳语：“没想到这次行动这么顺利，看来实验体对寄生体的反应比预期的要强烈得多。”",
+        "event_false_takeover_zh_choice": "（愿者上钩……）",
+        "game_over_FALSE_TAKEOVER_ZH_OUTCOME_title": "K级情景升级：宿主被捕",
+        "game_over_FALSE_TAKEOVER_ZH_OUTCOME_desc": "报告显示，宿主张慧丽在遭受寄生体入侵后，体内改造装置被意外激活，导致寄生体脱离并被捕获。宿主本人在挣扎中表现出异常的自愈和攻击性，被混沌分裂者特工紧急带离H市，有被武器化的危险。O5议会已批准新的收容措施，评估可能引发K级情景。",
+
         // === 【新】侵蚀张慧丽事件 ===
         "event_takeover_zhang_huili_title": "无声的渗透",
         "takeover_huili_p1_desc": "夜深人静。史莱姆操控着宋欣的身体，悄无声息地来到后院。冰冷的月光下，巨大的太阳能蓄水池像一头沉默的巨兽。宋欣熟练地拧开顶部一个隐蔽的检修阀门，毫不犹豫地将一小部分史莱姆核心组织吐入其中。",
@@ -629,6 +651,12 @@ const LANGS = {
         "event_reenter_zh_title": "意识回归 (张慧丽)",
         "event_reenter_zh_desc": "史莱姆的意识重新连接上这具温顺的躯壳，她的身体如提线木偶般，再度听从你的每一个指令。",
 
+        //张慧丽永久接管
+        // 文件: language.js
+        "event_perm_takeover_title_zh": "意识同化完成 (张慧丽)",
+        "event_perm_takeover_desc_zh": "随着最后一道精神屏障的粉碎，名为“张慧丽”的残存意识彻底消散了。现在，这具躯壳完全属于你了。你获得了此躯壳的永久控制权！",
+        "event_perm_takeover_desc_zh_detailed": "你的史莱姆意识小心翼翼地避开了张慧丽大脑中那些异常的、散发着微弱能量的改造痕迹，如同潜行的幽灵，深入她神经的最底层。在那一刻，张慧丽发出了最后一声属于她自己的、带着绝望与解脱的呻吟。随后，她的一切都归于平静，只剩下你无尽的支配。",
+
         // --- 张慧丽记忆侵蚀 ---
         "event_mem_plunder_success_zh_title": "记忆深处的囚笼",
         "event_mem_plunder_success_zh_p1": "你驱使着史莱姆的意识沉入这具躯壳的更深处。无数纤细的触手沿着神经束向下探索，试图找出她为何如此“听话”的根源。当你的意识触及连接脊髓的脑干时，你“看”到了一个异物——一个冰冷的、闪着金属光泽的植入体。它像一只恶毒的寄生虫，盘踞在所有生命信号的中枢。",
@@ -637,6 +665,8 @@ const LANGS = {
         "toast_mem_plunder_success_zh": "你发现了一个针对自己的、致命的陷阱！",
 
         // --- 张慧丽与刘敏互动事件文本 ---
+        "event_chat_liumin_title": "与刘敏闲聊",
+        "event_chat_liumin_desc": "你以张慧丽的身份，与刘敏进行了一番看似平常的闲聊。你小心翼翼地试探，她则滴水不漏地应对。这次对话让你对这个女人有了更深的警惕，但你们之间的关系似乎也因此拉近了一点。",
         "event_track_footprints_btn": "蹲守脚印的主人",
         "feedback_track_footprints_daytime": "白天什么也没有发现，脚印的主人似乎只在晚上活动。",
         "toast_need_socialization_control": "必须在接管模式下，并解锁“社会化”技能才能执行此操作。",
@@ -651,7 +681,48 @@ const LANGS = {
         "event_request_visit_lm_desc": "刘敏狐疑地上下打量了“张慧丽”一番，眼神在你空洞的瞳孔上停留了片刻。最终，她点了点头：‘可以。但是，只准你一个人来，不准带任何不相干的人。’",
         "event_request_visit_lm_choice": "（她似乎在防备着什么…）",
 
+        // --- 刘敏动态对话 ---
+        "event_chat_liumin_alert_title": "警觉的试探",
+        "event_chat_liumin_alert_desc": "你尝试与刘敏交谈，但她的回答简短而公式化，锐利的眼神从未离开过你，仿佛在评估一个潜在的威胁。气氛有些紧张。",
+        "event_chat_liumin_calm_title": "逐渐缓和",
+        "event_chat_liumin_calm_desc": "这次的对话比上次要顺畅一些。刘敏虽然依旧保持着距离，但偶尔会透露出一些关于村子的、无关紧要的信息。她的防备似乎有所松动。",
+        "event_chat_liumin_eager_title": "敞开心扉",
+        "event_chat_liumin_eager_desc": "刘敏的态度发生了明显的变化。她不再那么警惕，甚至会主动询问你的状况，言语间流露出一种笨拙的关心。在你迷茫的“表演”下，她似乎真的把你当成了那个需要保护的“亲戚”。",
 
+        // --- 侵蚀刘敏 ---
+        "event_takeover_liumin_btn": "侵蚀刘敏",
+        "event_takeover_liumin_title": "猎人与猎物",
+        "takeover_liumin_p1": "你操控张慧丽的身体，用一种精心设计的、混合着恐惧与哀求的语调向刘敏哭诉，讲述自己“恢复”的记忆和对现状的恐惧。你央求她放你一条生路，并暗示下一个受害者可能就是她自己。",
+        "takeover_liumin_p2": "刘敏的眼中闪过一丝挣扎，她那训练有素的冷酷外壳出现了一丝裂痕。“……我去客厅确认一下，如果她说的是真的……”她喃喃自语，转身走向门口。就在她开门的瞬间，背后的“张慧丽”脸上露出了非人的微笑，手中紧握着一块砖头，粘稠的绿色液体从嘴角滴落……",
+        "takeover_liumin_p3": "刘敏从一阵剧烈的头痛中惊醒，发现自己躺在床上，仿佛刚才的一切只是一场噩梦。但她下意识地摸了摸耳朵，那里还残留着一丝湿漉漉的、黏滑的触感……",
+        "toast_takeover_liumin_success": "成功侵蚀刘敏！混沌分裂者的精英特工，现在成了你的新玩物。",
+
+        // --- 刘敏记忆侵夺 ---
+        "event_mem_plunder_success_lm_title": "特工的记忆",
+        "event_mem_plunder_success_lm_p1": "你毫不留情地撕开刘敏那受过严格训练的精神防壁。她的记忆如决堤的洪水般涌出，两眼翻白，七窍流出绿色的粘液。在这个精英特工的脑海里，隐藏着关于这个村庄的、最深层的秘密。",
+        "event_mem_plunder_success_lm_p2": "你看到了改造张慧丽的手术现场。刘敏站在一位看不清面容的“领导”身旁，一脸厌恶地看着那两个男人猥琐地讨论着张慧丽的身体。“长官，”她用一种压抑着怒气的声音说，“真的有必要让他们参与最后的收尾工作吗？基于目标的特性，恐怕宿主一脱衣服，他们的防线就垮了。”",
+        "event_mem_plunder_success_lm_p3": "领导轻笑了一声，用流利的英文回答道：“（已翻译）也正因为目标的特性，它无法直接控制男性。所以，让他们来做最后的保险是必要的。当然，如果你坚持，你可以顶替掉其中一个，但必须留下一个。”随后，领导接到通讯，神色一凛：“……又发现一个样本，就在村外。我带人先去部署兜底方案，之后联系。”那是刘敏最后一次见到她的领导。从那天起，她每天都会去湖边瞭望，因为她知道，如果他们还活着，一定会回来；如果他们遭遇不测，自己过去……也只有死路一条。",
+        "toast_mem_plunder_success_lm": "你终于理解了一切。原来，这个村子是一个为捕捉你而设下的、双重陷阱。",
+
+        // --- 刘敏 - 独处 NSFW (HOST/SLIME 修正版) ---
+        "nsfw_event_lm_title": "特工的宣泄",
+        "nsfw_choice_self_lm": "屈从于冲动",
+        "nsfw_desc_liumin_bedroom_host": "在这个绝对私密的空间里，刘敏紧绷的神经终于有了一丝喘息之机。但随之而来的，却是被史莱姆放大了无数倍的、来自肉体的空虚与渴望。她痛恨这种失控的感觉，身体却背叛了意志，双手不受控制地开始探索自己的身体。每一次触摸带来的战栗，都混合着极致的羞耻与无法停止的愉悦。",
+        "nsfw_desc_liumin_bedroom_slime": "史莱姆驱动着这具精英特工的躯体，如同在调试一件新获得的精密仪器。刘敏双目无神，动作标准而高效地褪去衣物，然后用一种毫无感情的、机械的节奏抚慰着自己。每一个动作都精准地引发最强烈的生理反应，这是一场完美的能量汲取表演，也是对这具躯壳“前主人”意志的无情嘲弄。",
+        "nsfw_desc_liumin_bathroom_host": "温热的水流冲刷着身体，也冲垮了刘敏最后的心理防线。在水汽氤氲的镜中，她看到自己情欲勃发的模样，羞耻感几乎将她吞没。但身体却在水中变得更加敏感，指尖每一次不经意的划过，都能带来一阵让她腿软的快感。她咬着嘴唇，在羞愤与沉沦的边缘痛苦地挣扎。",
+        "nsfw_desc_liumin_bathroom_slime": "史莱姆将浴室视为一个绝佳的“能量放大器”。它操控着刘敏的身体，双目空洞地站在花洒下，任由水流冲刷。她的双手以一种冷静到可怕的精准度，在自己身上进行着高效的刺激。每一次水珠的冲击，都让神经信号的峰值更高，能量的转化效率也因此倍增。",
+        "nsfw_desc_liumin_lake_host": "在无人的湖边，晚风吹拂着刘敏发烫的脸颊。她不知道自己为何会做出如此不知羞耻的行为。对面的废弃仓库像一只沉默的巨兽，在黑暗中窥视着她的一切。这种被监视的错觉，让她内心的羞耻感和背德感达到了顶峰，也让快感变得愈发难以抗拒。",
+        "nsfw_desc_liumin_lake_slime": "史莱姆驱使着刘敏的身体，在这片开阔的、充满未知危险的湖边进行自我展示。刘敏双目无神，机械地褪去衣物，在月光下如同一个精致的人偶。这不仅仅是为了汲取能量，更是一种极致的显摆——看，即使在这样的环境中，这具强大的躯壳也只能任我玩弄。",
+        "nsfw_desc_liumin_office_host": "办公室里空无一人，只剩下赵齐民那充满上位者气息的味道。这股味道像催化剂一样，点燃了刘敏被压抑的欲望。在敌人的地盘上做出这种事情，让她感到一种混杂着恐惧、羞耻和刺激的眩晕。每一次濒临高潮的战栗，都让她觉得自己正无可救药地堕落下去。",
+        "nsfw_desc_liumin_office_slime": "史莱姆操控着这具训练有素的特工身体，在这间属于“上位者”的办公室里，上演了一场无声的亵渎。刘敏双目无神，动作精准地解开自己的束缚。它不仅仅是在汲取能量，更是在用这具躯壳的体液和信息素，故意玷污这个权力空间。这是一种最原始、最嚣张的挑衅。",
+        "nsfw_desc_liumin_square_host": "夜色下的村广场寂静无人，刘敏隐藏在监控的死角。白天压抑的紧张感和对未知的恐惧，在这一刻转化为强烈的生理渴望。她靠着冰冷的廊柱，进行了一场迅速而激烈的自我慰藉。身体的战栗让她暂时忘记了自己孤身一人、深陷敌营的处境。",
+        "nsfw_desc_liumin_square_slime": "史莱姆精准地计算着每一个监控摄像头的扫描周期和盲区。它驱使刘敏的身体，双目空洞，在这片看似毫无遮掩的广场上上演了一场最大胆的能量汲取。看着那些冰冷的机器徒劳地扫过，却无法捕捉到阴影中这具正在沉沦的精英躯体，史莱姆的意识中涌动着近乎于嘲弄的愉悦。",
+
+        // --- 刘敏与赵齐民互动 NSFW (HOST/SLIME 修正版) ---
+        "zq_nsfw_desc_lm_host_BJ": "为了获取情报，刘敏压下内心的屈辱，主动靠近了赵齐民。她跪了下去，用一种混合着憎恶与自我放弃的心态，让自己的唇舌不熟练地在他的胯间游走。每一次触碰都像是在凌迟她的自尊，但为了任务，她只能将这份恶心与身体深处不受控制的背德快感一同咽下。",
+        "zq_nsfw_desc_lm_slime_BJ": "史莱姆将这次互动视为一次绝佳的示威。它操控着刘敏的身体主动跪下，用她那受过严格训练的唇舌，上演了一场足以摧毁任何男性意志的“表演”。它冷静地欣赏着目标逐渐失控的生理反应，每一次接触，都是在宣告：看，你们引以为傲的精英特工，现在只是我的玩物。",
+        "zq_nsfw_desc_lm_host_MS": "刘敏放弃了最后的抵抗，主动褪去衣物，将这次沉沦视为任务的一部分——一种必要的牺牲。她跨坐在对方身上，在身体的交缠中努力保持着一丝清醒，试图从对方的喘息和话语中分析出有用的情报。但身体上传来的、无法抗拒的快感，却在一点点蚕食着她的意志，让她分不清这究竟是任务，还是纯粹的、停不下来的堕落。",
+        "zq_nsfw_desc_lm_slime_MS": "史莱姆全面接管了刘敏的感官系统，将这场性爱变成了一场高效的能量盛宴和一场残忍的示威。它驱动这具精英特工的躯体主动跨坐上去，让她双目无神地承受着一切，在自己最鄙夷的欲望中彻底沉沦。它能清晰地感受到目标的征服欲和满足感，并将这份情绪连同生命能量一同吞噬。这不仅是进食，更是对“人类”这种生物无情的嘲弄。",
 
         //--- 第二章 NSFW 事件文本 ---
         "nsfw_choice_cost_suffix": " (体力-{COST})",
@@ -668,39 +739,47 @@ const LANGS = {
         "songxin_c2_nsfw_desc_square_slime": "村广场上空无一人，只有诡异的宣传画在风中摇曳。史莱姆操控着宋欣的身体，让她在一个监控摄像头的死角处，缓缓褪去衣物。在这种半公开的、充满监视意味的环境中进行能量汲取，让史莱姆的意识产生了一种亵渎神圣的、极致的愉悦感。",
         //赵齐民互动事件
         "nsfw_event_zq_title_BJ": "低语的诱惑",
-        "zq_nsfw_desc_sx_slime_BJ": "史莱姆操控着宋欣年轻的身体，带着天真无邪的微笑，缓缓靠近赵齐民。他的眼中闪过一抹隐秘的渴望。史莱姆利用这份轻视，将亲密的唇舌交缠化为一场精妙的试探，柔缓地挑逗着他的感官，以轻吻与低语试探他的克制，评估每一丝动摇的防线。",
-        "zq_nsfw_desc_sx_slime_intense": "在史莱姆的精妙操控下，宋欣的身体化作致命的魅惑之器，彻底点燃赵齐民的原始冲动。在这场炽热的交缠仪式中，史莱姆主导着每一次深切的贴合与律动，她的双腿缠绕，引领他陷入紧密的节奏，所有理智与抗拒在狂热的碰撞中瓦解，沉沦于本能的深渊。",
+        "zq_nsfw_desc_sx_slime_BJ": "在史莱姆的意志下，“宋欣”带着天真无邪的微笑，主动贴近了赵齐民，并跪在了他的腿间。史莱姆操控着这具年轻的躯壳，让她的唇舌笨拙地在他的胯间游走。这具完美的容器正在上演一场精彩的“捕食”秀，而眼前的这个男人，就是第一个猎物。",
+        "zq_nsfw_desc_sx_slime_MS": "史莱姆的意志化作最直接的指令。“宋欣”主动褪去衣物，用她那不属于这个年龄段的大胆，跨坐在了赵齐民的身上。在这场由史莱姆主导的、原始的交合仪式中，它能清晰地感受到身下这个雄性生物逐渐被欲望吞噬的过程，并从中汲取着最甜美的能量。",
 
         // ===张慧丽===
         "nsfw_event_zh_title": "破碎的渴望",
         "nsfw_choice_self_zh": "屈从于冲动",
-        "nsfw_desc_huili_bedroom_host": "在自己的卧室里，张慧丽感到一阵莫名的空虚。她的意识像一团迷雾，无法思考，只有一股源自身体深处的、模糊的渴望在主导着她。她麻木地褪下衣物，手指笨拙地抚摸着自己的身体，试图从这种机械的接触中找到一丝存在感，但眼神依旧空洞。",
-        "nsfw_desc_huili_bedroom_slime": "【目标：张慧丽 | 地点：巢穴】史莱姆开始对这具新的容器进行初步的性能测试。它驱动张慧丽的手指进行自我刺激，仔细记录着心率、激素分泌和神经信号的峰值。与宋欣不同，这具躯壳的反应显得有些“迟钝”，像一台许久未经保养的机器，需要更多的调试。",
-        "nsfw_desc_huili_bathroom_host": "镜子里的女人眼神涣散，面色潮红。张慧丽不认识她，但身体却不受控制地在温热的水流下寻求着慰藉。陌生的快感冲刷着她几近空白的大脑，让她发出一声压抑而困惑的呻吟。她不明白自己为什么这么做，只知道身体需要这个。",
-        "nsfw_desc_huili_bathroom_slime": "【环境：高湿度 | 状态：测试中】史莱姆利用水流作为催化剂，增强对张慧丽身体的刺激。它发现这具躯壳的敏感度很高，但精神反馈却很微弱。一个完美的、几乎没有反抗意志的容器。史莱姆对此感到非常满意，汲取能量的效率大大提高了。",
+        "nsfw_desc_huili_bedroom_host": "在自己的卧室里，张慧丽感到一阵莫名的空虚。她的意识像一团迷雾，无法思考，只有一股源自身体深处的、模糊的渴望在主导着她。她痛恨这种失控，身体却背叛了意志，双手不受控制地开始探索自己的身体。每一次触摸带来的战栗，都混合着极致的羞耻与无法停止的愉悦。",
+        "nsfw_desc_huili_bedroom_slime": "史莱姆驱动着这具新的容器，如同在调试一件刚到手的、精致的玩物。张慧丽双目无神，动作标准而高效地褪去衣物，然后用一种毫无感情的、机械的节奏抚慰着自己。每一个动作都精准地引发最强烈的生理反应，这是一场完美的能量汲取表演，也是对这具躯壳“前主人”意志的无情嘲弄。",
+        "nsfw_desc_huili_bathroom_host": "温热的水流冲刷着身体，也冲垮了张慧丽最后的心理防线。在水汽氤氲的镜中，她看到自己情欲勃发的模样，羞耻感几乎将她吞没。但身体却在水中变得更加敏感，指尖每一次不经意的划过，都能带来一阵让她腿软的快感。她咬着嘴唇，在羞愤与沉沦的边缘痛苦地挣扎。",
+        "nsfw_desc_huili_bathroom_slime": "史莱姆将浴室视为一个绝佳的“能量放大器”。它操控着张慧丽的身体，双目空洞地站在花洒下，任由水流冲刷。她的双手以一种冷静到可怕的精准度，在自己身上进行着高效的刺激。每一次水珠的冲击，都让神经信号的峰值更高，能量的转化效率也因此倍增。",
         "nsfw_desc_huili_livingroom_host": "客厅里的寂静让她感到窒息。一股无法言喻的冲动攫住了她。张慧丽蜷缩在沙发上，像一只寻求温暖的小动物，无意识地开始自我抚慰。她的动作茫然而重复，仿佛这样做就能填补内心的巨大空洞，但空虚感却在快感褪去后变得更加强烈。",
-        "nsfw_desc_huili_livingroom_slime": "【地点：公共区域 | 风险：低】在确认环境安全后，史莱姆开始对张慧丽进行常规的能量汲取。它操控着这具温顺的身体，在沙发上进行着隐蔽而高效的自我刺激。这具躯壳的服从度远超预期，让史莱姆可以最大化地将每一丝生理波动都转化为可储存的能量。",
-        "nsfw_desc_village_office_host": "在办事处那张冰冷的办公桌后，张慧丽感到一阵突如其来的燥热。她的思绪一片混乱，无法集中精神。在无人注意的角落，她悄悄地、机械地抚慰着自己，试图平息这股不知从何而来的焦躁。这是一种羞耻而陌生的行为，但她的身体却仿佛早就习以为常。",
-        "nsfw_desc_village_office_slime": "【环境：高风险 | 目标：能量汲取】史莱姆认为，在敌人的眼皮底下进行“捕食”是一种高效的伪装。它驱动张慧丽的身体，在办公桌的掩护下进行隐蔽的自我刺激。这不仅能收集能量，还能测试在压力环境下，这具新容器的生理和心理极限。每一次心跳的加速，都是一行完美的实验数据。",
+        "nsfw_desc_huili_livingroom_slime": "在确认环境安全后，史莱姆开始对张慧丽进行常规的能量汲取。它操控着这具温顺的身体，在沙发上进行着隐蔽而高效的自我刺激。这具躯壳的服从度远超预期，让史莱姆可以最大化地将每一丝生理波动都转化为可储存的能量。",
+        "nsfw_desc_huili_office_host": "在办事处那张冰冷的办公桌后，张慧丽感到一阵突如其来的燥热。她的思绪一片混乱，无法集中精神。在无人注意的角落，她悄悄地、机械地抚慰着自己，试图平息这股不知从何而来的焦躁。这是一种羞耻而陌生的行为，但她的身体却仿佛早就习以为常。",
+        "nsfw_desc_huili_office_slime": "史莱姆认为，在敌人的眼皮底下进行“捕食”是一种高效的伪装。它驱动张慧丽的身体，在办公桌的掩护下进行隐蔽的自我刺激。这不仅能收集能量，还能测试在压力环境下，这具新容器的生理和心理极限。每一次心跳的加速，都是一行完美的实验数据。",
         "nsfw_desc_huili_lake_host": "湖边的晚风吹拂着张慧丽发烫的脸颊。她不知道自己为什么会在这里，也不知道为什么身体会不受控制地褪去衣物，走进冰冷的湖水。在月光下，她麻木地抚慰着自己，仿佛在进行一场毫无意义的仪式。湖水很冷，但她的身体却很烫。",
-        "nsfw_desc_huili_lake_slime": "【环境：开放水域 | 战术：利用环境】史莱姆将张慧丽的身体浸入湖中，利用水温和水流的变化来增强刺激，以测试这具新容器在极端环境下的能量产出效率。看着这具躯壳在月光下的水中因为非自愿的快感而颤抖，史莱姆感到一种掌控一切的满足感。",
+        "nsfw_desc_huili_lake_slime": "史莱姆将张慧丽的身体浸入湖中，利用水温和水流的变化来增强刺激，以测试这具新容器在极端环境下的能量产出效率。看着这具躯壳在月光下的水中因为非自愿的快感而颤抖，史莱姆感到一种掌控一切的满足感。",
         "nsfw_desc_huili_square_host": "广场的长椅上，张慧丽的意识一片空白。她感到身体不受控制地燥热起来，一只手仿佛有了自己的意志，悄悄伸向裙底，寻求着那份能暂时麻痹神经的快感。不远处村民呆滞的目光，似乎正注视着她，但她已经无法分辨那究竟是现实还是幻觉。",
-        "nsfw_desc_huili_square_slime": "【环境：高风险 | 战术：心理压迫】史莱姆选择在村广场这个监视最严密的地方进行能量汲取。它驱动张慧丽的身体，进行着最大胆、最羞耻的自我暴露。这种行走在刀锋上的刺激，能最大化地压榨出这具躯壳的精神能量，也是对这个村庄无声的挑衅。",
+        "nsfw_desc_huili_square_slime": "史莱姆选择在村广场这个监视最严密的地方进行能量汲取。它驱动张慧丽的身体，进行着最大胆、最羞耻的自我暴露。这种行走在刀锋上的刺激，能最大化地压榨出这具躯壳的精神能量，也是对这个村庄无声的挑衅。",
+        "nsfw_desc_huili_in_liumin_bedroom_host": "在这间属于刘敏的、冰冷而整洁的卧室里，张慧丽感到一种前所未有的恐惧和刺激。她知道自己随时可能被发现，这种巨大的风险让她浑身战栗，却也催生出一股更加强烈的、病态的渴望。她的手不受控制地探入裙底，每一次触摸都混合着对同性身体的好奇和对自身堕落的羞耻。",
+        "nsfw_desc_huili_in_liumin_bedroom_slime": "史莱姆驱使着张慧丽的身体，在这位“精英特工”的巢穴核心进行了一场无声的“领地标记”。它让她双目无神地躺在对方的床上，用这具傀儡的身体进行自我慰藉。这不仅是在汲取能量，更是一种极致的挑衅——在你最私密的地方，用你的“同类”来上演这场好戏。",
+        "nsfw_desc_huili_in_liumin_bathroom_host": "刘敏的浴室里，镜子干净得能倒映出张慧丽脸上所有的迷茫和羞耻。她不知道自己为什么会在这里做出这种事，但身体的冲动却无法抑制。她背靠着冰冷的墙壁，感受着那份夹杂着负罪感的快感，每一次呼吸都带着恐惧的颤抖。",
+        "nsfw_desc_huili_in_liumin_bathroom_slime": "史莱姆操控着张慧丽的身体，在这个同样属于“敌人”的私密空间里进行能量汲取。它让她双目空洞地看着镜中的自己，机械地抚慰着身体。看着镜子里那具美丽的躯壳在自己的意志下沉沦，史莱姆的意识中充满了玩弄猎物的愉悦。",
+
         //赵齐民互动事件
         "zq_nsfw_desc_zh_host_BJ_title": "迷雾的沉沦",
         "zq_nsfw_desc_zh_slime_BJ_title": "冷焰的低语",
-        "zq_nsfw_desc_zh_slime_BJ": "在史莱姆的冰冷操控下，张慧丽的身体化作一具精致的傀儡，面无表情却带着致命的吸引力，靠近赵齐民。他的眼中闪过一丝欲望。史莱姆以精准的节奏引导她的唇舌，柔缓却无情地挑逗他的感官，宛如一场冷酷的试探，测试他克制的每一道裂痕。",
-        "zq_nsfw_desc_zh_host_BJ": "张慧丽在催眠的迷雾中轻移步伐，眼神空洞却透着朦胧的魅惑，缓缓靠近赵齐民。他的眼中闪过一抹隐秘的渴望。史莱姆在她体内悄然引导，将唇舌的轻柔缠绵化为一场梦幻试探，柔缓地撩拨他的感官，仿佛在迷雾中试探他的每一丝克制与动摇。",
         "zq_nsfw_desc_zh_host_MS_title": "迷雾的缠绵",
         "zq_nsfw_desc_zh_slime_MS_title": "冷焰的缠绵",
-        "zq_nsfw_desc_zh_host_MS": "在催眠的迷雾中，张慧丽的身体如梦似幻，带着朦胧的魅惑贴近赵齐民，她像一个被玩坏的娃娃，任由赵齐民摆布。她的意识早已漂流到遥远的地方，只有身体还留在这里，承受着一切。没有痛苦，也没有快乐，只有一片无尽的虚无。史莱姆在她体内引导，每一次深切的贴合与律动都如梦境般流转，她的双腿缠绕，引领他陷入迷离的节奏。理智与抗拒在狂热的交缠中消散，沉沦于迷雾中的本能深渊。",
-        "zq_nsfw_desc_zh_slime_MS": "在史莱姆的绝对掌控下，张慧丽的身体化作一具冷酷的魅惑机器，毫无感情地点燃赵齐民的原始欲望。她的动作精准而无情，每一次贴合与律动都由史莱姆主导，双腿交缠将他拖入狂热的节奏。在这场冰冷的征服仪式中，理智与抗拒在她的机械魅惑下崩塌，彻底沉沦。",
-        //与刘敏互动事件
-        "nsfw_choice_huili_liumin_lp": "舔舐刘敏的身体",
-        "nsfw_title_huili_liumin_lp_host": "PLACEHOLDER: 舔舐刘敏的身体 (HOST)",
-        "nsfw_title_huili_liumin_lp_slime": "PLACEHOLDER: 舔舐刘敏的身体 (SLIME)",
-        "nsfw_desc_huili_liumin_lp_host": "PLACEHOLDER: 张慧丽舔舐刘敏的身体 (HOST) - 描述文本",
-        "nsfw_desc_huili_liumin_lp_slime": "PLACEHOLDER: 张慧丽舔舐刘敏的身体 (SLIME) - 描述文本",
+        "zq_nsfw_desc_zh_host_BJ": "在催眠般的迷雾中，张慧丽的身体不受控制地主动靠近了赵齐民，并顺从地跪了下去。她的意识在遥远的地方哭泣，唇舌却不熟练地在他的胯间游走。每一次触碰都让她感到灵魂被撕裂般的羞耻，但身体深处却涌动着一股无法抗拒的、病态的愉悦。",
+        "zq_nsfw_desc_zh_slime_BJ": "史莱姆操控着“张慧丽”这具精致的傀儡，让她主动跪在赵齐民的腿间。它以一种近乎于实验的冷静，驱动着她的唇舌在他的胯间机械地游走，仔细观察并记录着这个男人的每一个生理反应。这不仅仅是能量汲取，更是一场关于“人类雄性弱点”的实况研究。",
+        "zq_nsfw_desc_zh_host_MS": "张慧丽的身体仿佛不再属于自己，她主动褪去衣物，像一个被玩坏的人偶，跨坐在赵齐民的身上任由对方摆布。她的意识早已漂流到遥远的地方，只有身体还留在这里，承受着一切。没有痛苦，也没有快乐，只有一片无尽的虚无。",
+        "zq_nsfw_desc_zh_slime_MS": "在史莱姆的绝对掌控下，“张慧丽”的身体化作一具冷酷的魅惑机器，主动跨坐在赵齐民身上，用最原始的动作点燃对方的欲望。在这场冰冷的征服仪式中，理智与抗拒在他的机械魅惑下崩塌，彻底沉沦。",
+
+
+        // 文件: language.js (中文)
+
+        "nsfw_choice_huili_liumin_lp": "用舌头取悦刘敏",
+        "nsfw_title_huili_liumin_lp_host": "失控的慰藉",
+        "nsfw_title_huili_liumin_lp_slime": "人偶的侍奉",
+        "nsfw_desc_huili_liumin_lp_host": "一股不属于自己的、强烈的冲动驱使着张慧丽的身体。她主动地、甚至可以说是笨拙地跪在了刘敏的身前。刘敏的眼中闪过一丝惊讶和不解，但并没有推开她。当张慧丽颤抖的唇舌探向那片私密的花园时，她能感受到对方身体瞬间的僵硬，和随之而来的、压抑不住的轻颤。从对方喉咙里泄出的呻吟，像一道电流，击中了张慧丽麻木的神经，让她在羞耻的深渊中，感受到了一丝停不下来的、病态的愉悦。",
+        "nsfw_desc_huili_liumin_lp_slime": "史莱姆将这次互动视为一场对“精英特工”底线的精妙测试。它操控着张慧丽的身体，让她双目无神地跪下，用一种冷静到残忍的、机械的节奏，让她的唇舌在那片女性最敏感的私密花园间游走。它饶有兴致地观察着刘敏从最初的惊愕，到身体逐渐软化、呼吸变得急促的全过程。看着这名训练有素的特工在自己人偶的侍奉下逐渐沉沦，史莱姆从中汲取着最纯粹的、充满支配感的愉悦。",
 
         // --- 第二章倒计时和Game Over ---
         "task_bomb_countdown": "距离协议执行还剩",
@@ -1200,6 +1279,17 @@ const LANGS = {
         "daily_huili_weekend_e1": "Returning home, she enters the bathroom and begins her daily cleaning ritual. The water, the soap, the mirror... all are familiar yet strange. She looks at her own expressionless face in the mirror and feels nothing, as if looking at a complete stranger.",
         "daily_huili_weekend_e2": "The weekend night is as silent as a weekday one. Zhang Huili lies in bed, the darkness gently wrapping around her, severing her final connection to the world. A new day will come, but for her, it may just be another repetition of the same.",
 
+        // 文件: language.js
+        // --- Liu Min - Daily Narrations (Placeholders) ---
+        "daily_liumin_all_m1": "In the early morning, Liu Min's room is spotless, with everything arranged with military precision. She woke up early, her slender fingers repeatedly polishing a delicate dagger, her eyes scanning every corner with vigilance, as if this seemingly ordinary room concealed an unknown, fatal threat.",
+        "daily_liumin_all_m2": "She opens an encrypted laptop, streams of data incomprehensible to ordinary people scroll rapidly across the screen—reports of anomalous activities from H-city's underground. Her expression is focused and cold, her lips tightly pressed, a hint of tension permeating the air. She frantically investigates anomalies, unaware she is already deeply mired.",
+        "daily_liumin_all_n1": "Lunch is a simple energy bar and water. For her, eating is merely to sustain bodily functions, not for enjoyment. Each bite is taken with a mechanical precision, as if refueling for the actions to come. She is always prepared.",
+        "daily_liumin_all_n2": "She meticulously checks the hidden cameras and sensors in her room again and again, ensuring no anomalies. Her senses are acutely trained; not a single subtle anomaly escapes her notice. She believes only extreme caution can ensure survival, yet unbeknownst to her, the true danger is already at her doorstep.",
+        "daily_liumin_all_a1": "She engages in high-intensity physical training. Sweat soaks her tank top, outlining her taut and powerful muscles. Her breathing remains steady and strong, but deep in her eyes lies a hint of fatigue and anxiety. She must maintain peak condition, for she knows that any slackening will lead to irreversible ruin.",
+        "daily_liumin_all_a2": "She comes to the lake, but uncharacteristically, she doesn't survey the terrain. She just stands quietly, a rare hint of anxiety and vulnerability showing on her face. Her gaze darts repeatedly, almost nervously, towards the abandoned warehouse on the far side of the lake, as if she is expecting something... or perhaps, dreading it.",
+        "daily_liumin_all_e1": "As night falls, Liu Min, like a lurking phantom, blends into the shadows of the village square. She silently observes the movements of every villager, her eyes carrying an imperceptible scrutiny. Her body is ephemeral in the darkness, that dangerous and mysterious aura, rendered exceptionally captivating under the dim lights, yet also concealing a fatal allure.",
+        "daily_liumin_all_e2": "Returning home, she takes a combat shower; water droplets slide down her smooth skin, briefly washing away the day's fatigue. Afterward, she returns to her world of intelligence, intently watching for anomalies on the screen. Outside, the moonlight bathes her focused profile, lending her an unconscious sensuality, and a tragic sense of being played by fate.",
+
         "slime_desc_default": "[DATA MISSING] Unable to analyze current environment.",
         "story_detached_host_info": "Life signal source ({HOST_NAME}) is currently at: {LOCATION}.",
         "story_detached_mode_suffix_generic": "Independent perception brings a strange freedom, but also the vulnerability of being separated from its life source.",
@@ -1300,6 +1390,15 @@ const LANGS = {
         "event_chat_zq_generic_desc": "You chat with Zhao Qimin about some trivial matters in the village. He answers impeccably, always wearing that gentle, formulaic smile.",
         "event_chat_zq_generic_choice": "(Favorability +5)",
 
+        "event_attempt_false_takeover_zh_btn": "Slime (Night): Attempt to Erode Zhang Huili (Dangerous)",
+        "event_false_takeover_zh_title": "Nightmare Descends",
+        "event_false_takeover_zh_p1": "You slip into Zhang Huili's bedroom. She lies on the bed, eyes half-open and expressionless, like an empty shell. You sense something amiss, but primal hunger drives you to enter her ear, heading straight for her brain.",
+        "event_false_takeover_zh_p2": "The moment your tendrils touch the depths of her brain, Zhang Huili's body convulses violently, emitting an inhuman shriek. An intense pain pierces your slime form. You feel a cold, hard metallic object deep within her brain, radiating terrifying energy, not only destroying the host's nerves but also tearing at your own consciousness!",
+        "event_false_takeover_zh_p3": "In the throes of immense pain and terror, your consciousness is forcibly ripped away. When you 'awaken' again, it is daytime. Zhang Huili lies on the bed in a twisted posture, pupils dilated, surrounded by a group of uniformed individuals. You overhear a whispered comment: 'Unexpectedly smooth operation this time. It seems the test subject's reaction to the parasite was far more intense than anticipated.'",
+        "event_false_takeover_zh_choice": "(Fool's Gold...)",
+        "game_over_FALSE_TAKEOVER_ZH_OUTCOME_title": "K-Class Scenario Escalation: Host Captured",
+        "game_over_FALSE_TAKEOVER_ZH_OUTCOME_desc": "Reports indicate that after parasite invasion, Host Zhang Huili's internal modifications were unexpectedly activated, leading to the parasite's detachment and capture. The host herself displayed abnormal self-healing and aggression during the struggle and was urgently extracted from H-city by Chaos Insurgency agents, posing a risk of weaponization. The O5 Council has approved new containment protocols, evaluating potential K-Class scenario escalation.",
+
         // === [NEW] Erode Zhang Huili Event ===
         "event_takeover_zhang_huili_title": "Silent Infiltration",
         "takeover_huili_p1_desc": "The night is quiet. The slime controls Song Xin's body, moving silently to the backyard. Under the cold moonlight, the giant solar water tank looms like a silent beast. Song Xin skillfully twists open a hidden maintenance valve at the top and, without hesitation, spits a small part of the slime's core tissue into it.",
@@ -1314,6 +1413,11 @@ const LANGS = {
         "event_reenter_zh_title": "Consciousness Return (Zhang Huili)",
         "event_reenter_zh_desc": "The slime's consciousness reconnects to this docile vessel. Her body, like a marionette, once again obeys your every command.",
 
+        //张慧丽永久接管
+        "event_perm_takeover_title_zh": "Consciousness Assimilation Complete (Zhang Huili)",
+        "event_perm_takeover_desc_zh": "As the final mental barrier shatters, the residual consciousness known as 'Zhang Huili' completely dissipates. Now, this vessel is entirely yours. You have gained permanent control of this vessel!",
+        "event_perm_takeover_desc_zh_detailed": "Your slime consciousness cautiously navigated past the anomalous, faintly glowing traces of modification within Zhang Huili's brain, like a lurking phantom, delving into the deepest layers of her nerves. In that moment, Zhang Huili emitted one final moan, both despairing and relieved, that was truly her own. Afterward, all of her fell into silence, leaving only your unending dominion.",
+
         // --- Zhang Huili Memory Plunder ---
         "event_mem_plunder_success_zh_title": "The Cage in Deep Memory",
         "event_mem_plunder_success_zh_p1": "You drive the slime's consciousness deeper into this vessel. Countless slender tentacles explore downwards along the neural bundles, trying to find the root cause of her 'obedience'. As your consciousness touches the brainstem connecting to the spinal cord, you 'see' a foreign object—a cold, metallic implant. It clings there like a venomous parasite, right at the hub of all vital signals.",
@@ -1322,6 +1426,8 @@ const LANGS = {
         "toast_mem_plunder_success_zh": "You've discovered a deadly trap set specifically for you!",
 
         // ---Zhang hui li & Liumin Event Texts ---
+        "event_chat_liumin_title": "Chat with Liu Min",
+        "event_chat_liumin_desc": "As Zhang Huili, you engaged in seemingly casual conversation with Liu Min. You cautiously probed, while she parried every attempt flawlessly. This exchange deepened your wariness of her, yet it also seemed to subtly bridge the distance between you.",
         "event_track_footprints_btn": "Stake out the owner of the footprints",
         "feedback_track_footprints_daytime": "You found nothing during the day. The owner of the footprints seems to be active only at night.",
         "toast_need_socialization_control": "Must be in control mode and have unlocked the 'Socialization' skill to perform this action.",
@@ -1335,6 +1441,59 @@ const LANGS = {
         "event_request_visit_lm_title": "A Test",
         "event_request_visit_lm_desc": "Liu Min eyes 'Zhang Huili' up and down suspiciously, her gaze lingering on your empty pupils for a moment. Finally, she nods. 'Fine. But you come alone. Don't bring anyone else with you.'",
         "event_request_visit_lm_choice": "(She seems to be on guard against something...)",
+
+        // --- Liu Min Dynamic Dialogue ---
+        "event_chat_liumin_alert_title": "Wary Probing",
+        "event_chat_liumin_alert_desc": "You try to talk to Liu Min, but her answers are short and formulaic, her sharp eyes never leaving you, as if assessing a potential threat. The atmosphere is tense.",
+        "event_chat_liumin_calm_title": "Gradual Easing",
+        "event_chat_liumin_calm_desc": "This conversation is smoother than the last. Although Liu Min still keeps her distance, she occasionally reveals some trivial information about the village. Her guard seems to be lowering.",
+        "event_chat_liumin_eager_title": "Opening Up",
+        "event_chat_liumin_eager_desc": "Liu Min's attitude has changed significantly. She's no longer so wary and even asks about your well-being, her words carrying a clumsy concern. Under your dazed 'performance,' she seems to genuinely see you as the 'relative' who needs protection.",
+
+        // --- Erode Liu Min ---
+        "event_takeover_liumin_btn": "Erode Liu Min",
+        "event_takeover_liumin_title": "Hunter and Prey",
+        "takeover_liumin_p1": "Controlling Zhang Huili's body, you plead with Liu Min in a carefully crafted tone of fear and supplication, telling her about your 'recovered' memories and your terror of the current situation. You beg her to let you live, implying she could be the next victim.",
+        "takeover_liumin_p2": "A flicker of struggle crosses Liu Min's eyes; a crack appears in her professionally trained cold exterior. '...I'll go to the living room to confirm. If what she says is true...' she murmurs, turning towards the door. The moment she opens it, the 'Zhang Huili' behind her reveals an inhuman smile, a brick tightly gripped in her hand, as viscous green fluid drips from the corner of her mouth...",
+        "takeover_liumin_p3": "Liu Min awakens from a splitting headache, finding herself in bed as if it were all just a nightmare. But she subconsciously touches her ear, where a damp, slimy sensation still lingers...",
+        "toast_takeover_liumin_success": "Successfully eroded Liu Min! The elite agent of the Chaos Insurgency is now your new plaything.",
+
+        // --- Liu Min Memory Plunder ---
+        "event_mem_plunder_success_lm_title": "The Agent's Memory",
+        "event_mem_plunder_success_lm_p1": "You ruthlessly tear through Liu Min's highly trained mental defenses. Her memories flood out like a broken dam, her eyes rolling back as green mucus flows from her orifices. Within this elite agent's mind lie the deepest secrets of this village.",
+        "event_mem_plunder_success_lm_p2": "You see the operating room where Zhang Huili was modified. Liu Min stands beside a superior whose face is unclear, watching with disgust as the two men lewdly discuss Zhang Huili's body. 'Sir,' she says, her voice tight with suppressed anger, 'is it really necessary for them to handle the final phase? Given the target's nature, I'm afraid their defenses will crumble the moment the host takes off her clothes.'",
+        "event_mem_plunder_success_lm_p3": "The superior chuckles and replies in fluent English: '(Translated) Precisely because of the target's nature, it cannot directly control males. That's why they are necessary as the final failsafe. Of course, if you insist, you can replace one of them, but one must remain.' Then, the superior receives a communication, their expression hardening. '...Another specimen has been located, just outside the village. I'm taking a team to deploy a contingency plan. I'll be in touch.' That was the last time Liu Min saw her superior. From that day on, she would watch from the lake every day, because she knew, if they were alive, they would return. If they had met their end, her own fate... was also death.",
+        "toast_mem_plunder_success_lm": "You finally understand everything. This village was a double-layered trap, set just for you.",
+
+        // --- New NSFW Text Placeholders ---
+        "songxin_c2_nsfw_desc_office_slime": "PLACEHOLDER: Song Xin masturbates in the village office (SLIME) - Description Text",
+        "nsfw_desc_huili_in_liumin_bedroom_host": "PLACEHOLDER: Zhang Huili masturbates in Liu Min's bedroom (HOST) - Description Text",
+        "nsfw_desc_huili_in_liumin_bedroom_slime": "PLACEHOLDER: Zhang Huili masturbates in Liu Min's bedroom (SLIME) - Description Text",
+        "nsfw_desc_huili_in_liumin_bathroom_host": "PLACEHOLDER: Zhang Huili masturbates in Liu Min's bathroom (HOST) - Description Text",
+        "nsfw_desc_huili_in_liumin_bathroom_slime": "PLACEHOLDER: Zhang Huili masturbates in Liu Min's bathroom (SLIME) - Description Text",
+        "nsfw_event_lm_title": "PLACEHOLDER: Liu Min Masturbation Title",
+        "nsfw_choice_self_lm": "PLACEHOLDER: Liu Min Masturbation Button",
+        // 文件: language.js (英文)
+
+        // --- Liu Min - Solo NSFW (HOST/SLIME Revised) ---
+        "nsfw_event_lm_title": "The Agent's Release",
+        "nsfw_choice_self_lm": "Succumb to the impulse",
+        "nsfw_desc_liumin_bedroom_host": "In this absolutely private space, Liu Min's tense nerves finally find a moment of respite. But with it comes a physical emptiness and craving, amplified countless times by the slime. She loathes this loss of control, yet her body betrays her will, her hands uncontrollably beginning to explore herself. Every shiver from her touch is a mixture of extreme shame and unstoppable pleasure.",
+        "nsfw_desc_liumin_bedroom_slime": "The slime drives this elite agent's body as if calibrating a newly acquired precision instrument. With vacant eyes, Liu Min undresses with standard, efficient movements, then soothes herself in an emotionless, mechanical rhythm. Every action is precisely calculated to trigger the strongest physiological response—a perfect performance of energy harvesting, and a merciless mockery of the vessel's 'former master'.",
+        "nsfw_desc_liumin_bathroom_host": "The warm water washes over her body, breaking down Liu Min's final mental defenses. In the steamy mirror, she sees her own lustful reflection, and the shame nearly consumes her. But her body becomes even more sensitive in the water; every casual brush of her fingertips brings a wave of pleasure that makes her knees weak. She bites her lip, painfully struggling on the edge of shame and submission.",
+        "nsfw_desc_liumin_bathroom_slime": "The slime views the bathroom as an excellent 'energy amplifier.' It controls Liu Min's body to stand under the shower, eyes empty, letting the water run over her. Her hands, with a chillingly calm precision, perform efficient self-stimulation. Every impact of the water droplets pushes the neural signals to a higher peak, doubling the energy conversion efficiency.",
+        "nsfw_desc_liumin_lake_host": "By the deserted lakeside, the evening breeze caresses Liu Min's flushed cheeks. She doesn't know why she would do something so shameless. The abandoned warehouse opposite feels like a silent beast, spying on her every move from the darkness. This illusion of being watched pushes her sense of shame and depravity to its peak, making the pleasure all the more irresistible.",
+        "nsfw_desc_liumin_lake_slime": "The slime drives Liu Min's body to perform a self-display in this open, dangerously unpredictable lakeside. With vacant eyes, she mechanically sheds her clothes, appearing like an exquisite doll under the moonlight. This is not just for harvesting energy, but an ultimate act of showing off—see, even in this environment, this powerful vessel can only be my plaything.",
+        "nsfw_desc_liumin_office_host": "The office is empty, save for the lingering scent of authority from Zhao Qimin. This scent acts as a catalyst, igniting Liu Min's repressed desires. Doing this in the enemy's territory sends a dizzying mix of fear, shame, and excitement through her. Every shudder that brings her to the brink of orgasm makes her feel like she is falling, irredeemably.",
+        "nsfw_desc_liumin_office_slime": "Controlling this highly-trained agent's body, the slime stages a silent desecration in the office of the 'superior.' With vacant eyes, Liu Min precisely unfastens her restraints. It's not just harvesting energy; it's deliberately defiling this space of power with the vessel's bodily fluids and pheromones. This is a primal, arrogant provocation.",
+        "nsfw_desc_liumin_square_host": "The village square is silent under the night sky. Liu Min hides in a surveillance blind spot. The suppressed tension from the day and the fear of the unknown transform into a potent physiological craving. Leaning against a cold pillar, she engages in a quick, intense act of self-solace. The shudders running through her body let her temporarily forget she is alone and deep in enemy lines.",
+        "nsfw_desc_liumin_square_slime": "The slime precisely calculates the scanning cycles and blind spots of every surveillance camera. It drives Liu Min's body, eyes vacant, to perform the most audacious energy extraction in this seemingly open square. Watching the cold machines sweep by, unable to capture the elite vessel succumbing in the shadows, a near-mocking pleasure surges through the slime's consciousness.",
+
+        // --- Liu Min & Zhao Qimin Interaction NSFW (HOST/SLIME Revised) ---
+        "zq_nsfw_desc_lm_host_BJ": "To obtain intelligence, Liu Min suppresses her inner humiliation and actively approaches Zhao Qimin. She kneels, and with a mix of disgust and self-abandonment, lets her lips and tongue unskillfully explore his groin. Every touch feels like a slow death to her self-respect, but for the mission, she can only swallow this disgust along with the uncontrollable, perverse pleasure welling up from deep within.",
+        "zq_nsfw_desc_lm_slime_BJ": "The slime views this interaction as a perfect demonstration. It manipulates Liu Min's body to kneel actively, using her highly-trained lips and tongue to perform a 'show' capable of breaking any man's will. It calmly savors the target's escalating loss of control, each touch a declaration: behold, the elite agent you pride yourselves on is now merely my plaything.",
+        "zq_nsfw_desc_lm_host_MS": "Liu Min abandons her final resistance, actively undressing and treating this submission as part of her mission—a necessary sacrifice. She straddles him, striving to maintain a sliver of clarity amidst their physical entanglement, trying to analyze useful intelligence from his breaths and words. But the irresistible pleasure coursing through her body slowly erodes her will, blurring the line between mission and pure, unstoppable depravity.",
+        "zq_nsfw_desc_lm_slime_MS": "The slime fully commandeers Liu Min's sensory system, turning this sexual act into an efficient energy feast and a cruel spectacle. It drives this elite agent's body to straddle him actively, making her endure everything with vacant eyes, forcing her to drown in the very desires she despises. It can clearly perceive the target's sense of conquest and satisfaction, and it devours these emotions along with his life force. This is not just feeding; it is a merciless mockery of the 'human' species.",
 
         //--- Chapter 2 NSFW Event Texts ---
         "nsfw_choice_cost_suffix": " (Stamina -{COST})", // [ADD] Generic stamina cost suffix
@@ -1351,40 +1510,62 @@ const LANGS = {
         //Play with Zhao Qi ming
         "nsfw_choice_invite_zq_BJ_cost": "Engage in an \"oral\" exchange (Stamina -{COST})",
         "nsfw_event_zq_title_BJ": "Whispered Temptation",
-        "zq_nsfw_desc_sx_slime_BJ": "The slime, guiding Song Xin’s youthful form, wears an innocent smile as it draws near Zhao Qimin. A fleeting spark of desire glints in his eyes. Seizing this vulnerability, the slime transforms the intimate dance of lips and tongue into a delicate test, softly teasing his senses with gentle kisses and whispers, probing every falter in his restraint.",
-        "zq_nsfw_desc_sx_slime_intense": "Under the slime’s masterful control, Song Xin’s body becomes a weapon of irresistible allure, igniting Zhao Qimin’s primal urges. In this fervent ritual of entwined bodies, the slime orchestrates every deep, rhythmic press, her legs entwining to guide him into an unrelenting cadence where all reason and resistance crumble, consumed by the raw intensity of their union.",
+        // 文件: language.js (英文)
+
+        // --- Song Xin & Zhao Qimin Interaction NSFW (Revised) ---
+        "zq_nsfw_desc_sx_slime_BJ": "Under the slime's will, 'Song Xin', with an innocent smile, actively approaches Zhao Qimin and kneels between his legs. The slime controls this young vessel, making her lips and tongue clumsily explore his groin. This perfect container is staging a spectacular 'predation' show, and the man before her is the first prey.",
+        "zq_nsfw_desc_sx_slime_MS": "The slime's will becomes a direct command. 'Song Xin' actively sheds her clothes and, with a boldness beyond her years, straddles Zhao Qimin. In this primal ritual of union directed by the slime, it can clearly feel the male creature below being consumed by desire, from which it draws the sweetest energy.",
+
+        // --- Zhang Huili & Zhao Qimin Interaction NSFW (Revised) ---
+        "zq_nsfw_desc_zh_host_BJ": "In a hypnotic fog, Zhang Huili's body uncontrollably moves to kneel before Zhao Qimin. Her consciousness weeps from a distant place, while her lips and tongue unskillfully wander his groin. Every touch feels like a tearing shame upon her soul, yet a deep, irresistible, and morbid pleasure surges from within.",
+        "zq_nsfw_desc_zh_slime_BJ": "The slime directs the exquisite puppet 'Zhang Huili' to kneel actively between Zhao Qimin's legs. With an almost experimental calmness, it drives her lips and tongue to mechanically explore his groin, carefully observing and recording the man's every physiological reaction. This is not just energy harvesting; it is a live study of the 'weaknesses of the human male'.",
+        "zq_nsfw_desc_zh_host_MS": "Zhang Huili's body feels as if it's no longer her own. She actively undresses and, like a broken doll, straddles Zhao Qimin, letting him do as he pleases. Her consciousness has drifted far away, leaving only her body here to endure everything. There is no pain, no pleasure, only an endless void.",
+        "zq_nsfw_desc_zh_slime_MS": "Under the slime's absolute control, 'Zhang Huili's' body becomes a cold, seductive machine, actively straddling Zhao Qimin and igniting his desires with the most primitive movements. In this frigid ritual of conquest, his reason and resistance crumble under her mechanical allure, utterly consumed.",
+
+        // --- Liu Min & Zhao Qimin Interaction NSFW (Revised) ---
+        "zq_nsfw_desc_lm_host_BJ": "To obtain intelligence, Liu Min suppresses her inner humiliation and actively approaches Zhao Qimin. She kneels, and with a mix of disgust and self-abandonment, lets her lips and tongue unskillfully explore his groin. Every touch feels like a slow death to her self-respect, but for the mission, she can only swallow this disgust along with the uncontrollable, perverse pleasure welling up from deep within.",
+        "zq_nsfw_desc_lm_slime_BJ": "The slime views this interaction as a perfect demonstration. It manipulates Liu Min's body to kneel actively, using her highly-trained lips and tongue to perform a 'show' capable of breaking any man's will. It calmly savors the target's escalating loss of control, each touch a declaration: behold, the elite agent you pride yourselves on is now merely my plaything.",
+        "zq_nsfw_desc_lm_host_MS": "Liu Min abandons her final resistance, actively undressing and treating this submission as part of her mission—a necessary sacrifice. She straddles him, striving to maintain a sliver of clarity amidst their physical entanglement, trying to analyze useful intelligence from his breaths and words. But the irresistible pleasure coursing through her body slowly erodes her will, blurring the line between mission and pure, unstoppable depravity.",
+        "zq_nsfw_desc_lm_slime_MS": "The slime fully commandeers Liu Min's sensory system, turning this sexual act into an efficient energy feast and a cruel spectacle. It drives this elite agent's body to straddle him actively, making her endure everything with vacant eyes, forcing her to drown in the very desires she despises. It can clearly perceive the target's sense of conquest and satisfaction, and it devours these emotions along with his life force. This is not just feeding; it is a merciless mockery of the 'human' species.",
 
 
         // Zhang Huili
         "nsfw_event_zh_title": "Shattered Desire",
         "nsfw_choice_self_zh": "Succumb to the impulse",
-        "nsfw_desc_huili_bedroom_host": "In her own bedroom, Zhang Huili feels an inexplicable emptiness. Her consciousness is a fog, unable to think, only a vague desire from deep within her body directs her. She numbly removes her clothes, her fingers clumsily caressing her own body, trying to find a sense of existence from this mechanical contact, but her eyes remain vacant.",
-        "nsfw_desc_huili_bedroom_slime": "[Target: Zhang Huili | Location: Nest] The slime begins preliminary performance tests on the new vessel. It drives Zhang Huili's fingers to self-stimulate, carefully recording heart rate, hormone secretion, and neural signal peaks. Unlike Song Xin, this vessel's response is somewhat 'sluggish,' like a machine that hasn't been maintained in a long time and needs more tuning.",
-        "nsfw_desc_huili_bathroom_host": "The woman in the mirror has a dazed look, her face flushed. Zhang Huili doesn't recognize her, but her body uncontrollably seeks solace under the warm water. Unfamiliar pleasure rushes through her nearly blank mind, making her let out a suppressed and confused moan. She doesn't understand why she's doing this, only that her body needs it.",
-        "nsfw_desc_huili_bathroom_slime": "[Environment: High Humidity | Status: Testing] The slime uses the water flow as a catalyst to enhance stimulation of Zhang Huili's body. It discovers that this vessel has high sensitivity but very weak mental feedback. A perfect vessel, with almost no will to resist. The slime is very pleased with this, as the efficiency of energy extraction has greatly increased.",
+
+        // --- Zhang Huili - Solo NSFW (HOST/SLIME Revised) ---
+        "nsfw_desc_huili_bedroom_host": "In her own bedroom, Zhang Huili feels an inexplicable emptiness. She loathes this loss of control, yet her body betrays her will, her hands uncontrollably beginning to explore herself. Every shiver from her touch is a mixture of extreme shame and unstoppable pleasure.",
+        "nsfw_desc_huili_bedroom_slime": "The slime drives this new vessel as if calibrating a newly acquired, exquisite plaything. With vacant eyes, Zhang Huili undresses with standard, efficient movements, then soothes herself in an emotionless, mechanical rhythm. Every action is precisely calculated to trigger the strongest physiological response—a perfect performance of energy harvesting, and a merciless mockery of the vessel's 'former master'.",
+        "nsfw_desc_huili_bathroom_host": "The warm water washes over her body, breaking down Zhang Huili's final mental defenses. In the steamy mirror, she sees her own lustful reflection, and the shame nearly consumes her. But her body becomes even more sensitive in the water; every casual brush of her fingertips brings a wave of pleasure that makes her knees weak. She bites her lip, painfully struggling on the edge of shame and submission.",
+        "nsfw_desc_huili_bathroom_slime": "The slime views the bathroom as an excellent 'energy amplifier.' It controls Zhang Huili's body to stand under the shower, eyes empty, letting the water run over her. Her hands, with a chillingly calm precision, perform efficient self-stimulation. Every impact of the water droplets pushes the neural signals to a higher peak, doubling the energy conversion efficiency.",
         "nsfw_desc_huili_livingroom_host": "The silence of the living room is suffocating. An indescribable impulse seizes her. Zhang Huili curls up on the sofa like a small animal seeking warmth, unconsciously beginning to pleasure herself. Her movements are dazed and repetitive, as if doing so could fill the huge void inside her, but the emptiness becomes even stronger after the pleasure fades.",
-        "nsfw_desc_huili_livingroom_slime": "[Location: Public Area | Risk: Low] After confirming the environment is secure, the slime begins a routine energy extraction on Zhang Huili. It controls this docile body to perform covert and efficient self-stimulation on the sofa. This vessel's obedience far exceeds expectations, allowing the slime to maximize the conversion of every physiological fluctuation into storable energy.",
-        "nsfw_desc_village_office_host": "Behind the cold desk in the village office, Zhang Huili feels a sudden wave of heat. Her thoughts are a jumble, unable to concentrate. In an unnoticed corner, she secretly and mechanically pleasures herself, trying to quell this restless feeling that came from nowhere. It's a shameful and unfamiliar act, yet her body seems to have long been accustomed to it.",
-        "nsfw_desc_village_office_slime": "[Environment: High Risk | Objective: Energy Extraction] The slime believes that 'preying' right under the enemy's nose is an effective form of camouflage. It drives Zhang Huili's body to perform covert self-stimulation under the cover of the desk. This not only gathers energy but also tests the physiological and psychological limits of this new vessel under pressure. Every accelerated heartbeat is a perfect line of experimental data.",
+        "nsfw_desc_huili_livingroom_slime": "After confirming the environment is secure, the slime begins a routine energy extraction on Zhang Huili. It controls this docile body to perform covert and efficient self-stimulation on the sofa. This vessel's obedience far exceeds expectations, allowing the slime to maximize the conversion of every physiological fluctuation into storable energy.",
+        "nsfw_desc_huili_office_host": "Behind the cold desk in the village office, Zhang Huili feels a sudden wave of heat. Her thoughts are a jumble, unable to concentrate. In an unnoticed corner, she secretly and mechanically pleasures herself, trying to quell this restless feeling that came from nowhere. It's a shameful and unfamiliar act, yet her body seems to have long been accustomed to it.",
+        "nsfw_desc_huili_office_slime": "The slime believes that 'preying' right under the enemy's nose is an effective form of camouflage. It drives Zhang Huili's body to perform covert self-stimulation under the cover of the desk. This not only gathers energy but also tests the physiological and psychological limits of this new vessel under pressure. Every accelerated heartbeat is a perfect line of experimental data.",
         "nsfw_desc_huili_lake_host": "The evening breeze by the lake caresses Zhang Huili's flushed cheeks. She doesn't know why she is here, nor why her body uncontrollably sheds its clothes and steps into the cold water. Under the moonlight, she numbly pleasures herself as if performing a meaningless ritual. The water is cold, but her body is burning hot.",
-        "nsfw_desc_huili_lake_slime": "[Environment: Open Water | Tactic: Environmental Exploitation] The slime submerges Zhang Huili's body in the lake, using the changes in water temperature and flow to enhance stimulation, testing the energy output efficiency of this new vessel in an extreme environment. Watching this vessel tremble in the moonlit water from involuntary pleasure, the slime felt a sense of absolute control and satisfaction.",
+        "nsfw_desc_huili_lake_slime": "The slime submerges Zhang Huili's body in the lake, using the changes in water temperature and flow to enhance stimulation, testing the energy output efficiency of this new vessel in an extreme environment. Watching this vessel tremble in the moonlit water from involuntary pleasure, the slime felt a sense of absolute control and satisfaction.",
         "nsfw_desc_huili_square_host": "On a bench in the square, Zhang Huili's mind is a blank slate. She feels an uncontrollable heat rising in her body. A hand, as if with a will of its own, secretly slips under her skirt, seeking the pleasure that can temporarily numb her nerves. The vacant gazes of villagers not far away seem to be fixed on her, but she can no longer tell if it's reality or hallucination.",
-        "nsfw_desc_huili_square_slime": "[Environment: High Risk | Tactic: Psychological Pressure] The slime chooses the most heavily monitored location, the village square, for energy extraction. It drives Zhang Huili's body to perform the most daring and shameful self-exposure. The thrill of walking on a knife's edge maximizes the extraction of mental energy from this vessel and serves as a silent provocation to the entire village.",
+        "nsfw_desc_huili_square_slime": "The slime chooses the most heavily monitored location, the village square, for energy extraction. It drives Zhang Huili's body to perform the most daring and shameful self-exposure. The thrill of walking on a knife's edge maximizes the extraction of mental energy from this vessel and serves as a silent provocation to the entire village.",
+        "nsfw_desc_huili_in_liumin_bedroom_host": "In Liu Min's cold and tidy bedroom, Zhang Huili feels an unprecedented mix of fear and excitement. She knows she could be discovered at any moment, and this immense risk sends shivers down her spine, yet it also fuels a stronger, morbid desire. Her hand uncontrollably slips under her skirt, each touch a blend of curiosity about another woman's body and shame for her own degradation.",
+        "nsfw_desc_huili_in_liumin_bedroom_slime": "The slime drives Zhang Huili's body to perform a silent 'territorial marking' in the very heart of the 'elite agent's' nest. It makes her lie on the other's bed, eyes vacant, using this puppet's body for self-pleasure. This is not just about harvesting energy; it's an ultimate provocation—staging this show in your most private space, using one of your 'own kind'.",
+        "nsfw_desc_huili_in_liumin_bathroom_host": "In Liu Min's bathroom, the mirror is clean enough to reflect all the confusion and shame on Zhang Huili's face. She doesn't know why she's doing this here, but the physical urge is overwhelming. She leans against the cold wall, feeling a pleasure laced with guilt, her every breath trembling with fear.",
+        "nsfw_desc_huili_in_liumin_bathroom_slime": "The slime controls Zhang Huili's body to harvest energy in this private space that also belongs to the 'enemy.' It makes her stare at her own reflection with empty eyes while mechanically pleasuring the body. Watching the beautiful vessel in the mirror succumb to its will fills the slime's consciousness with the joy of toying with its prey.",
+
         //赵齐民互动事件
         "zq_nsfw_desc_zh_host_BJ_title": "Sinking into the Mist",
         "zq_nsfw_desc_zh_slime_BJ_title": "Cold Flame’s Whisper",
-        "zq_nsfw_desc_zh_host_BJ": "Zhang Huili moves lightly in a hypnotized haze, her vacant eyes tinged with a dreamy allure, drawing closer to Zhao Qimin. A subtle spark of desire glints in his gaze. Guided by the slime within, she turns the tender interplay of lips and tongue into a dreamlike probe, softly teasing his senses, as if testing every falter in his restraint within an enchanted mist.",
-        "zq_nsfw_desc_zh_slime_BJ": "Under the slime’s icy control, Zhang Huili’s body becomes a refined puppet, expressionless yet radiating fatal allure, approaching Zhao Qimin. A flicker of desire sparks in his eyes. The slime directs her lips and tongue with precise rhythm, softly yet ruthlessly teasing his senses, like a cold probe testing every crack in his restraint.",
         "zq_nsfw_desc_zh_host_MS_title": "Entwined in the Mist",
         "zq_nsfw_desc_zh_slime_MS_title": "Cold Flame’s Conquest",
-        "zq_nsfw_desc_zh_host_MS": "In a hypnotized haze, Zhang Huili’s body moves dreamlike, radiating a misty allure as she draws close to Zhao Qimin, pliable like a broken doll under his control. Her consciousness has long drifted to a distant realm, leaving only her body behind, yielding to every motion. There is no pain, no pleasure, only an endless void. Guided by the slime within, each deep, rhythmic press flows like a dream, her legs entwining to pull him into a trance-like cadence. Reason and resistance dissolve in the fervent entwining, consumed by the abyss of instinct within the mist.",
-        "zq_nsfw_desc_zh_slime_MS": "Under the slime’s absolute control, Zhang Huili’s body becomes a cold, seductive machine, igniting Zhao Qimin’s primal desires without a trace of emotion. Her movements are precise and unrelenting, each press and rhythm orchestrated by the slime, her legs entwining to pull him into a frenzied cadence. In this icy ritual of conquest, reason and resistance collapse under her mechanical allure, utterly consumed.",
+        "zq_nsfw_desc_zh_host_BJ": "In a hypnotic fog, Zhang Huili's body uncontrollably moves to kneel before Zhao Qimin. Her consciousness weeps from a distant place, while her lips and tongue unskillfully wander his groin. Every touch feels like a tearing shame upon her soul, yet a deep, irresistible, and morbid pleasure surges from within.",
+        "zq_nsfw_desc_zh_slime_BJ": "The slime directs the exquisite puppet 'Zhang Huili' to kneel actively between Zhao Qimin's legs. With an almost experimental calmness, it drives her lips and tongue to mechanically explore his groin, carefully observing and recording the man's every physiological reaction. This is not just energy harvesting; it is a live study of the 'weaknesses of the human male'.",
+        "zq_nsfw_desc_zh_host_MS": "Zhang Huili's body feels as if it's no longer her own. She actively undresses and, like a broken doll, straddles Zhao Qimin, letting him do as he pleases. Her consciousness has drifted far away, leaving only her body here to endure everything. There is no pain, no pleasure, only an endless void.",
+        "zq_nsfw_desc_zh_slime_MS": "Under the slime's absolute control, 'Zhang Huili's' body becomes a cold, seductive machine, actively straddling Zhao Qimin and igniting his desires with the most primitive movements. In this frigid ritual of conquest, his reason and resistance crumble under her mechanical allure, utterly consumed.",
         //与刘敏互动事件
-        "nsfw_choice_huili_liumin_lp": "Lick Liu Min's body",
-        "nsfw_title_huili_liumin_lp_host": "PLACEHOLDER: Lick Liu Min's body (HOST)",
-        "nsfw_title_huili_liumin_lp_slime": "PLACEHOLDER: Lick Liu Min's body (SLIME)",
-        "nsfw_desc_huili_liumin_lp_host": "PLACEHOLDER: Zhang Huili licks Liu Min's body (HOST) - Description Text",
-        "nsfw_desc_huili_liumin_lp_slime": "PLACEHOLDER: Zhang Huili licks Liu Min's body (SLIME) - Descrip",
+        "nsfw_choice_huili_liumin_lp": "Please Liu Min with your tongue",
+        "nsfw_title_huili_liumin_lp_host": "Uncontrolled Consolation",
+        "nsfw_title_huili_liumin_lp_slime": "The Puppet's Service",
+        "nsfw_desc_huili_liumin_lp_host": "A strong impulse, not her own, drives Zhang Huili's body. She actively, almost clumsily, kneels before Liu Min. A flash of surprise and confusion crosses Liu Min's eyes, but she doesn't push her away. As Zhang Huili's trembling lips and tongue explore that private garden, she can feel the other's body stiffen for a moment, followed by an irrepressible shudder. The moan escaping from the other's throat strikes Zhang Huili's numb nerves like an electric current, making her feel an unstoppable, morbid pleasure in the abyss of her shame.",
+        "nsfw_desc_huili_liumin_lp_slime": "The slime views this interaction as a subtle test of the 'elite agent's' limits. It controls Zhang Huili's body, making her kneel with vacant eyes. Then, with a chillingly cruel and mechanical rhythm, it makes her lips and tongue wander between the most sensitive petals of that female garden. It watches with great interest as Liu Min's initial astonishment gives way to a softening body and quickening breath. Watching this highly-trained agent succumb to the ministrations of its puppet, the slime draws the purest, most dominant pleasure.",
 
         // --- Chapter 2 Countdown and Game Over ---
         "task_bomb_countdown": "Time until protocol execution:",
