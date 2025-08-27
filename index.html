@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="game_title_long">寄生史莱姆v0.2.7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Start Menu -->
+    <div id="start-menu" class="fixed inset-0 bg-gray-900 flex flex-col justify-end items-start p-10 md:p-16">
+        <div id="start-menu-bg" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"></div>
+        <div class="relative z-10 text-white">
+            <h1 id="game-title" class="text-6xl md:text-8xl font-bold text-shadow-lg mb-6" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);" data-lang-key="game_title_short">寄生史莱姆</h1>
+            <div class="space-y-4">
+                <button id="start-new-game-button" class="sidebar-button w-64 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-md text-xl" data-lang-key="btn_new_game">开始新游戏</button>
+                <button id="continue-game-button" class="sidebar-button w-64 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-md text-xl" data-lang-key="btn_continue_game">继续游戏</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container" class="flex h-screen hidden">
+        <!-- Left Sidebar -->
+        <aside class="w-1/3 xl:w-1/4 bg-gray-800/80 p-4 flex flex-col shadow-2xl z-20 overflow-y-auto">
+            <div id="char-image-container" class="mb-4 relative">
+                <!-- 在这里添加新的按钮 -->
+                <button onclick="game.switchLanguage()" data-lang-key="btn_language_switch" class="lang-switch-button">
+                    中/EN
+                </button>
+                <img id="char-image" src="https://placehold.co/400x400/1a1a2e/ffffff?text=Character" alt="角色立绘" class="w-full aspect-square object-cover rounded-lg shadow-lg">
+            </div>
+            <div class="mb-4">
+                <h2 class="text-xl font-bold border-b-2 border-purple-500 pb-2 mb-3" data-lang-key="ui_host_status">宿主状态</h2>
+                <div class="space-y-2 text-sm">
+                    <div><strong data-lang-key="stat_name">姓名:</strong> <span id="stat-hostname" class="font-bold text-gray-300"></span></div>
+                    <div><strong data-lang-key="stat_stamina">体力:</strong> <span id="stat-stamina" class="font-bold stat-value text-cyan-400"></span> / 100</div>
+                    <div><strong data-lang-key="stat_sanity">理智:</strong> <span id="stat-sanity" class="font-bold stat-value text-green-400"></span> / 100</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-xl font-bold border-b-2 border-green-500 pb-2 mb-3" data-lang-key="ui_slime_status">史莱姆状态</h2>
+                <div class="space-y-2 text-sm">
+                    <div><strong data-lang-key="stat_suspicion">怀疑:</strong> <span id="stat-suspicion" class="font-bold stat-value text-yellow-300"></span> / 200</div>
+                    <div><strong data-lang-key="stat_mutation">突变点:</strong> <span id="stat-mutation-points" class="font-bold text-lime-400"></span></div>
+                    <div><strong data-lang-key="stat_integration">结合等级:</strong> <span id="stat-integration" class="font-bold stat-value text-lime-400"></span></div>
+                    <div id="control-status-display" class="hidden"><strong data-lang-key="stat_control_status">控制状态:</strong> <span id="control-status-text" class="font-bold slime-mode-text"></span></div>
+                    <div id="detach-status-display" class="hidden text-sm">
+                        <strong data-lang-key="stat_detach_status">状态: </strong><span id="detach-status-text" class="font-bold text-yellow-400"></span>
+                        <button id="detach-button" class="ml-2 text-xs bg-yellow-600 hover:bg-yellow-700 px-2 py-1 rounded"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <h2 class="text-xl font-bold border-b-2 border-pink-500 pb-2 mb-3" data-lang-key="ui_core_abilities">核心能力</h2>
+                <div class="space-y-2">
+                    <button id="skill-tree-button" class="ability-button w-full bg-purple-600 text-white font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_skill_tree">打开技能树</button>
+                </div>
+            </div>
+            <div class="mt-auto space-y-2">
+                <button id="save-button" class="sidebar-button w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_save">保存进度</button>
+                <button id="load-button" class="sidebar-button w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_load">读取进度</button>
+                <button id="reset-button" class="sidebar-button w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_reset">重新开始</button>
+                <button id="cheat-button" class="sidebar-button w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_cheat">作弊模式</button>
+            </div>
+        </aside>
+
+        <!-- Right Main Content -->
+        <main id="main-content" class="w-2/3 xl:w-3/4 main-content-bg flex flex-col justify-end p-6 md:p-10 relative">
+            <div id="top-right-ui" class="top-right-ui">
+                <button id="task-button" class="ui-box w-full text-left task-button-interactive hidden">
+                    <div id="task-ui">
+                        <h3 class="font-bold text-lg text-amber-300" data-lang-key="ui_current_task">当前任务</h3>
+                        <p id="task-title" class="text-sm text-gray-300 truncate"></p>
+                        <div id="countdown-container" class="mt-2 hidden">
+                            <h4 class="font-bold text-md text-red-400" data-lang-key="ui_important_event">重要事件</h4>
+                            <p id="countdown-text" class="text-sm text-gray-300"></p>
+                        </div>
+                    </div>
+                </button>
+                <div id="favor-ui-container"></div>
+                <button id="host-management-button" class="ui-box w-full text-left task-button-interactive hidden">
+                    <h4 class="font-bold text-md text-purple-300" data-lang-key="ui_host_management">宿主管理</h4>
+                </button>
+            </div>
+            <div id="text-box" class="text-box p-5 md:p-6 rounded-xl shadow-lg relative">
+                <h3 id="time-display" class="text-2xl font-bold text-purple-300 mb-2"></h3>
+                <p id="story-text" class="text-base md:text-lg mb-4 leading-relaxed min-h-[6em]"></p>
+                <div id="choices-display" class="border-t border-gray-600 pt-4">
+                    <h4 id="choices-title" class="text-md font-bold mb-2 text-gray-300"></h4>
+                    <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+                <div id="extra-actions-container" class="mt-3 flex gap-3">
+                    <button id="location-event-button" class="event-button flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_location_event">区域事件</button>
+                    <button id="enter-host-button" class="hidden event-button flex-1 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-3 rounded-lg shadow-md" data-lang-key="btn_enter_host">进入宿主</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-black bg-opacity-70 z-40"></div>
+    <div id="generic-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-900/90 p-6 rounded-2xl shadow-2xl z-50 w-11/12 h-5/6 max-w-4xl flex flex-col">
+        <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
+            <h3 id="modal-title" class="text-3xl font-bold text-purple-300"></h3>
+            <button id="modal-close-button" class="text-gray-400 hover:text-white text-3xl font-bold">&times;</button>
+        </div>
+        <div id="modal-content" class="flex-grow overflow-y-auto pr-2"></div>
+    </div>
+    <div id="confirm-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-8 rounded-2xl shadow-2xl z-50 w-11/12 max-w-sm">
+        <h3 id="confirm-title" class="text-xl font-bold mb-4 text-center"></h3>
+        <p id="confirm-text" class="text-gray-300 mb-6 text-center"></p>
+        <div class="flex justify-center gap-4">
+            <button id="confirm-yes" class="action-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg" data-lang-key="btn_confirm">确认</button>
+            <button id="confirm-no" class="action-button bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg" data-lang-key="btn_cancel">取消</button>
+        </div>
+    </div>
+    <div id="takeover-screen" class="hidden fixed inset-0 z-50 flex items-center justify-center control-warning-bg p-8">
+        <div class="text-center max-w-2xl">
+            <h2 id="takeover-title" class="text-4xl font-bold mb-4 text-purple-300" data-lang-key="takeover_title">宿主意识崩溃</h2>
+            <p id="takeover-description" class="text-lg text-gray-300 mb-8"></p>
+            <div id="takeover-choices" class="space-y-4"></div>
+        </div>
+    </div>
+    <div id="event-modal" class="hidden fixed inset-0 z-50 flex flex-col justify-end p-8 event-modal-bg">
+        <div class="w-full max-w-3xl mx-auto relative">
+            <div id="event-text-box" class="text-box p-6 rounded-xl shadow-lg mb-4">
+                <h3 id="event-title" class="text-xl font-bold text-pink-400 mb-2"></h3>
+                <p id="event-description" class="text-gray-300"></p>
+            </div>
+            <div id="event-choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+        </div>
+    </div>
+
+    <!-- Host Management Modal -->
+    <div id="host-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-800 p-5 rounded-2xl shadow-2xl z-50 w-11/12 max-w-lg">
+        <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
+            <h3 class="text-xl font-bold text-purple-300" data-lang-key="ui_host_management">宿主管理</h3>
+            <button id="host-modal-close-button" class="text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+        </div>
+        <div id="host-modal-content" class="space-y-3 max-h-80 overflow-y-auto"></div>
+    </div>
+
+    <!-- Minigame Modals -->
+    <div id="tetris-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-900/95 p-6 rounded-2xl shadow-2xl z-50 w-11/12 max-w-lg flex flex-col">
+        <div class="flex justify-between items-center mb-4 border-b border-gray-700 pb-3">
+            <h3 class="text-3xl font-bold text-purple-300" data-lang-key="minigame_tetris_title">记忆碎片</h3>
+            <button id="tetris-skip-button" class="action-button bg-gray-600 hover:bg-gray-700 text-white font-bold py-1 px-4 rounded-lg" data-lang-key="btn_skip">跳过</button>
+        </div>
+        <div id="tetris-modal-content">
+            <canvas id="tetris-canvas" width="240" height="480"></canvas>
+            <div id="tetris-info">
+                <h4 class="text-lg font-bold" data-lang-key="minigame_tetris_goal">目标</h4>
+                <p><span data-lang-key="minigame_tetris_clear">消除</span> <span id="tetris-lines-left">4</span> <span data-lang-key="minigame_tetris_layers">层</span></p>
+                <h4 class="text-lg font-bold mt-4" data-lang-key="minigame_tetris_controls">操控</h4>
+                <p class="text-sm" data-lang-key="minigame_tetris_move">← →: 移动</p>
+                <p class="text-sm" data-lang-key="minigame_tetris_rotate">↑: 旋转</p>
+                <p class="text-sm" data-lang-key="minigame_tetris_drop">↓: 加速下落</p>
+            </div>
+        </div>
+    </div>
+    <div id="clicker-modal" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center p-8">
+        <div class="w-full max-w-2xl text-center">
+            <h2 class="text-4xl font-bold text-white mb-2" data-lang-key="minigame_clicker_title">意识侵蚀</h2>
+            <p class="text-lg text-gray-400 mb-6" data-lang-key="minigame_clicker_desc">疯狂点击，粉碎宿主的最后抵抗！</p>
+            <div id="clicker-progress-bar-bg" class="w-full h-4 rounded-full mb-6">
+                <div id="clicker-progress-bar" class="h-full rounded-full"></div>
+            </div>
+            <p id="clicker-timer" class="text-5xl font-mono font-bold text-white mb-8"></p>
+            <button id="clicker-button" class="w-48 h-48 rounded-full text-white text-3xl font-bold" data-lang-key="btn_click">点击！</button>
+        </div>
+    </div>
+
+    <!-- Intro & Game Over Modals -->
+    <div id="intro-modal" class="hidden fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black p-4">
+        <div class="w-full max-w-4xl"><img id="intro-image" src="" alt="Intro Image" class="w-full h-64 md:h-96 object-contain mb-4 rounded-lg"></div>
+        <div class="w-full max-w-4xl intro-text-box p-6 rounded-lg shadow-lg">
+            <h2 id="intro-title" class="text-2xl font-bold text-indigo-400 mb-3"></h2>
+            <p id="intro-text" class="text-gray-300 leading-relaxed"></p>
+            <button id="intro-next-button" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" data-lang-key="btn_continue">继续</button>
+        </div>
+    </div>
+    <div id="gameover-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4">
+        <div class="w-full max-w-2xl gameover-text-box p-8 rounded-2xl shadow-2xl text-center">
+            <h2 id="gameover-title" class="text-4xl font-bold text-red-500 mb-4" data-lang-key="gameover_title">GAME OVER</h2>
+            <p id="gameover-text" class="text-gray-200 leading-relaxed mb-6"></p>
+            <button id="gameover-restart-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-8 rounded-lg" data-lang-key="btn_reset">重新开始</button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-[100] w-full max-w-xs space-y-2"></div>
+
+    <template id="host-panel-template">
+        <div class="host-panel p-3 rounded-lg border-2 bg-gray-800/60 backdrop-blur-sm">
+            <div class="flex items-start justify-between mb-2">
+                <h3 class="host-name text-xl font-bold text-white">宿主名称</h3>
+                <div class="status-badge px-2 py-1 rounded border font-bold text-xs text-white whitespace-nowrap">状态</div>
+            </div>
+            <div class="flex items-center gap-3">
+                <img class="host-portrait w-20 h-20 rounded-lg object-cover border-2 flex-shrink-0" src="" alt="portrait">
+                <div class="flex-grow space-y-1 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400" data-lang-key="stat_stamina">体力:</span>
+                        <span class="stat-stamina font-bold text-cyan-300">100 / 100</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400" data-lang-key="stat_sanity">理智:</span>
+                        <span class="stat-sanity font-bold text-lime-300">100 / 100</span>
+                    </div>
+                    <div class="pt-1 border-t border-white/10">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400" data-lang-key="host_info_current">当前:</span>
+                            <span class="location-current">地点</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400" data-lang-key="host_info_next">下时段:</span>
+                            <span class="location-next">地点</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 🔧 修复的脚本加载 - 确保只引用存在的文件 -->
+    <script type="module" src="game.js"></script>
+</body>
+</html>

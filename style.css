@@ -1,0 +1,355 @@
+﻿/* General Body Styles */
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    overflow: hidden;
+}
+
+/* Main Content Background Transition */
+.main-content-bg {
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease-in-out;
+}
+
+/* Text Box Styling */
+.text-box {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+/* Button Transitions and Hover Effects */
+.sidebar-button, .ability-button, .action-button, .event-button {
+    transition: all 0.2s ease-in-out;
+}
+
+    .sidebar-button:hover, .ability-button:hover:not(:disabled), .action-button:hover:not(:disabled), .event-button:hover:not(:disabled) {
+        transform: scale(1.03);
+        filter: brightness(1.1);
+    }
+
+    /* Disabled Button Styles */
+    .ability-button:disabled, .action-button:disabled, .event-button:disabled {
+        cursor: not-allowed;
+        filter: grayscale(80%);
+        opacity: 0.7;
+    }
+
+/* Utility Class */
+.hidden {
+    display: none !important;
+}
+
+/* Modal Overlay Transition */
+.modal-overlay {
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Stat Value Transition */
+.stat-value {
+    transition: color 0.5s ease;
+}
+
+/* Character Image Transition */
+#char-image {
+    transition: all 0.5s ease-in-out;
+}
+
+/* Skill Tree Specific Styles */
+.skill-tree-bg {
+    background-image: url('image/技能树.png');
+    background-size: cover;
+    border: 2px solid #4f46e5;
+}
+
+.skill-node {
+    transition: all 0.2s ease-in-out;
+    border: 2px solid #4a5568;
+    background-color: rgba(31, 41, 55, 0.8);
+}
+
+    .skill-node.available {
+        border-color: #6366f1;
+        cursor: pointer;
+    }
+
+        .skill-node.available:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+    .skill-node.maxed {
+        border-color: #f59e0b;
+        background-color: #78350f;
+        cursor: default;
+    }
+
+    .skill-node.locked {
+        filter: grayscale(90%);
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+.skill-tier-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #9ca3af;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+    .skill-tier-divider::before, .skill-tier-divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #4b5563;
+    }
+
+    .skill-tier-divider:not(:empty)::before {
+        margin-right: .5em;
+    }
+
+    .skill-tier-divider:not(:empty)::after {
+        margin-left: .5em;
+    }
+
+/* Special UI Element Styles */
+.control-warning-bg {
+    background: linear-gradient(45deg, #4a044e, #1e1b4b);
+    border: 2px solid #a855f7;
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+}
+
+.slime-mode-text {
+    color: #a3e635;
+    text-shadow: 0 0 5px #a3e635;
+}
+
+/* Event Modal Background */
+.event-modal-bg {
+    background-size: cover;
+    background-position: center;
+}
+
+    .event-modal-bg::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+/* Intro & Game Over Text Boxes */
+.intro-text-box {
+    background-color: rgba(17, 24, 39, 0.9);
+    border-top: 2px solid #4f46e5;
+}
+
+.gameover-text-box {
+    background-color: rgba(55, 48, 163, 0.2);
+    border: 2px solid #ef4444;
+    backdrop-filter: blur(10px);
+}
+
+/* Top Right UI Container */
+.top-right-ui {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 250px;
+}
+
+.ui-box {
+    background-color: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(5px);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #374151;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.task-button-interactive {
+    transition: all 0.2s ease-in-out;
+}
+
+    .task-button-interactive:hover {
+        background-color: rgba(55, 65, 81, 0.5);
+        border-color: #f59e0b;
+    }
+
+/* Favorability Bar */
+.favor-bar-bg {
+    background-color: #374151;
+    border-radius: 9999px;
+    overflow: hidden;
+    height: 1rem;
+}
+
+.favor-bar-fill {
+    background-color: #ec4899;
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Tetris Minigame Styles */
+#tetris-modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px;
+    height: 100%;
+}
+
+#tetris-canvas {
+    background-color: #000;
+    border: 2px solid #4f46e5;
+}
+
+#tetris-info {
+    color: #fff;
+    width: 150px;
+}
+
+/* Clicker Minigame Styles */
+#clicker-modal {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+}
+
+#clicker-progress-bar-bg {
+    background-color: #334155;
+}
+
+#clicker-progress-bar {
+    background: linear-gradient(90deg, #a855f7 0%, #6366f1 100%);
+    transition: width 0.1s linear;
+}
+
+#clicker-button {
+    background: radial-gradient(circle, #a855f7, #7c3aed);
+    box-shadow: 0 0 20px #a855f7, inset 0 0 10px rgba(255,255,255,0.3);
+    transition: transform 0.05s ease-out;
+}
+
+    #clicker-button:active {
+        transform: scale(0.95);
+    }
+
+/* Main Menu Styles */
+#start-menu-bg {
+    background-image: url("image/封面.png");
+}
+
+#continue-game-button:disabled {
+    cursor: not-allowed;
+    filter: grayscale(80%);
+    opacity: 0.5;
+    background-color: #4a5568; /* Tailwind gray-600 */
+}
+/* 新增：语言切换按钮样式 */
+.lang-switch-button {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 30;
+    background-color: rgba(17, 24, 39, 0.8);
+    border: 1px solid #4a5568;
+    border-radius: 0.375rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #9ca3af;
+    transition: all 0.2s ease-in-out;
+}
+
+    .lang-switch-button:hover {
+        background-color: #4f46e5;
+        color: white;
+    }
+/* ============================================= */
+/* ↓↓↓ 用这个新版本替换 style.css 中的旧样式 ↓↓↓ */
+/* ============================================= */
+
+/* 控制状态: 紫色 */
+.host-panel.status-control,
+.host-panel.status-control .host-portrait,
+.status-badge.status-control {
+    border-color: #9333ea; /* purple-600 */
+}
+
+.status-badge.status-control {
+    background-color: #7e22ce;
+}
+/* purple-700 */
+
+/* 【修改】傀儡状态: 黄色 */
+.host-panel.status-puppet,
+.host-panel.status-puppet .host-portrait,
+.status-badge.status-puppet {
+    border-color: #eab308; /* yellow-500 */
+}
+
+.status-badge.status-puppet {
+    background-color: #ca8a04;
+}
+/* yellow-600 */
+
+/* 正常状态: 绿色 */
+.host-panel.status-normal,
+.host-panel.status-normal .host-portrait,
+.status-badge.status-normal {
+    border-color: #16a34a; /* green-600 */
+}
+
+.status-badge.status-normal {
+    background-color: #15803d;
+}
+/* green-700 */
+
+/* 断联状态: 灰色 */
+.host-panel.status-disconnected,
+.host-panel.status-disconnected .host-portrait,
+.status-badge.status-disconnected {
+    border-color: #4b5563; /* gray-600 */
+}
+
+.status-badge.status-disconnected {
+    background-color: #374151;
+}
+/* gray-700 */
+
+/* 断联状态的特殊样式 */
+.host-panel.status-disconnected {
+    opacity: 0.6;
+    filter: grayscale(80%);
+}
+
+/*新提示框淡入淡出*/
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.animate-fade-in-out {
+    animation: fadeInOut 3s ease-in-out forwards;
+}
