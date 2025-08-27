@@ -613,26 +613,29 @@ class UIManager {
 
 
     renderTopRightUI(state, LANG) {
-        // --- 任务和倒计时的部分保持不变 ---
         if (state.story.mainQuest && gameData.taskData[state.story.mainQuest]) {
             this.dom.taskButton.classList.remove('hidden');
             const quest = gameData.taskData[state.story.mainQuest];
             this.dom.taskTitle.textContent = LANG[quest.titleKey];
-            if (state.story.countdown.key && gameData.taskData[state.story.countdown.key]) {
-                this.dom.countdownText.textContent = `${LANG[gameData.taskData[state.story.countdown.key].countdownTextKey]} ${state.story.countdown.days} ${LANG['time_unit_days']}`;
-                this.dom.countdownContainer.classList.remove('hidden');
-            } else {
-                this.dom.countdownContainer.classList.add('hidden');
-            }
         } else {
             this.dom.taskButton.classList.add('hidden');
         }
 
-        // --- 好感度条渲染逻辑 ---
+        // ▼▼▼ 核心修改：增加 isVisible 判断 ▼▼▼
+        if (state.story.countdown.key && state.story.countdown.isVisible) {
+            const countdownData = gameData.taskData[state.story.countdown.key];
+            if (countdownData) {
+                this.dom.countdownText.textContent = `${LANG[countdownData.countdownTextKey]} ${state.story.countdown.days} ${LANG['time_unit_days']}`;
+                this.dom.countdownContainer.classList.remove('hidden');
+            }
+        } else {
+            this.dom.countdownContainer.classList.add('hidden');
+        }
+
+        // ... 后续的好感度条渲染逻辑保持不变 ...
         this.dom.favorUiContainer.innerHTML = '';
         Object.entries(state.npcs).forEach(([npcId, npcData]) => {
             const correspondingHost = state.hosts[npcId];
-            // 条件：NPC在场，且这个NPC(如果同时是宿主)尚未被永久夺取过
             const shouldShow = npcData.isPresent && (!correspondingHost || !correspondingHost.wasEverPossessed);
 
             if (shouldShow) {
@@ -1014,9 +1017,14 @@ class TimeManager {
 
         if (state.story.countdown.key) {
             state.story.countdown.days--;
-            if (state.story.countdown.days <= 0 && state.story.countdown.key === 'health_check_main') {
-                this.onTimeAdvanced({ gameEvent: 'health_check_failed' });
-                return;
+            if (state.story.countdown.days <= 0) {
+                if (state.story.countdown.key === 'health_check_main') {
+                    this.onTimeAdvanced({ gameEvent: 'health_check_failed' });
+                    return;
+                } else if (state.story.countdown.key === 'bomb_countdown') { // <-- 检查新的key
+                    this.onTimeAdvanced({ gameEvent: 'bomb_detonated' }); // <-- 触发新的事件
+                    return;
+                }
             }
         }
 
@@ -2089,9 +2097,10 @@ class Game {
             switch (event.gameEvent) {
                 case 'force_return_control': this.returnControl(true); break;
                 case 'start_clicker_game':
-                    this.eventManager.startClickerGame(event.hostId); // 将 hostId 传递下去
+                    this.eventManager.startClickerGame(event.hostId);
                     break;
-                case 'health_check_failed': this.eventManager.triggerHealthCheckFailure(); break;
+                case 'health_check_failed': this.eventManager.triggerEvent('health_check_failure'); break;
+                case 'bomb_detonated': this.uiManager.showGameOver('BOMB_DETONATED'); break; // <-- 处理新的事件
             }
         } else { this.update(); }
     }
@@ -2292,16 +2301,38 @@ class Game {
         return false;
     }
 
+    // 文件: game.js
+
     startNewChapter() {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
-        state.chapter = 2;
-        state.story.mainQuest = 'stranger_in_a_strange_land';
-        state.story.countdown = {};
-        state.hosts.song_wei.status = 'DISCONNECTED';
-        state.hosts.song_xin.currentLocationId = 'huili_home_your_bedroom';
-        state.story.dailyFlow = 'village_life'; // Set default flow for new chapter
-        this.uiManager.showMessage(LANG['chapter_2_title'], 'success');
+        const nextChapter = state.chapter + 1;
+        const setup = gameData.chapterSetupData[nextChapter];
+
+        if (!setup) {
+            console.error(`Chapter setup data not found for Chapter ${nextChapter}!`);
+            this.uiManager.showGameOver('GENERIC_ERROR'); // 可以设置一个通用错误结局
+            return;
+        }
+
+        // --- 开始根据配置数据更新游戏状态 ---
+        state.chapter = nextChapter;
+        state.story.mainQuest = setup.mainQuest || null;
+        state.story.countdown = setup.initialCountdown || {};
+
+        if (setup.hostStatusChanges) {
+            Object.entries(setup.hostStatusChanges).forEach(([hostId, changes]) => {
+                if (state.hosts[hostId]) {
+                    Object.assign(state.hosts[hostId], changes);
+                }
+            });
+        }
+
+        state.story.dailyFlow = setup.initialDailyFlow || 'none';
+
+        const titleKey = `chapter_${nextChapter}_title`;
+        this.uiManager.showMessage(LANG[titleKey] || `Chapter ${nextChapter}`, 'success');
+
         this.update();
     }
 
