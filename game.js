@@ -1,4 +1,4 @@
-﻿// =================================================================
+// =================================================================
 //
 //                      寄生史莱姆 - v0.2.8 (架构重构)
 //                      Game Logic File
@@ -2760,9 +2760,7 @@ class Game {
     }
 
 
-    // 在 Game 类中
-    // ▼▼▼ 使用这个【排序功能版】，完整替换掉旧的 openHostManagementModal 函数 ▼▼▼
-
+    // In class Game...
     openHostManagementModal() {
         const state = this.stateManager.getState();
         if (!state) return;
@@ -2777,19 +2775,15 @@ class Game {
         }
         content.innerHTML = '';
 
-        // ▼▼▼ 【核心修改】先排序，再渲染 ▼▼▼
         const sortedHosts = Object.entries(state.hosts).sort(([, a], [, b]) => {
             const aDisconnected = a.status === 'DISCONNECTED';
             const bDisconnected = b.status === 'DISCONNECTED';
-            if (aDisconnected && !bDisconnected) return 1;  // a断联，b没有，a排后面
-            if (!aDisconnected && bDisconnected) return -1; // b断联，a没有，b排后面
-            return 0; // 其他情况保持原有顺序
+            if (aDisconnected && !bDisconnected) return 1;
+            if (!aDisconnected && bDisconnected) return -1;
+            return 0;
         });
 
         sortedHosts.forEach(([hostId, hostData]) => {
-            // ... 后续的所有渲染逻辑保持不变 ...
-
-            // 登场条件判断
             let shouldShow = false;
             if (hostId === 'song_wei') {
                 shouldShow = true;
@@ -2802,14 +2796,13 @@ class Game {
             let statusClass = '';
             let statusText = '';
 
-            // ▼▼▼ 【核心】状态显示的判断逻辑，严格使用 isPuppet ▼▼▼
             if (hostId === state.activeHostId && state.controlState !== 'HOST') {
                 statusClass = 'status-control';
                 statusText = LANG['host_status_control'];
             } else if (hostData.status === 'DISCONNECTED') {
                 statusClass = 'status-disconnected';
                 statusText = LANG['host_status_disconnected'];
-            } else if (hostData.isPuppet) { // <--- 只检查 isPuppet
+            } else if (hostData.isPuppet) {
                 statusClass = 'status-puppet';
                 statusText = LANG['host_status_puppet'];
             } else {
@@ -2833,9 +2826,8 @@ class Game {
 
             let portraitSrc = 'https://placehold.co/100x100/333/fff?text=NoImg';
             if (hostData.portraits) {
-                const isControlled = (hostId === state.activeHostId && state.controlState !== 'HOST');
-                const isPuppet = hostData.isPuppet;
-                if (isControlled || isPuppet) {
+                const isControlledByPlayer = (hostId === state.activeHostId && state.controlState !== 'HOST');
+                if (isControlledByPlayer || hostData.isPuppet) {
                     portraitSrc = hostData.portraits.controlled;
                 } else {
                     portraitSrc = hostData.portraits.normal;
@@ -2843,30 +2835,27 @@ class Game {
             }
             panel.querySelector('.host-portrait').src = portraitSrc;
 
-            const nameElement = panel.querySelector('.host-name');
-            if (nameElement) nameElement.textContent = hostData.name;
+            panel.querySelector('.host-name').textContent = hostData.name;
 
             const staminaElement = panel.querySelector('.stat-stamina');
-            if (staminaElement) {
-                const stamina = (state.controlState === 'PERMANENT_SLIME' && hostId === state.activeHostId) ? '∞' : Math.round(hostData.stamina);
-                staminaElement.textContent = `${stamina} / 100`;
-            }
+            const stamina = (state.controlState === 'PERMANENT_SLIME' && hostId === state.activeHostId) ? '∞' : Math.round(hostData.stamina);
+            staminaElement.textContent = `${stamina} / 100`;
 
+            // ▼▼▼ 核心修正代码开始 ▼▼▼
             const sanityElement = panel.querySelector('.stat-sanity');
-            if (sanityElement) sanityElement.textContent = `${Math.round(hostData.sanity)} / 100`;
+            const isCurrentlyControlled = (hostId === state.activeHostId && state.controlState !== 'HOST');
+            const sanity = isCurrentlyControlled ? 0 : Math.round(hostData.sanity);
+            sanityElement.textContent = `${sanity} / 100`;
+            // ▲▲▲ 核心修正代码结束 ▲▲▲
 
             const currentLocationElement = panel.querySelector('.location-current');
-            if (currentLocationElement) {
-                const currentChapterLocations = this.getCurrentChapterLocations();
-                const locationName = currentChapterLocations[hostData.currentLocationId] ? LANG[currentChapterLocations[hostData.currentLocationId].nameKey] : LANG['location_unknown'];
-                currentLocationElement.textContent = locationName;
-            }
+            const currentChapterLocations = this.getCurrentChapterLocations();
+            const locationName = currentChapterLocations[hostData.currentLocationId] ? LANG[currentChapterLocations[hostData.currentLocationId].nameKey] : LANG['location_unknown'];
+            currentLocationElement.textContent = locationName;
 
             const nextLocationElement = panel.querySelector('.location-next');
-            if (nextLocationElement) {
-                const nextLocationInfo = this.getNextLocationInfo(hostId);
-                nextLocationElement.textContent = nextLocationInfo.name;
-            }
+            const nextLocationInfo = this.getNextLocationInfo(hostId);
+            nextLocationElement.textContent = nextLocationInfo.name;
 
             content.appendChild(panel);
         });
@@ -2875,6 +2864,7 @@ class Game {
         this.uiManager.dom.hostModal.classList.remove('hidden');
     }
 
+    // In class Game...
     getNextLocationInfo(hostId) {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
@@ -2884,22 +2874,25 @@ class Game {
         const chapterLocations = this.getCurrentChapterLocations();
         const chapterFlows = this.getCurrentChapterFlows();
 
-        // 【核心修改】只有在“接管模式”下，当前宿主才显示“玩家决定”
+        // 条件1: 宿主正被玩家主动控制
         if (hostId === state.activeHostId && state.controlState !== 'HOST') {
-            return { name: LANG['location_player_controlled'] || "玩家决定" };
+            return { name: LANG['location_player_controlled'] };
         }
 
-        if (host.wasEverPossessed) {
-            return { name: LANG[chapterLocations[host.currentLocationId]?.nameKey] || LANG['location_unknown'] };
+        // 条件2: 宿主是傀儡 (但非玩家当前控制)，将会前往待机地点
+        if (host.isPuppet) {
+            const standbyLocationId = gameData.chapterData[state.chapter].puppetStandbyLocationId;
+            const locationName = chapterLocations[standbyLocationId] ? LANG[chapterLocations[standbyLocationId].nameKey] : LANG['location_unknown'];
+            return { name: locationName };
         }
 
+        // 条件3: 宿主是正常的AI，根据日程预测下一步行动
         if (!chapterFlows || !chapterFlows[hostId] || Object.keys(chapterFlows[hostId]).length === 0) {
             return { name: LANG['location_free_action'] };
         }
 
         const hostFlows = chapterFlows[hostId];
-        // 在宿主模式下，当前控制的角色也按照AI日程来预测
-        const flowKey = (state.story.dailyFlow !== 'none' && hostId === state.activeHostId)
+        const flowKey = (state.story.dailyFlow !== 'none' && hostId === state.activeHostId && state.controlState === 'HOST')
             ? state.story.dailyFlow
             : (state.time.dayOfWeek <= 5 ? 'workday' : 'weekend');
         const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
@@ -2907,7 +2900,9 @@ class Game {
         if (!flow) return { name: LANG['location_free_action'] };
 
         const currentIndex = this.timeManager.timeSegments.indexOf(state.time.segment);
-        if (currentIndex >= this.timeManager.timeSegments.length - 1) return { name: LANG['location_free_action'] };
+        if (currentIndex >= this.timeManager.timeSegments.length - 1) {
+            return { name: LANG['location_free_action'] }; // 一天结束，日程中没有下一个时间段
+        }
 
         const nextSegmentKey = this.timeManager.timeSegments[currentIndex + 1];
         const nextSegment = flow[nextSegmentKey];
