@@ -1103,10 +1103,10 @@ class TimeManager {
         this.updateOnTimePassage(true);
         this.onTimeAdvanced();
     }
+    // 文件: game.js
 
-    // 在 TimeManager 类中
     updateOnTimePassage(isNewDay = false) {
-        const LANG = this.languageManager.getCurrentLanguageData(); 
+        const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
 
         // 1. 重置所有宿主的 nsfw 标记
@@ -1114,9 +1114,11 @@ class TimeManager {
             host.nsfwUsedThisSegment = false;
         });
 
+        // ▼▼▼ 核心修正：重构AI行动规划逻辑 ▼▼▼
         // 2. AI 宿主行动规划 (只更新期望地点)
         Object.keys(state.hosts).forEach(hostId => {
-            if (hostId !== state.activeHostId) { // AI只规划非玩家当前控制的宿主
+            // 只规划非玩家当前控制的AI宿主
+            if (hostId !== state.activeHostId && state.hosts[hostId].isAiControlled) {
                 const host = state.hosts[hostId];
                 if (host.isPuppet) {
                     // 如果是傀儡，规划前往待机地点
@@ -1124,11 +1126,18 @@ class TimeManager {
                     host.expectedLocationId = standbyLocation;
                 } else {
                     // 如果是正常的AI，按日程规划
-                    const chapterFlows = gameData.allDailyFlows[state.chapter];
+                    const chapterFlows = this.game.getCurrentChapterFlows(); // 使用辅助函数
                     if (chapterFlows && chapterFlows[hostId]) {
                         const hostFlows = chapterFlows[hostId];
-                        const flowKey = state.time.dayOfWeek <= 5 ? 'workday' : 'weekend';
+
+                        // 修正后的日程表选择逻辑
+                        let flowKey = hostFlows.defaultFlow; // 首先尝试读取默认日程
+                        if (!flowKey) { // 如果没有默认，则根据日期判断
+                            flowKey = state.time.dayOfWeek <= 5 ? 'workday' : 'weekend';
+                        }
+                        // 确保我们使用的flowKey在数据中真实存在
                         const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
+
                         if (flow && flow[state.time.segment]) {
                             host.expectedLocationId = flow[state.time.segment].locationId;
                         }
@@ -1136,8 +1145,9 @@ class TimeManager {
                 }
             }
         });
+        // ▲▲▲ 修正结束 ▲▲▲
 
-        // 3. 【新增】AI 宿主行动执行 (在这里统一移动)
+        // 3. AI 宿主行动执行 (在这里统一移动)
         Object.values(state.hosts).forEach(host => {
             if (host.isAiControlled && host.currentLocationId !== host.expectedLocationId) {
                 host.currentLocationId = host.expectedLocationId;
@@ -1267,7 +1277,13 @@ class EventManager {
         for (const effect of actions) {
             switch (effect.type) {
                 case 'setFlag':
-                    this.setFlagByPath(state, effect.path, effect.value);
+                    // ▼▼▼ 核心修正：增加对函数值的处理 ▼▼▼
+                    let finalValue = effect.value;
+                    if (typeof effect.value === 'function') {
+                        finalValue = effect.value(state); // 如果value是函数，则执行它并取其返回值
+                    }
+                    this.setFlagByPath(state, effect.path, finalValue);
+                    // ▲▲▲ 修正结束 ▲▲▲
                     break;
                 case 'showMessage':
                     let replacements = {};
@@ -1409,6 +1425,8 @@ class EventManager {
                     successEventName = 'memory_plunder_success';
                 } else if (hostId === 'zhang_huili') {
                     successEventName = 'memory_plunder_success_zh';
+                } else if (hostId === 'liu_min') {
+                    successEventName = 'memory_plunder_success_lm';
                 }
 
                 if (successEventName) {
@@ -2362,17 +2380,19 @@ class Game {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
         const nextChapter = state.chapter + 1;
+        // ▼▼▼ 核心修正：从 data.js 的 chapterSetupData 读取配置 ▼▼▼
         const setup = gameData.chapterSetupData[nextChapter];
 
         if (!setup) {
             console.error(`Chapter setup data not found for Chapter ${nextChapter}!`);
-            this.uiManager.showGameOver('GENERIC_ERROR'); // 可以设置一个通用错误结局
+            this.uiManager.showGameOver('GENERIC_ERROR'); // 设置一个通用错误结局
             return;
         }
 
         // --- 开始根据配置数据更新游戏状态 ---
         state.chapter = nextChapter;
         state.story.mainQuest = setup.mainQuest || null;
+        // ▼▼▼ 核心修正：正确地应用倒计时数据，而不是清空它 ▼▼▼
         state.story.countdown = setup.initialCountdown || {};
 
         if (setup.hostStatusChanges) {
@@ -2956,7 +2976,8 @@ class Game {
         this.uiManager.dom.hostModal.classList.remove('hidden');
     }
 
-    // In class Game...
+    // 文件: game.js
+
     getNextLocationInfo(hostId) {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
@@ -2984,10 +3005,15 @@ class Game {
         }
 
         const hostFlows = chapterFlows[hostId];
-        const flowKey = (state.story.dailyFlow !== 'none' && hostId === state.activeHostId && state.controlState === 'HOST')
-            ? state.story.dailyFlow
-            : (state.time.dayOfWeek <= 5 ? 'workday' : 'weekend');
+
+        // ▼▼▼ 核心修正：更智能的日程表选择逻辑 ▼▼▼
+        let flowKey = hostFlows.defaultFlow; // 1. 优先尝试读取 defaultFlow (例如 'all_week')
+        if (!hostFlows[flowKey]) { // 2. 如果 defaultFlow 不存在或无效，则根据日期判断
+            flowKey = state.time.dayOfWeek <= 5 ? 'workday' : 'weekend';
+        }
+        // 3. 使用找到的 flowKey，或使用第一个可用的日程表作为保底
         const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
+        // ▲▲▲ 修正结束 ▲▲▲
 
         if (!flow) return { name: LANG['location_free_action'] };
 
