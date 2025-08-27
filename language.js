@@ -570,6 +570,16 @@ const LANGS = {
         "task_stranger_hint1": "作为史莱姆，你的首要任务是寻找新的容器和能量。张慧丽是一个完美的目标，但贸然行动可能会导致失败。",
         "task_stranger_hint2": "仔细调查环境中的每一个细节，它们可能会揭示出意想不到的突破口。特别是那个连接着后院的供水系统……",
 
+        //---闻香识女人---
+        "task_stranger_step7": "侵蚀张慧丽",
+        "task_scent_of_woman_title": "闻香识女人",
+        "task_scent_of_woman_desc": "张慧丽的记忆揭示了这个村庄是一个陷阱，而那个神秘的脚印似乎是新的线索。在倒计时结束前，必须尽快找出真相，并找到新的盟友或容器。",
+        "task_scent_of_woman_step1": "翻阅张慧丽的记忆 ",
+        "task_scent_of_woman_step2": "尝试蹲守神秘脚印的主人",
+        "task_scent_of_woman_step3": "和刘敏打好关系 (好感度 >= 80)",
+        "task_scent_of_woman_step4": "想办法侵蚀刘敏",
+        "task_scent_of_woman_hint1": "刘敏只在晚上出现在村广场。你需要以“张慧丽”的身份，在接管模式下与她接触。",
+
         // 事件系列
         "event_investigate_environment_btn": "调查环境",
 
@@ -622,6 +632,21 @@ const LANGS = {
         "event_mem_plunder_success_zh_p3": "画面扭曲，但一个轻佻而有些耳熟的声音钻入你的脑海：‘嘿，我说，为了个实验品就毁了这么个美人儿，也太可惜了吧？随便找个长相普通的女人不就好了？’另一个声音冷酷地打断他：‘如果鱼饵不够鲜美，你觉得那条大鱼会咬钩吗？记住，我们的时间只有<strong>30天</strong>。30天一到，不管成不成功，她都只是块没用的烂肉罢了。’",
         "toast_mem_plunder_success_zh": "你发现了一个针对自己的、致命的陷阱！",
 
+        // --- 张慧丽与刘敏互动事件文本 ---
+        "event_track_footprints_btn": "蹲守脚印的主人",
+        "feedback_track_footprints_daytime": "白天什么也没有发现，脚印的主人似乎只在晚上活动。",
+        "toast_need_socialization_control": "必须在接管模式下，并解锁“社会化”技能才能执行此操作。",
+        "event_meet_liumin_title": "月下的访客",
+        "event_meet_liumin_p1": "你操控着张慧丽的身体，在夜晚的村广场静静等待。果然，一个鬼鬼祟祟的身影出现在月光下，正弓着腰小心翼翼地打量着张慧丽家的方向。你立刻大声呵斥：‘谁在那里！’",
+        "event_meet_liumin_p2": "那个身影被吓了一跳，猛地站直了身体。借着月光，你看清了她的脸——一个同样年轻但眼神锐利的女人。“是我，刘敏，你的邻居。”她镇定地说道，缓步向你走来，“我看你最近总是无精打采的，有点担心，想来看看你。怎么，慧丽，连我都不认识了？”",
+        "event_meet_liumin_p3": "你迅速搜索张慧丽的记忆，却找不到任何关于“刘敏”的有效信息。不确定对方是敌是友，你决定以不变应万变，让张慧丽露出平时那种迷离的表情：“……我有点累了，想回去了，我们之后再聊吧。”刘敏审视地看了你一眼，似乎察觉到了什么，但没有再追问，只是点了点头：“好，那你多注意身体。”说完，她便转身消失在了夜色中。",
+        "event_request_visit_lm_btn": "请求去你家坐坐",
+        "event_chat_with_liumin_btn": "和刘敏聊聊",
+        "toast_new_location_unlocked": "新地点已解锁：刘敏家",
+        "event_request_visit_lm_title": "一次试探",
+        "event_request_visit_lm_desc": "刘敏狐疑地上下打量了“张慧丽”一番，眼神在你空洞的瞳孔上停留了片刻。最终，她点了点头：‘可以。但是，只准你一个人来，不准带任何不相干的人。’",
+        "event_request_visit_lm_choice": "（她似乎在防备着什么…）",
+
         //--- 第二章 NSFW 事件文本 ---
         "nsfw_choice_cost_suffix": " (体力-{COST})",
         "nsfw_choice_invite_zq_MS": "原始的拥抱",
@@ -664,6 +689,12 @@ const LANGS = {
         "zq_nsfw_desc_zh_slime_MS_title": "冷焰的缠绵",
         "zq_nsfw_desc_zh_host_MS": "在催眠的迷雾中，张慧丽的身体如梦似幻，带着朦胧的魅惑贴近赵齐民，她像一个被玩坏的娃娃，任由赵齐民摆布。她的意识早已漂流到遥远的地方，只有身体还留在这里，承受着一切。没有痛苦，也没有快乐，只有一片无尽的虚无。史莱姆在她体内引导，每一次深切的贴合与律动都如梦境般流转，她的双腿缠绕，引领他陷入迷离的节奏。理智与抗拒在狂热的交缠中消散，沉沦于迷雾中的本能深渊。",
         "zq_nsfw_desc_zh_slime_MS": "在史莱姆的绝对掌控下，张慧丽的身体化作一具冷酷的魅惑机器，毫无感情地点燃赵齐民的原始欲望。她的动作精准而无情，每一次贴合与律动都由史莱姆主导，双腿交缠将他拖入狂热的节奏。在这场冰冷的征服仪式中，理智与抗拒在她的机械魅惑下崩塌，彻底沉沦。",
+        //与刘敏互动事件
+        "nsfw_choice_huili_liumin_lp": "舔舐刘敏的身体",
+        "nsfw_title_huili_liumin_lp_host": "PLACEHOLDER: 舔舐刘敏的身体 (HOST)",
+        "nsfw_title_huili_liumin_lp_slime": "PLACEHOLDER: 舔舐刘敏的身体 (SLIME)",
+        "nsfw_desc_huili_liumin_lp_host": "PLACEHOLDER: 张慧丽舔舐刘敏的身体 (HOST) - 描述文本",
+        "nsfw_desc_huili_liumin_lp_slime": "PLACEHOLDER: 张慧丽舔舐刘敏的身体 (SLIME) - 描述文本",
 
         // --- 第二章倒计时和Game Over ---
         "task_bomb_countdown": "距离协议执行还剩",
@@ -1211,12 +1242,24 @@ const LANGS = {
         "task_stranger_step4": "Investigate the village office to make initial contact with the village's administrator",
         "task_stranger_step5": "Investigate the lake to confirm suspicious signs outside the village",
         "task_stranger_step6": "Formulate a thorough plan in the bedroom to prepare for taking over Zhang Huili",
+        "task_stranger_step7": "Erode Zhang Huili",
 
         // Game Hints
         "task_stranger_hint1": "As a slime, your primary mission is to find new vessels and energy. Zhang Huili is a perfect target, but a rash move could lead to failure.",
         "task_stranger_hint2": "Carefully investigate every detail in the environment; they might reveal unexpected breakthroughs. Especially that water supply system connected to the backyard...",
 
         "event_investigate_environment_btn": "Investigate Area",
+
+        //---闻香识女人---
+        "task_stranger_step7": "Erode Zhang Huili",
+        "task_scent_of_woman_title": "Scent of a Woman",
+        "task_scent_of_woman_desc": "Zhang Huili's memories revealed that this village is a trap, and the mysterious footprints seem to be a new clue. Before the countdown ends, you must uncover the truth and find new allies or vessels.",
+        "task_scent_of_woman_step1": "Go through Zhang Huili's memories ",
+        "task_scent_of_woman_step2": "Stake out the owner of the mysterious footprints",
+        "task_scent_of_woman_step3": "Build a good relationship with Liu Min (Favorability >= 80)",
+        "task_scent_of_woman_step4": "Find a way to erode Liu Min",
+        "task_scent_of_woman_hint1": "Liu Min only appears in the village square at night. You need to approach her as 'Zhang Huili' while in control mode.",
+
 
         // 1. Investigate Bedroom
         "event_investigate_bedroom_c2_title": "Eyes in the Corner",
@@ -1268,6 +1311,21 @@ const LANGS = {
         "event_mem_plunder_success_zh_p3": "The vision distorts, but a slick, somewhat familiar voice slides into your mind: 'Hey, I gotta say, ruining a beauty like this for an experiment is a real shame, don't you think? Couldn't we have just picked some plain-looking woman?' The other voice cuts him off coldly: 'If the bait isn't enticing enough, do you really think the big fish will bite? Remember, we only have <strong>30 days</strong>. Once 30 days are up, successful or not, she's just a useless piece of meat.'",
         "toast_mem_plunder_success_zh": "You've discovered a deadly trap set specifically for you!",
 
+        // ---Zhang hui li & Liumin Event Texts ---
+        "event_track_footprints_btn": "Stake out the owner of the footprints",
+        "feedback_track_footprints_daytime": "You found nothing during the day. The owner of the footprints seems to be active only at night.",
+        "toast_need_socialization_control": "Must be in control mode and have unlocked the 'Socialization' skill to perform this action.",
+        "event_meet_liumin_title": "Visitor Under the Moon",
+        "event_meet_liumin_p1": "Controlling Zhang Huili's body, you wait quietly in the village square at night. As expected, a sneaky figure appears in the moonlight, cautiously observing Zhang Huili's house. You immediately shout, 'Who's there!'",
+        "event_meet_liumin_p2": "The figure jumps, startled, and stands up straight. In the moonlight, you see her face—a young woman with sharp eyes. 'It's me, Liu Min, your neighbor,' she says calmly, walking towards you. 'You've seemed out of it lately, I was worried and wanted to check on you. What's wrong, Huili, don't you recognize me anymore?'",
+        "event_meet_liumin_p3": "You quickly search Zhang Huili's memories but find no useful information about 'Liu Min'. Unsure if she's a friend or foe, you decide to play it safe, making Zhang Huili adopt her usual dazed expression: '...I'm a bit tired, I think I'll go back. We can talk later.' Liu Min gives you a scrutinizing look, as if she noticed something, but doesn't press further. 'Alright, take care of yourself,' she says, before turning and disappearing into the night.",
+        "event_request_visit_lm_btn": "Ask to visit her home",
+        "event_chat_with_liumin_btn": "Chat with Liu Min",
+        "toast_new_location_unlocked": "New Location Unlocked: Liu Min's Home",
+        "event_request_visit_lm_title": "A Test",
+        "event_request_visit_lm_desc": "Liu Min eyes 'Zhang Huili' up and down suspiciously, her gaze lingering on your empty pupils for a moment. Finally, she nods. 'Fine. But you come alone. Don't bring anyone else with you.'",
+        "event_request_visit_lm_choice": "(She seems to be on guard against something...)",
+
         //--- Chapter 2 NSFW Event Texts ---
         "nsfw_choice_cost_suffix": " (Stamina -{COST})", // [ADD] Generic stamina cost suffix
         "nsfw_choice_invite_zq_MS": "Primal Embrace",
@@ -1311,6 +1369,12 @@ const LANGS = {
         "zq_nsfw_desc_zh_slime_MS_title": "Cold Flame’s Conquest",
         "zq_nsfw_desc_zh_host_MS": "In a hypnotized haze, Zhang Huili’s body moves dreamlike, radiating a misty allure as she draws close to Zhao Qimin, pliable like a broken doll under his control. Her consciousness has long drifted to a distant realm, leaving only her body behind, yielding to every motion. There is no pain, no pleasure, only an endless void. Guided by the slime within, each deep, rhythmic press flows like a dream, her legs entwining to pull him into a trance-like cadence. Reason and resistance dissolve in the fervent entwining, consumed by the abyss of instinct within the mist.",
         "zq_nsfw_desc_zh_slime_MS": "Under the slime’s absolute control, Zhang Huili’s body becomes a cold, seductive machine, igniting Zhao Qimin’s primal desires without a trace of emotion. Her movements are precise and unrelenting, each press and rhythm orchestrated by the slime, her legs entwining to pull him into a frenzied cadence. In this icy ritual of conquest, reason and resistance collapse under her mechanical allure, utterly consumed.",
+        //与刘敏互动事件
+        "nsfw_choice_huili_liumin_lp": "Lick Liu Min's body",
+        "nsfw_title_huili_liumin_lp_host": "PLACEHOLDER: Lick Liu Min's body (HOST)",
+        "nsfw_title_huili_liumin_lp_slime": "PLACEHOLDER: Lick Liu Min's body (SLIME)",
+        "nsfw_desc_huili_liumin_lp_host": "PLACEHOLDER: Zhang Huili licks Liu Min's body (HOST) - Description Text",
+        "nsfw_desc_huili_liumin_lp_slime": "PLACEHOLDER: Zhang Huili licks Liu Min's body (SLIME) - Descrip",
 
         // --- Chapter 2 Countdown and Game Over ---
         "task_bomb_countdown": "Time until protocol execution:",
