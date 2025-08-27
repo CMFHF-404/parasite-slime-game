@@ -1348,10 +1348,7 @@ class EventManager {
         }
     }
 
-    /**
-     * 启动记忆夺取小游戏（保留，因为它涉及独特的UI和实时逻辑）。
-     */
-    startMemoryPlunderGame() {
+    startMemoryPlunderGame(hostId) {
         const LANG = this.languageManager.getCurrentLanguageData();
         this.uiManager.dom.modalOverlay.classList.remove('hidden');
         this.uiManager.dom.tetrisModal.classList.remove('hidden');
@@ -1360,7 +1357,19 @@ class EventManager {
         const onTetrisComplete = (success) => {
             this.uiManager.closeModal();
             if (success) {
-                this.triggerEvent('memory_plunder_success'); 
+                let successEventName = '';
+                // ▼▼▼ 核心逻辑：根据传入的角色ID，决定成功后触发哪个事件 ▼▼▼
+                if (hostId === 'song_wei') {
+                    successEventName = 'memory_plunder_success';
+                } else if (hostId === 'zhang_huili') {
+                    successEventName = 'memory_plunder_success_zh';
+                }
+
+                if (successEventName) {
+                    this.triggerEvent(successEventName);
+                } else {
+                    console.error(`No memory plunder success event defined for host: ${hostId}`);
+                }
             } else {
                 this.uiManager.showMessage(LANG['toast_mem_plunder_fail'], "error");
                 this.game.timeManager.advanceSegment();
