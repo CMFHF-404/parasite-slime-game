@@ -1,4 +1,4 @@
-﻿// data.js
+// data.js
 // This file contains all the static data for the game, with text references moved to language.js
 import { LanguageManager } from './languageManager.js';
 const introData = [
@@ -16,7 +16,7 @@ const gameOverData = {
     SONG_XIN_AND_SONG_WEI_LOST: "gameover_song_xin_and_song_wei_lost",
     SLIME_ALONE_CONTAINED: "gameover_slime_alone_contained",
     WILLING_HOOK: "gameover_willing_hook", // <-- 新增(愿者上钩)
-    BOMB_DETONATED: "gameover_bomb_detonated" // <-- 新增（炸弹爆炸）
+    BOMB_DETONATED: "gameover_bomb_detonated"
 };
 
 // 在 data.js 文件中
@@ -181,7 +181,7 @@ const allLocationData = {
             descriptionKey: 'location_desc_village_lake',
             slimeDescriptionKey: 'slime_desc_village_lake',
             category: 'village_out',
-            isPublic: true,
+            isPublic: false,
             image: "image/环境/湖泊.png",
             accessTags: ['public'],
             suspicionModifier: 1.0
@@ -258,6 +258,7 @@ const allDailyFlows = {
 
     // 在 data.js 的 allDailyFlows 中，添加第二章的数据
     2: {
+        //张慧丽
         'zhang_huili': {
             defaultFlow: 'workday',
             workday: {
@@ -275,8 +276,10 @@ const allDailyFlows = {
                 'morning-2': { locationId: 'huili_home_livingroom', textKey: 'daily_huili_weekend_m2' },
                 'noon-1': { locationId: 'village_square', textKey: 'daily_huili_weekend_n1' },
                 'noon-2': { locationId: 'village_square', textKey: 'daily_huili_weekend_n2' },
-                'afternoon-1': { locationId: 'huili_home_livingroom', textKey: 'daily_huili_weekend_a1' },
-                'afternoon-2': { locationId: 'huili_home_livingroom', textKey: 'daily_huili_weekend_a2' },
+                // ▼▼▼ 核心修改部分 ▼▼▼
+                'afternoon-1': { locationId: 'village_lake', textKey: 'daily_huili_weekend_a1_lake' }, // <--- 修改地点和文本Key
+                'afternoon-2': { locationId: 'village_lake', textKey: 'daily_huili_weekend_a2_lake' }, // <--- 修改地点和文本Key
+                // ▲▲▲ 修改结束 ▲▲▲
                 'evening-1': { locationId: 'huili_home_bathroom', textKey: 'daily_huili_weekend_e1' },
                 'evening-2': { locationId: 'huili_home_huili_bedroom', textKey: 'daily_huili_weekend_e2' }
             }
@@ -767,6 +770,36 @@ const allEventData = {
             }
         ]
     },
+
+    //===张慧丽相关事件===
+    //张慧丽记忆侵夺
+    'memory_plunder_success_zh': {
+        titleKey: 'event_mem_plunder_success_zh_title',
+        pages: [
+            {
+                textKey: 'event_mem_plunder_success_zh_p1',
+                image: 'image/第二章事件/侵蚀张慧丽记忆/第一张.png'
+            },
+            {
+                textKey: 'event_mem_plunder_success_zh_p2',
+                image: 'image/第二章事件/侵蚀张慧丽记忆/第二张.png'
+            },
+            {
+                textKey: 'event_mem_plunder_success_zh_p3',
+                image: 'image/第二章事件/侵蚀张慧丽记忆/第三张.png',
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'story.flags.chapter2.npc_zhang_huili.memoryPlundered', value: true },
+                        { type: 'setFlag', path: 'story.countdown.isVisible', value: true },
+                        { type: 'showMessage', key: 'toast_mem_plunder_success_zh', messageType: 'success' },
+                        { type: 'advanceTime' }
+                    ]
+                }]
+            }
+        ]
+    },
+
     //===赵齐民相关事件===
     'chat_zhao_qimin_generic': {
         titleKey: 'event_chat_zq_generic_title',
@@ -1096,7 +1129,11 @@ const allNsfwData = {
                 'village_lake': {
                     images: { SLIME: "image/CG/宋欣/第二章/湖泊.png" },
                     descriptions: { SLIME: "songxin_c2_nsfw_desc_lake_slime" }
-                }
+                },
+                'village_square': {
+                    images: { SLIME: "image/CG/宋欣/第二章/广场.png" },
+                    descriptions: { SLIME: "songxin_c2_nsfw_desc_square_slime" }
+                },
             }
         },
         partnered: {
@@ -1135,7 +1172,8 @@ const allNsfwData = {
                 'huili_home_bathroom': { images: { HOST: "image/CG/张慧丽/宿主模式/厕所.png", SLIME: "image/CG/张慧丽/接管模式/厕所.png" }, descriptions: { HOST: "nsfw_desc_huili_bathroom_host", SLIME: "nsfw_desc_huili_bathroom_slime" } },
                 'huili_home_livingroom': { images: { HOST: "image/CG/张慧丽/宿主模式/客厅.png", SLIME: "image/CG/张慧丽/接管模式/客厅.png" }, descriptions: { HOST: "nsfw_desc_huili_livingroom_host", SLIME: "nsfw_desc_huili_livingroom_slime" } },
                 'village_office': { images: { HOST: "image/CG/张慧丽/宿主模式/办公室.png", SLIME: "image/CG/张慧丽/接管模式/办公室.png" }, descriptions: { HOST: "nsfw_desc_village_office_host", SLIME: "nsfw_desc_village_office_slime" } },
-                'village_lake': { images: { HOST: "image/CG/张慧丽/宿主模式/湖泊.png", SLIME: "image/CG/张慧丽/接管模式/湖泊.png" }, descriptions: { HOST: "nsfw_desc_huili_lake_host", SLIME: "nsfw_desc_huili_lake_slime" } }
+                'village_lake': { images: { HOST: "image/CG/张慧丽/宿主模式/湖泊.png", SLIME: "image/CG/张慧丽/接管模式/湖泊.png" }, descriptions: { HOST: "nsfw_desc_huili_lake_host", SLIME: "nsfw_desc_huili_lake_slime" } },
+                'village_square': { images: { HOST: "image/CG/张慧丽/宿主模式/广场.png", SLIME: "image/CG/张慧丽/接管模式/广场.png" }, descriptions: { HOST: "nsfw_desc_huili_square_host", SLIME: "nsfw_desc_huili_square_slime" } },
             }
         },
         partnered: {
@@ -1218,6 +1256,9 @@ const taskData = {
         // 游戏提示
         hintsKeys: ['task_stranger_hint1', 'task_stranger_hint2']
     },
+    'bomb_countdown': {
+        countdownTextKey: 'task_bomb_countdown',
+    },
 };
 
 const locationEventData = {
@@ -1259,7 +1300,7 @@ const locationEventData = {
                 state.controlState !== 'SLIME_DETACHED'
             );
         },
-        action: (game) => { game.eventManager.startMemoryPlunderGame(); }
+        action: (game) => { game.eventManager.startMemoryPlunderGame('song_wei'); }
     },
     'invite_songxin': {
         location: ['home_livingroom', 'home_bedroom', 'home_bathroom'],
@@ -1329,7 +1370,9 @@ const locationEventData = {
             });
         }
     },
-    // === 张慧丽宿主解锁 ===
+
+    // === 张慧丽相关事件 ===
+    //宿主解锁
     'takeover_huili_fake': {
         location: 'huili_home_huili_bedroom',
         buttonTextKey: 'event_takeover_sx_btn', // 复用夺取宋欣的按钮文本
@@ -1341,6 +1384,22 @@ const locationEventData = {
         buttonTextKey: 'event_execute_plan_btn',
         condition: (state) => state.story.flags.chapter2.investigation.plan_made && state.time.segment.startsWith('evening') && state.activeHostId === 'song_xin',
         action: (game) => { game.eventManager.triggerEvent('takeover_host_zhang_huili'); }
+    },
+    //张慧丽记忆夺取
+    'memory_plunder_zhang_huili': {
+        location: ['huili_home_huili_bedroom', 'huili_home_livingroom', 'huili_home_bathroom'], // 地点限制在张慧丽家
+        buttonTextKey: 'event_memory_plunder_btn',
+        color: 'bg-purple-800',
+        // ▼▼▼ 核心修改：更新触发条件 ▼▼▼
+        condition: (state, skillManager) => {
+            return (
+                skillManager.getSkillRank('memory_plunder', state.activeHostId) > 0 &&
+                !state.story.flags.chapter2.npc_zhang_huili.memoryPlundered &&
+                state.activeHostId === 'zhang_huili' // 必须控制张慧丽
+            );
+        },
+        // ▲▲▲ 修改结束 ▲▲▲
+        action: (game) => { game.eventManager.startMemoryPlunderGame('zhang_huili'); }
     },
 
 
@@ -1445,6 +1504,30 @@ const locationEventData = {
     }
 };
 
+const chapterSetupData = {
+    // === 第二章的启动配置 ===
+    2: {
+        mainQuest: 'stranger_in_a_strange_land',
+        initialCountdown: { key: 'bomb_countdown', days: 30, isVisible: false },
+        hostStatusChanges: {
+            'song_wei': { status: 'DISCONNECTED' },
+            'song_xin': { currentLocationId: 'huili_home_your_bedroom' }
+        },
+        initialDailyFlow: 'village_life' // 为新章节设置默认流程
+    },
+    // === 第三章的预留位置 ===
+    3: {
+        // mainQuest: 'new_quest_for_chapter_3',
+        // initialCountdown: { key: 'another_countdown', days: 15, isVisible: true },
+        // hostStatusChanges: {
+        //     'zhang_huili': { status: 'DISCONNECTED' },
+        //     'liu_min': { currentLocationId: 'new_city_apartment' }
+        // },
+        // initialDailyFlow: 'city_exploration'
+    }
+    // ... 未来可以继续添加更多章节
+};
+
 // 在 data.js 文件末尾
 export {
     introData,
@@ -1459,5 +1542,6 @@ export {
     chapterData,
     allEventData,
     allNpcInteractions,
-    generalHints
+    generalHints,
+    chapterSetupData
 };
