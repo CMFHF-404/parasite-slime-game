@@ -99,7 +99,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/乡村卧室.png",
             accessTags: ['song_xin', 'zhang_huili'],
-            suspicionModifier: 1.3
+            suspicionModifier: 1.5
         },
         'huili_home_huili_bedroom': {
             nameKey: 'location_huili_home_huili_bedroom',
@@ -109,7 +109,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/张慧丽卧室.png",
             accessTags: ['zhang_huili'],
-            suspicionModifier: 1.3
+            suspicionModifier: 1.5
         },
         'huili_home_livingroom': {
             nameKey: 'location_huili_home_livingroom',
@@ -119,7 +119,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/乡村客厅.png",
             accessTags: ['song_xin', 'zhang_huili', 'guest'],
-            suspicionModifier: 1.3
+            suspicionModifier: 1.5
         },
         'huili_home_bathroom': {
             nameKey: 'location_huili_home_bathroom',
@@ -129,7 +129,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/乡村厕所.png",
             accessTags: ['song_xin', 'zhang_huili'],
-            suspicionModifier: 1.3
+            suspicionModifier: 1.5
         },
         // === 刘敏家 (liumin_home) ===
         'liumin_home_bedroom': {
@@ -205,7 +205,7 @@ const allLocationData = {
             image: "image/环境/废弃仓库.png",
             accessTags: ['public'],
             unlockFlag: 'chapter2.quests.warehouse_found',
-            suspicionModifier: 2.0
+            suspicionModifier: 1.0
         },
     }
 };
@@ -285,18 +285,29 @@ const allDailyFlows = {
             }
         },
         'liu_min': {
-            defaultFlow: 'all_week',
-            all_week: {
+            // ▼▼▼ 核心修正：将 all_week 拆分为 workday 和 weekend ▼▼▼
+            defaultFlow: 'workday', // 默认使用工作日日程
+            workday: {
                 'morning-1': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_m1' },
                 'morning-2': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_m2' },
                 'noon-1': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_n1' },
                 'noon-2': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_n2' },
                 'afternoon-1': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_a1' },
-                // ▼▼▼ 核心修正：使用正确的文本Key ▼▼▼
+                'afternoon-2': { locationId: 'village_lake', textKey: 'daily_liumin_all_a2' },
+                'evening-1': { locationId: 'village_square', textKey: 'daily_liumin_all_e1' },
+                'evening-2': { locationId: 'liumin_home_bathroom', textKey: 'daily_liumin_all_e2' }
+            },
+            weekend: {
+                'morning-1': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_m1' },
+                'morning-2': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_m2' },
+                'noon-1': { locationId: 'village_office', textKey: 'daily_liumin_weekend_n1' }, // 周末中午去办事处
+                'noon-2': { locationId: 'liumin_home_bedroom', textKey: 'daily_liumin_all_n2' },
+                'afternoon-1': { locationId: 'village_office', textKey: 'daily_liumin_weekend_a1' }, // 周末下午去办事处
                 'afternoon-2': { locationId: 'village_lake', textKey: 'daily_liumin_all_a2' },
                 'evening-1': { locationId: 'village_square', textKey: 'daily_liumin_all_e1' },
                 'evening-2': { locationId: 'liumin_home_bathroom', textKey: 'daily_liumin_all_e2' }
             }
+            // ▲▲▲ 修正结束 ▲▲▲
         },
         // 宋欣和Jane被玩家控制，所以她们没有AI日程
         'song_xin': {},
@@ -351,10 +362,17 @@ const allEventData = {
             textKey: 'event_health_check_desc',
             image: "image/事件/城市封锁.png",
             choices: [{
-                textKey: 'event_health_check_choice',
+                textKey: 'event_continue_ellipsis',
                 action: [
-                    { type: 'setFlag', path: 'story.mainQuest', value: 'health_check_main' },
-                    { type: 'setFlag', path: 'story.countdown', value: { key: 'health_check_main', days: 14 } }
+                    { type: 'setFlag', path: 'story.flags.chapter2.quests.forest_entered', value: true },
+                    // ▼▼▼ 核心修正 ▼▼▼
+                    // 1. 设置正确的解锁标记
+                    { type: 'setFlag', path: 'story.flags.chapter2.quests.warehouse_found', value: true },
+                    // 2. 移动玩家到新地点
+                    { type: 'moveActiveHost', locationId: 'abandoned_warehouse' },
+                    // ▲▲▲ 修正结束 ▲▲▲
+                    { type: 'showMessage', key: 'toast_warehouse_unlocked', messageType: 'success' },
+                    { type: 'advanceTime' }
                 ]
             }]
         }]
@@ -599,6 +617,18 @@ const allEventData = {
         }]
     },
 
+    're_enter_liu_min': {
+        titleKey: 'event_reenter_lm_title',
+        pages: [{
+            textKey: 'event_reenter_lm_desc',
+            image: '{dynamic}', // 使用动态图片
+            choices: [{
+                textKey: 'btn_continue',
+                action: [{ type: 'reEnterHost', hostId: 'liu_min' }]
+            }]
+        }]
+    },
+
     'permanent_takeover_song_wei': {
         titleKey: 'event_perm_takeover_title',
         pages: [{
@@ -618,7 +648,41 @@ const allEventData = {
             }]
         }]
     },
+    'permanent_takeover_zhang_huili': {
+        titleKey: 'event_perm_takeover_title_zh',
+        pages: [{
+            textKey: 'event_perm_takeover_desc_zh_detailed',
+            image: "image/CG/张慧丽/接管模式/永久接管成功.png",
+            choices: [{
+                textKey: 'event_continue_ellipsis',
+                action: [
+                    { type: 'setFlag', path: 'controlState', value: 'PERMANENT_SLIME' },
+                    { type: 'setFlag', path: 'hosts.zhang_huili.sanity', value: 0 },
+                    { type: 'setFlag', path: 'hosts.zhang_huili.isPuppet', value: true },
+                    { type: 'showMessage', key: 'toast_perm_takeover_success', messageType: 'success' },
+                    { type: 'advanceTime' }
+                ]
+            }]
+        }]
+    },
 
+    'permanent_takeover_liu_min': {
+        titleKey: 'event_perm_takeover_title_lm',
+        pages: [{
+            textKey: 'event_perm_takeover_desc_lm',
+            image: "image/CG/刘敏/接管模式/永久接管成功.png", // 假设的图片路径
+            choices: [{
+                textKey: 'event_continue_ellipsis',
+                action: [
+                    { type: 'setFlag', path: 'controlState', value: 'PERMANENT_SLIME' },
+                    { type: 'setFlag', path: 'hosts.liu_min.sanity', value: 0 },
+                    { type: 'setFlag', path: 'hosts.liu_min.isPuppet', value: true },
+                    { type: 'showMessage', key: 'toast_perm_takeover_success', messageType: 'success' },
+                    { type: 'advanceTime' }
+                ]
+            }]
+        }]
+    },
 
     // --- 章节结束事件 ---
     'leave_city_sequence': {
@@ -927,26 +991,7 @@ const allEventData = {
             }]
         }]
     },
-    //永久接管
-
-    'permanent_takeover_zhang_huili': {
-        titleKey: 'event_perm_takeover_title_zh',
-        pages: [{
-            // ▼▼▼ 修正文本Key ▼▼▼
-            textKey: 'event_perm_takeover_desc_zh_detailed',
-            image: "image/CG/张慧丽/接管模式/永久接管成功.png",
-            choices: [{
-                textKey: 'event_continue_ellipsis',
-                action: [
-                    { type: 'setFlag', path: 'controlState', value: 'PERMANENT_SLIME' },
-                    { type: 'setFlag', path: 'hosts.zhang_huili.sanity', value: 0 },
-                    { type: 'setFlag', path: 'hosts.zhang_huili.isPuppet', value: true },
-                    { type: 'showMessage', key: 'toast_perm_takeover_success', messageType: 'success' },
-                    { type: 'advanceTime' }
-                ]
-            }]
-        }]
-    },
+    
 
     //===刘敏相关事件===
     'takeover_host_liu_min': {
@@ -993,6 +1038,7 @@ const allEventData = {
                     textKey: 'event_continue_ellipsis',
                     action: [
                         { type: 'setFlag', path: 'story.flags.chapter2.npc_liu_min.memoryPlundered', value: true },
+                        { type: 'setFlag', path: 'story.mainQuest', value: 'curiosity_kills_the_cat' },
                         { type: 'showMessage', key: 'toast_mem_plunder_success_lm', messageType: 'success' },
                         { type: 'advanceTime' }
                     ]
@@ -1044,6 +1090,71 @@ const allEventData = {
         ]
     },
 
+    //森林迷宫
+    'forest_maze_event': {
+        titleKey: 'event_forest_maze_title',
+        pages: [
+            // 迷宫阶段 1
+            {
+                textKey: 'event_forest_maze_p1',
+                image: 'image/事件/森林迷宫/阶段1.png',
+                choices: [
+                    { textKey: 'maze_choice_north', action: [{ type: 'advanceMaze', stage: 2 }] }, // 正确答案
+                    { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_south', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_west', action: [{ type: 'failMaze' }] }
+                ]
+            },
+            // 迷宫阶段 2
+            {
+                textKey: 'event_forest_maze_p2',
+                image: 'image/事件/森林迷宫/阶段2.png',
+                choices: [
+                    { textKey: 'maze_choice_north', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_south', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_west', action: [{ type: 'advanceMaze', stage: 3 }] } // 正确答案
+                ]
+            },
+            // 迷宫阶段 3
+            {
+                textKey: 'event_forest_maze_p3',
+                image: 'image/事件/森林迷宫/阶段3.png',
+                choices: [
+                    { textKey: 'maze_choice_north', action: [{ type: 'advanceMaze', stage: 4 }] }, // 正确答案
+                    { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_south', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_west', action: [{ type: 'failMaze' }] }
+                ]
+            },
+            // 迷宫阶段 4
+            {
+                textKey: 'event_forest_maze_p4',
+                image: 'image/事件/森林迷宫/阶段4.png',
+                choices: [
+                    { textKey: 'maze_choice_north', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
+                    { textKey: 'maze_choice_south', action: [{ type: 'advanceMaze', stage: 5 }] }, // 正确答案
+                    { textKey: 'maze_choice_west', action: [{ type: 'failMaze' }] }
+                ]
+            },
+            // 成功
+            {
+                textKey: 'event_forest_maze_success',
+                image: 'image/事件/森林迷宫/成功.png',
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'story.flags.chapter2.quests.forest_entered', value: true },
+                        { type: 'setFlag', path: 'locations.abandoned_warehouse.unlocked', value: true }, // 解锁棚屋
+                        { type: 'showMessage', key: 'toast_warehouse_unlocked', messageType: 'success' },
+                        { type: 'advanceTime' }
+                    ]
+                }]
+            }
+        ]
+    },
+
     //===赵齐民相关事件===
     'chat_zhao_qimin_generic': {
         titleKey: 'event_chat_zq_generic_title',
@@ -1078,14 +1189,6 @@ const allNpcInteractions = {
             check: (state, skillManager) => state.controlState.includes('SLIME') && skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             action: { type: 'triggerEvent', eventName: 'ask_zhao_about_warehouse' },
             failAction: { type: 'showMessage', key: 'toast_need_socialization_control', messageType: 'warning' }
-        },
-        {
-            id: 'zhao_qimin_ask_warehouse',
-            buttonTextKey: 'event_ask_about_warehouse_btn',
-            // 条件：只有当玩家控制刘敏，且好感度>50时，这个选项才会出现
-            condition: (state) => state.activeHostId === 'liu_min' && state.npcs.zhao_qimin.favorability > 50,
-            // 动作：触发一个事件
-            action: { type: 'triggerEvent', eventName: 'warehouse_location_revealed' }
         },
         {
             id: 'zhao_qimin_final_confrontation',
@@ -1513,7 +1616,7 @@ const allNsfwData = {
         self: {
             titleKey: "nsfw_event_lm_title",
             choiceKey: "nsfw_choice_self_lm",
-            baseEffects: { stamina: -30, sanity: -20, baseSuspicion: 10 },
+            baseEffects: { stamina: -30, sanity: -20, baseSuspicion: 25 },
             locations: {
                 'default': { images: { HOST: "image/CG/刘敏/宿主模式/卧室.png", SLIME: "image/CG/刘敏/接管模式/卧室.png" }, descriptions: { HOST: "nsfw_desc_liumin_bedroom_host", SLIME: "nsfw_desc_liumin_bedroom_slime" } },
                 'liumin_home_bedroom': { images: { HOST: "image/CG/刘敏/宿主模式/卧室.png", SLIME: "image/CG/刘敏/接管模式/卧室.png" }, descriptions: { HOST: "nsfw_desc_liumin_bedroom_host", SLIME: "nsfw_desc_liumin_bedroom_slime" } },
@@ -1530,19 +1633,19 @@ const allNsfwData = {
                 npcId: 'zhao_qimin',
                 buttonTextKey: 'nsfw_choice_invite_zq_BJ',
                 condition: (state) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 15,
-                titleKey: 'nsfw_event_zq_title_BJ',
+                titleKey: { HOST: "zq_nsfw_desc_lm_host_BJ_title", SLIME: "zq_nsfw_desc_lm_slime_BJ_title" },
                 images: { HOST: "image/CG/刘敏/宿主模式/与赵齐民BJ.png", SLIME: "image/CG/刘敏/接管模式/与赵齐民BJ.png" },
                 descriptions: { HOST: "zq_nsfw_desc_lm_host_BJ", SLIME: "zq_nsfw_desc_lm_slime_BJ" },
-                effects: { favorability: 15, stamina: -30, baseSuspicion: 10, interactionSuspicion: 25, mutationChance: 0.4, mutationPoints: 1 }
+                effects: { favorability: 15, stamina: -30, baseSuspicion: 25, interactionSuspicion: 25, mutationChance: 0.4, mutationPoints: 1 }
             },
             'zhao_qimin_MS': {
                 npcId: 'zhao_qimin',
                 buttonTextKey: 'nsfw_choice_invite_zq_MS',
                 condition: (state) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 50,
-                titleKey: 'nsfw_event_zq_title_MS',
+                titleKey: { HOST: "zq_nsfw_desc_lm_host_MS_title", SLIME: "zq_nsfw_desc_lm_slime_MS_title" },
                 images: { HOST: "image/CG/刘敏/宿主模式/与赵齐民MS.png", SLIME: "image/CG/刘敏/接管模式/与赵齐民MS.png" },
                 descriptions: { HOST: "zq_nsfw_desc_lm_host_MS", SLIME: "zq_nsfw_desc_lm_slime_MS" },
-                effects: { favorability: 30, stamina: -50, baseSuspicion: 10, interactionSuspicion: 40, mutationChance: 0.6, mutationPoints: 2 }
+                effects: { favorability: 30, stamina: -50, baseSuspicion: 25, interactionSuspicion: 40, mutationChance: 0.6, mutationPoints: 2 }
             }
         }
     },
@@ -1586,6 +1689,7 @@ const taskData = {
             { textKey: 'task_scent_of_woman_step2', isDone: (state) => state.story.flags.chapter2.quests.footprints_owner_found, isVisible: (state) => true },
             { textKey: 'task_scent_of_woman_step3', isDone: (state) => state.npcs.liu_min.favorability >= 80, isVisible: (state) => state.story.flags.chapter2.quests.footprints_owner_found },
             { textKey: 'task_scent_of_woman_step4', isDone: (state) => state.hosts.liu_min.wasEverPossessed, isVisible: (state) => state.npcs.liu_min.favorability >= 80 },
+            { textKey: 'task_scent_of_woman_step5', isDone: (state) => state.story.flags.chapter2.npc_liu_min.memoryPlundered, isVisible: (state) => state.hosts.liu_min.wasEverPossessed }
         ],
         // ▼▼▼ 核心修改：将 hintsKeys 升级为对象数组 ▼▼▼
         hintsKeys: [
@@ -1607,7 +1711,12 @@ const taskData = {
             { textKey: 'task_curiosity_kills_the_cat_step4', isDone: (state) => state.story.flags.chapter2.quests.mysterious_figure_met, isVisible: (state) => state.story.flags.chapter2.quests.forest_entered },
         ],
         hintsKeys: [
-            { key: 'task_curiosity_kills_the_cat_hint1', condition: (state) => true }
+            { key: 'task_curiosity_kills_the_cat_hint1', condition: (state) => true },
+            {
+                key: 'task_curiosity_kills_the_cat_hint3', // 新提示的key
+                // 条件：和“进入森林”清单出现的条件完全一样
+                condition: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased
+            }
         ]
     },
     'bomb_countdown': {
@@ -1819,7 +1928,24 @@ const locationEventData = {
             game.uiManager.openStoreModal(); // 直接打开购买菜单
         }
     },
-
+    //进入 森林
+    'enter_forest_maze': {
+        location: 'village_lake', // 从湖边进入森林
+        buttonTextKey: 'event_enter_forest_btn',
+        condition: (state) => state.story.flags.chapter2.quests.warehouse_info_gathered && !state.story.flags.chapter2.quests.forest_entered,
+        action: (game) => {
+            const state = game.stateManager.getState();
+            if (state.activeHostId === 'liu_min' && state.controlState.includes('SLIME')) {
+                if (state.story.flags.chapter2.upgrades.scp500_clone_purchased) {
+                    game.eventManager.triggerEvent('forest_maze_event');
+                } else {
+                    game.uiManager.showMessage('toast_forest_no_scb500', 'error');
+                }
+            } else {
+                game.uiManager.showMessage('toast_forest_wrong_host', 'warning');
+            }
+        }
+    },
     // --- 任务【身在他乡为异客】的调查事件 ---
     // 在 data.js 的 locationEventData 中修改这些事件的条件
 
@@ -1938,6 +2064,23 @@ const chapterSetupData = {
 // 文件: data.js
 
 const storeItemsData = {
+    // ▼▼▼ 将“保养服务”置顶 ▼▼▼
+    'puppet_maintenance': {
+        nameKey: 'store_item_puppet_maintenance_name',
+        descKey: 'store_item_puppet_maintenance_desc',
+        cost: 5,
+        maxPurchases: 6,
+        isPurchased: (state) => (state.story.flags.chapter2.upgrades.puppet_maintenance_level || 0) >= 6,
+        effect: (game) => {
+            const state = game.stateManager.getState();
+            if (!state.story.flags.chapter2.upgrades.puppet_maintenance_level) {
+                state.story.flags.chapter2.upgrades.puppet_maintenance_level = 0;
+            }
+            state.story.flags.chapter2.upgrades.puppet_maintenance_level++;
+            game.uiManager.showMessage('toast_purchase_success_maintenance', 'success', { level: state.story.flags.chapter2.upgrades.puppet_maintenance_level });
+        }
+    },
+    // ▲▲▲ 置顶结束 ▲▲▲
     'destroy_cameras_home': {
         nameKey: 'store_item_destroy_cameras_1_name',
         descKey: 'store_item_destroy_cameras_1_desc',
@@ -1946,7 +2089,6 @@ const storeItemsData = {
         effect: (game) => {
             const state = game.stateManager.getState();
             state.story.flags.chapter2.upgrades.cameras_home_destroyed = true;
-            // ▼▼▼ 核心修正：直接使用 allLocationData ▼▼▼
             Object.values(allLocationData[2]).forEach(location => {
                 if (location.category === 'huili_home') {
                     location.suspicionModifier = Math.max(0.1, (location.suspicionModifier || 1.0) - 0.5);
@@ -1963,7 +2105,6 @@ const storeItemsData = {
         effect: (game) => {
             const state = game.stateManager.getState();
             state.story.flags.chapter2.upgrades.cameras_public_destroyed = true;
-            // ▼▼▼ 核心修正：直接使用 allLocationData ▼▼▼
             Object.values(allLocationData[2]).forEach(location => {
                 if (location.category === 'village_in' || location.category === 'village_out') {
                     location.suspicionModifier = Math.max(0.1, (location.suspicionModifier || 1.0) - 0.5);
