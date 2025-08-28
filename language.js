@@ -518,7 +518,7 @@ const LANGS = {
         "location_desc_special_store": "湖边有一台看起来格格不入的自动售货机，屏幕上闪烁着奇怪的符号。它似乎不是为人类服务的。",
         "location_desc_abandoned_warehouse": "空气中弥漫着铁锈和一种腐败的甜腻气味。仓库的大门虚掩着，里面漆黑一片，像巨兽张开的嘴。你的直觉告诉你，这里发生过非常可怕的事情。",
         "slime_desc_village_lake": "【战术评估】大型开放水域，构成天然屏障。水体生物成分异常。远端锁定可疑人造建筑，确认为主要目标点。",
-        "slime_desc_special_store": "【异常分析】发现未标记的人造设备。能量特征与已知人类科技不符。结构分析：一个交易终端？一个陷阱？需要进一步调查。",
+        "slime_desc_special_store": "【同类警告】检测到异常的生物信号。这不是人类科技，也不是简单的改造。这个“终端”的本质是一个被彻底清除了灵魂、并被某种更高等的力量重塑过的雌性生物。她的大脑被改造成了一个可以直接与你的意识进行交易的平台。这是一种……远超你目前理解能力的、同类的所作所为。是陷阱？还是机遇？",
         "slime_desc_abandoned_warehouse": "【高能警告】检测到强烈的同类生物信号！能量等级远超本单元。多种人类生物信号已消失。警告：这里是母体的巢穴，或是高级同类的捕食场。",
 
         //===傀儡宿主专属旁白===
@@ -548,7 +548,7 @@ const LANGS = {
         "daily_huili_weekend_e1": "回到家中，她走进浴室，开始重复每天的清洁仪式。水流、泡沫、镜子……这一切都熟悉而又陌生。她看着镜中那个面无表情的自己，心中没有任何感觉，仿佛在看一个与自己无关的陌生人。",
         "daily_huili_weekend_e2": "周末的夜晚和工作日的夜晚一样寂静。张慧丽躺在床上，黑暗温柔地包裹着她，也隔绝了她与这个世界最后的一丝联系。新的一天会到来，但对她而言，或许只是另一个重复的开始。",
 
-        // --- 刘敏 - 日常旁白 (占位符) ---
+        // --- 刘敏 - 日常旁白 ---
         "daily_liumin_all_m1": "清晨，刘敏的房间一尘不染，所有物品都摆放得像军队宿舍一样整齐。她很早就醒了，修长的手指反复擦拭着一把精致的匕首，眼神警惕地扫过每一个角落，仿佛这间看似普通的屋子，隐藏着不为人知的致命威胁。",
         "daily_liumin_all_m2": "她打开一个加密的笔记本电脑，屏幕上快速滚动着普通人无法理解的数据流，那是来自H市地下世界的异常动态报告。她的表情专注而冷酷，唇角紧抿，一丝紧张感在空气中弥漫。她拼命追查着各种异常，却不知道自己早已深陷泥潭。",
         "daily_liumin_all_n1": "午餐是简单的能量棒和水。对她来说，进食只是为了维持身体机能，而不是一种享受。每一口都带着某种机械般的精确，仿佛在为接下来的行动补充燃料。她时刻准备着。",
@@ -557,7 +557,8 @@ const LANGS = {
         "daily_liumin_all_a2": "她来到湖边，一反常态地没有勘察地形。她只是静静地站着，脸上少有地露出了一丝焦虑和脆弱的神色。她的目光不停地、有些神经质地望向湖对岸远处的那个废弃棚屋，似乎在期待着什么，又像是在恐惧着什么。",
         "daily_liumin_all_e1": "夜幕降临，刘敏像一个潜伏的幽灵，融入了村广场的阴影中。她不动声色地观察着每一个村民的动向，眼神中带着难以察觉的审视。她的身体在暗夜中若隐若现，那份危险而神秘的气质，在昏暗的灯光下显得格外迷人，却也隐藏着致命的诱惑。",
         "daily_liumin_all_e2": "回到家，她冲了一个战斗澡，水珠顺着她光洁的皮肤滑落，短暂地洗去了一天的疲惫。随后，她再次回到她的情报世界中，紧盯着屏幕上的异动。窗外月色如水，映照着她专注的侧脸，带着一丝不自知的性感，和一丝被命运玩弄的悲剧。",
-
+        "daily_liumin_weekend_n1": "周末的中午，办事处里只有刘敏一个人。她没有像平时一样处理公务，而是坐立不安地翻阅着一些加密的电子档案。她的眉头紧锁，似乎在寻找某个被遗漏的线索，但又像是在害怕找到什么。",
+        "daily_liumin_weekend_a1": "午后的阳光斜斜地照进办公室，在地上拉出长长的影子。刘敏靠在窗边，眼神空洞地望着窗外，脸上是少有的迷茫和疲惫。在这个本应休息的日子里，某种无形的压力反而让她更加喘不过气。",
 
         //---史莱姆视角动态兜底文本---
         "slime_desc_default": "【数据缺失】无法分析当前环境。",
@@ -590,7 +591,9 @@ const LANGS = {
         "task_scent_of_woman_step2": "尝试蹲守神秘脚印的主人",
         "task_scent_of_woman_step3": "和刘敏打好关系 (好感度 >= 80)",
         "task_scent_of_woman_step4": "想办法侵蚀刘敏",
+        "task_scent_of_woman_step5": "读取刘敏的记忆",
         "task_scent_of_woman_hint1": "刘敏只在晚上出现在村广场。你需要以“张慧丽”的身份，在接管模式下与她接触。",
+        "task_scent_of_woman_hint2": "也许和对方打好关系，可以进一步接近她的生活……",
         // --- 好奇心害死猫 ---
         "task_curiosity_kills_the_cat_title": "好奇心害死猫",
         "task_curiosity_kills_the_cat_desc": "事情开始变得紧张起来了。一个同类？兜底方案？为什么前往棚屋的人都有去无回？找到知情人士询问一下。",
@@ -598,7 +601,9 @@ const LANGS = {
         "task_curiosity_kills_the_cat_step2": "找到抵御特殊昆虫的办法",
         "task_curiosity_kills_the_cat_step3": "进入森林",
         "task_curiosity_kills_the_cat_step4": "和神秘人影交谈",
-        "task_curiosity_kills_the_cat_hint1": "那个神秘的售货机似乎不仅仅是个摆设……",
+        "task_curiosity_kills_the_cat_hint1": "你有找到神秘商店吗？",
+        "task_curiosity_kills_the_cat_hint3": "忘记迷宫路线了？看这里：北 -> 西 -> 北 -> 南！",
+
         // 事件系列
         "event_investigate_environment_btn": "调查环境",
 
@@ -640,22 +645,52 @@ const LANGS = {
         "event_discover_store_p2": "她“感应”到了你的到来，并主动向你开放了她的“大脑”。你惊恐地发现，她的大脑内部被彻底改造成了一个生物科技平台，专门用于吸收突变点，并将其转化为其他物质或能力。你瞬间明白了，能做出这种事情的，恐怕是级别远高于你的、恐怖的同类。",
         "toast_special_store_unlocked": "你解锁了特殊商店！现在可以通过区域事件访问。",
 
+        // --- 森林迷宫 ---
+        "event_enter_forest_btn": "进入森林",
+        "toast_forest_no_scb500": "没有做好准备定然有去无回！",
+        "toast_forest_wrong_host": "只有最专业的特工才能在这种环境下生存。",
+        "event_forest_maze_title": "黑暗森林",
+        "event_forest_maze_p1": "你踏入了森林，四周的树木高耸入云，遮天蔽日。空气中弥漫着一股奇异的甜腻气味，让你感到一阵轻微的眩晕。前方出现了四个岔路口。",
+        "event_forest_maze_p2": "你继续深入，周围的光线愈发昏暗，只能勉强看清脚下的路。湿滑的苔藓和盘根错节的树根让每一步都变得异常艰难。",
+        "event_forest_maze_p3": "森林深处传来非人的嘶吼，让你不寒而栗。你加快了脚步，只想尽快离开这个鬼地方。",
+        "event_forest_maze_p4": "你似乎已经走了很久，体力的消耗远超预期。就在你快要放弃的时候，你隐约看到了前方有光亮。",
+        "event_forest_maze_success": "你成功穿过了这片诡异的森林，废弃的棚屋近在眼前。但与此同时，一股前所未有的、源自基因深处的疲惫感袭来。刻在你基因里的SCP-500信息开始发挥作用，宿主的身体分泌出【数据删除】的特殊激素，抵御着这股致命的疲惫。",
+        "maze_choice_north": "往北走",
+        "maze_choice_east": "往东走",
+        "maze_choice_south": "往南走",
+        "maze_choice_west": "往西走",
+        "toast_maze_failed": "你在森林里迷路了，只能原路返回……",
+        "toast_warehouse_unlocked": "新地点已解锁：废弃仓库",
+
         //商店商品
         "store_item_destroy_cameras_1": "破坏隐藏摄像头 (解除张慧丽家怀疑权重)",
         "store_item_destroy_cameras_2": "明目张胆地破坏摄像头 (解除公共区域怀疑权重)",
         "store_item_scp500_clone": "特殊基因(SCP-500克隆体)",
 
-        // --- 商店UI和商品 ---
+        // --- 商店UI文本 ---
+        "store_item_cost": "成本: ",
+        "store_item_level": " (等级 {level})", // 等级显示的翻译
+        "store_btn_buy": "购买",
+        "store_btn_acquired": "已获取", // Acquired 的翻译
         "modal_title_special_store": "活体终端",
-        "event_investigate_machine_btn": "活体终端",
+        "event_investigate_machine_btn": "调查奇怪的机器",
         "store_current_mutation_points": "当前突变点：",
         "store_btn_purchased": "已获取",
+        // 文件: language.js (中文)
+
+        // --- 商店商品 (修正版) ---
         "store_item_destroy_cameras_1_name": "破坏隐藏摄像头",
-        "store_item_destroy_cameras_1_desc": "消耗5突变点。悄无声息地摧毁安装在张慧丽家中的所有微型摄像头，大幅降低在此处行动被察觉的风险。",
+        "store_item_destroy_cameras_1_desc": "消耗5突变点。“售货机”会悄无声息地摧毁安装在张慧丽家中的所有微型摄像头，大幅降低在此处行动被察觉的风险。",
         "store_item_destroy_cameras_2_name": "明目张胆地破坏摄像头",
-        "store_item_destroy_cameras_2_desc": "消耗13突变点。制造一场“意外”，摧毁村内所有公共区域的监控设备。短期内，这里将成为你的游乐场。",
-        "store_item_scp500_clone_name": "特殊基因（SCP-500克隆体）",
-        "store_item_scp500_clone_desc": "消耗25突变点。一种万能药的基因样本，能让你暂时抵御森林中那些致命的“虫灾”。",
+        "store_item_destroy_cameras_2_desc": "消耗13突变点。“售货机”会制造一场“意外”，摧毁村内所有公共区域的监控设备。短期内，这里将成为你的游乐场。",
+        "store_item_scp500_clone_name": "特殊基因（“万能药”SCP-500克隆体）", // 修改：为500加上前缀
+        "store_item_scp500_clone_desc": "消耗25突变点。“售货机”为你提供一种万能药的基因样本，能让你暂时抵御森林中那些致命的“虫灾”。",
+        "store_item_puppet_maintenance_name": "提供“保养”服务",
+        "store_item_puppet_maintenance_desc": "消耗5突变点。“售货机”每天会前往傀儡待机点，“保养”你停放的容器。每购买一级，每天就能让一个“傀儡”状态的宿主为你产生1个突变点（最多6级）。",
+
+        // --- 购买反馈 ---
+        "toast_purchase_success_maintenance": "“保养”服务已升级至 {level} 级！",
+        "toast_maintenance_income": "你的傀儡们通过“保养”为你生产了 {POINTS} 点突变点。",
         "toast_not_enough_mutation_points": "突变点不足！",
         "toast_purchase_success_cameras_home": "你感受到周围的窥视感减弱了。",
         "toast_purchase_success_cameras_public": "公共区域的“眼睛”暂时失明了。",
@@ -744,6 +779,11 @@ const LANGS = {
         "event_mem_plunder_success_lm_p3": "领导轻笑了一声，用流利的英文回答道：“（已翻译）也正因为目标的特性，它无法直接控制男性。所以，让他们来做最后的保险是必要的。当然，如果你坚持，你可以顶替掉其中一个，但必须留下一个。”随后，领导接到通讯，神色一凛：“……又发现一个样本，就在村外。我带人先去部署兜底方案，之后联系。”那是刘敏最后一次见到她的领导。从那天起，她每天都会去湖边瞭望，因为她知道，如果他们还活着，一定会回来；如果他们遭遇不测，自己过去……也只有死路一条。",
         "toast_mem_plunder_success_lm": "你终于理解了一切。原来，这个村子是一个为捕捉你而设下的、双重陷阱。",
 
+        "event_reenter_lm_title": "意识回归 (刘敏)",
+        "event_reenter_lm_desc": "史莱姆的意识重新连接上这具训练有素的特工躯壳，她的身体再度化为你手中最锋利的刀刃。",
+        "event_perm_takeover_title_lm": "意识同化完成 (刘敏)",
+        "event_perm_takeover_desc_lm": "混沌分裂者的精英特工，终究也无法抵抗你的侵蚀。名为“刘敏”的意志已彻底消散，现在，这具强大而美丽的躯壳完全属于你了。",
+
         // --- 刘敏 - 独处 NSFW (HOST/SLIME 修正版) ---
         "nsfw_event_lm_title": "特工的宣泄",
         "nsfw_choice_self_lm": "屈从于冲动",
@@ -766,7 +806,7 @@ const LANGS = {
 
         //--- 第二章 NSFW 事件文本 ---
         "nsfw_choice_cost_suffix": " (体力-{COST})",
-        "nsfw_choice_invite_zq_MS": "原始的拥抱",
+        "nsfw_choice_invite_zq_MS": "肉体的臣服",
         "nsfw_choice_invite_zq_BJ": "与赵齐民进行“口头”交流 ",
         "nsfw_choice_invite_zq_BJ_cost": "与赵齐民进行“口头”交流 (体力-{COST})",
         // ===宋欣 (第二章)===
@@ -811,8 +851,22 @@ const LANGS = {
         "zq_nsfw_desc_zh_slime_BJ": "史莱姆操控着“张慧丽”这具精致的傀儡，让她主动跪在赵齐民的腿间。它以一种近乎于实验的冷静，驱动着她的唇舌在他的胯间机械地游走，仔细观察并记录着这个男人的每一个生理反应。这不仅仅是能量汲取，更是一场关于“人类雄性弱点”的实况研究。",
         "zq_nsfw_desc_zh_host_MS": "张慧丽的身体仿佛不再属于自己，她主动褪去衣物，像一个被玩坏的人偶，跨坐在赵齐民的身上任由对方摆布。她的意识早已漂流到遥远的地方，只有身体还留在这里，承受着一切。没有痛苦，也没有快乐，只有一片无尽的虚无。",
         "zq_nsfw_desc_zh_slime_MS": "在史莱姆的绝对掌控下，“张慧丽”的身体化作一具冷酷的魅惑机器，主动跨坐在赵齐民身上，用最原始的动作点燃对方的欲望。在这场冰冷的征服仪式中，理智与抗拒在他的机械魅惑下崩塌，彻底沉沦。",
+        // --- 与赵齐民的MS NSFW事件标题 ---
+        "nsfw_event_zq_title_MS": "原始的仪式", // 宋欣 (只有SLIME模式)
 
+        "zq_nsfw_desc_zh_host_MS_title": "破碎的缠绵", // 张慧丽 (HOST模式)
+        "zq_nsfw_desc_zh_slime_MS_title": "冷焰的征服", // 张慧丽 (SLIME模式)
 
+        "zq_nsfw_desc_lm_host_MS_title": "特工的献祭", // 刘敏 (HOST模式)
+        "zq_nsfw_desc_lm_slime_MS_title": "精英的陨落", // 刘敏 (SLIME模式)
+        // --- 与赵齐民的BJ NSFW事件标题 ---
+        "nsfw_event_zq_title_BJ": "第一次捕食", // 宋欣 (只有SLIME模式)
+
+        "zq_nsfw_desc_zh_host_BJ_title": "迷雾中的低语", // 张慧丽 (HOST模式)
+        "zq_nsfw_desc_zh_slime_BJ_title": "人偶的测试", // 张慧丽 (SLIME模式)
+
+        "zq_nsfw_desc_lm_host_BJ_title": "必要的屈辱", // 刘敏 (HOST模式)
+        "zq_nsfw_desc_lm_slime_BJ_title": "猎物的评估", // 刘敏 (SLIME模式)
         // 文件: language.js (中文)
 
         "nsfw_choice_huili_liumin_lp": "用舌头取悦刘敏",
@@ -1329,6 +1383,8 @@ const LANGS = {
         "daily_liumin_all_a2": "She comes to the lake, but uncharacteristically, she doesn't survey the terrain. She just stands quietly, a rare hint of anxiety and vulnerability showing on her face. Her gaze darts repeatedly, almost nervously, towards the abandoned warehouse on the far side of the lake, as if she is expecting something... or perhaps, dreading it.",
         "daily_liumin_all_e1": "As night falls, Liu Min, like a lurking phantom, blends into the shadows of the village square. She silently observes the movements of every villager, her eyes carrying an imperceptible scrutiny. Her body is ephemeral in the darkness, that dangerous and mysterious aura, rendered exceptionally captivating under the dim lights, yet also concealing a fatal allure.",
         "daily_liumin_all_e2": "Returning home, she takes a combat shower; water droplets slide down her smooth skin, briefly washing away the day's fatigue. Afterward, she returns to her world of intelligence, intently watching for anomalies on the screen. Outside, the moonlight bathes her focused profile, lending her an unconscious sensuality, and a tragic sense of being played by fate.",
+        "daily_liumin_weekend_n1": "On a weekend noon, Liu Min is alone in the office. She isn't handling her usual duties; instead, she restlessly scrolls through encrypted digital files. Her brow is furrowed, as if searching for a missing clue, or perhaps, fearing what she might find.",
+        "daily_liumin_weekend_a1": "The afternoon sun slants into the office, casting long shadows on the floor. Liu Min leans against the window, her gaze empty, a rare look of confusion and exhaustion on her face. On this day meant for rest, an invisible pressure seems to suffocate her even more.",
 
         "slime_desc_default": "[DATA MISSING] Unable to analyze current environment.",
         "story_detached_host_info": "Life signal source ({HOST_NAME}) is currently at: {LOCATION}.",
@@ -1363,7 +1419,7 @@ const LANGS = {
         "location_desc_special_store": "By the lake stands an out-of-place vending machine, its screen flickering with strange symbols. It doesn't seem to be intended for human use.",
         "location_desc_abandoned_warehouse": "The air is thick with the smell of rust and a sickly sweet decay. The large doors of the warehouse are ajar, revealing a pitch-black interior like the gaping mouth of a beast. Your intuition tells you something terrible happened here.",
         "slime_desc_village_lake": "[TACTICAL OVERVIEW] Large open body of water, forming a natural barrier. Aquatic biological components are anomalous. Suspicious man-made structure locked on the far side, confirmed as primary objective point.",
-        "slime_desc_special_store": "[ANOMALY ANALYSIS] Unmarked artificial device detected. Energy signature inconsistent with known human technology. Structural analysis: A transaction terminal? A trap? Further investigation required.",
+        "slime_desc_special_store": "[KINDRED WARNING] Anomalous biological signature detected. This is not human technology, nor simple modification. The essence of this 'terminal' is a female organism, completely stripped of its soul and reshaped by a much higher power. Her brain has been converted into a platform that can directly interface with your consciousness for trade. This is... the work of a kindred, one far beyond your current comprehension. A trap? Or an opportunity?",
         "slime_desc_abandoned_warehouse": "[HIGH ENERGY WARNING] Strong biological signature of a kindred entity detected! Energy level far exceeds this unit's. Multiple human biometric signals have ceased. Warning: This is a matriarch's nest, or the hunting ground of a superior entity.",
 
         //任务系列
@@ -1394,7 +1450,9 @@ const LANGS = {
         "task_scent_of_woman_step2": "Stake out the owner of the mysterious footprints",
         "task_scent_of_woman_step3": "Build a good relationship with Liu Min (Favorability >= 80)",
         "task_scent_of_woman_step4": "Find a way to erode Liu Min",
+        "task_scent_of_woman_step5": "Read Liu Min's memories",
         "task_scent_of_woman_hint1": "Liu Min only appears in the village square at night. You need to approach her as 'Zhang Huili' while in control mode.",
+        "task_scent_of_woman_hint2": "Perhaps building a good relationship with her could allow you to get closer to her life...",
 
         // --- New Quest ---
         "task_curiosity_kills_the_cat_title": "Curiosity Kills the Cat",
@@ -1403,7 +1461,8 @@ const LANGS = {
         "task_curiosity_kills_the_cat_step2": "Find a way to resist the special insects",
         "task_curiosity_kills_the_cat_step3": "Enter the forest",
         "task_curiosity_kills_the_cat_step4": "Talk to the mysterious figure",
-        "task_curiosity_kills_the_cat_hint1": "That mysterious vending machine seems to be more than just a decoration...",
+        "task_curiosity_kills_the_cat_hint1": "Have you found the special store?",
+        "task_curiosity_kills_the_cat_hint3": "Forgot the maze route? Look here: North -> West -> North -> South!",
 
         // 1. Investigate Bedroom
         "event_investigate_bedroom_c2_title": "Eyes in the Corner",
@@ -1444,23 +1503,52 @@ const LANGS = {
         "event_discover_store_p2": "She 'senses' your arrival and willingly opens her 'mind' to you. To your horror, you find her brain has been completely converted into a biotech platform, specifically designed to absorb mutation points and transform them into other substances or abilities. You understand instantly: only a terrifyingly high-level kindred, far superior to you, could have done this.",
         "toast_special_store_unlocked": "You've unlocked the Special Store! It can now be accessed via Area Events.",
 
+        // --- Forest Maze ---
+        "event_enter_forest_btn": "Enter the Forest",
+        "toast_forest_no_scb500": "Without proper preparation, going there is a one-way trip!",
+        "toast_forest_wrong_host": "Only the most professional agent can survive in this environment.",
+        "event_forest_maze_title": "The Dark Forest",
+        "event_forest_maze_p1": "You step into the forest. The trees tower over you, blocking out the sun. A strange, sweet, cloying scent fills the air, making you slightly dizzy. Four paths diverge before you.",
+        "event_forest_maze_p2": "You venture deeper. The light grows dimmer, and you can barely see the path at your feet. Slippery moss and tangled roots make every step treacherous.",
+        "event_forest_maze_p3": "An inhuman screech echoes from the depths of the forest, sending a chill down your spine. You quicken your pace, desperate to leave this accursed place.",
+        "event_forest_maze_p4": "You feel like you've been walking for a very long time, your stamina draining faster than expected. Just as you're about to give up, you see a faint light ahead.",
+        "event_forest_maze_success": "You've successfully navigated the eerie forest. The abandoned warehouse is just ahead. But at the same time, an unprecedented fatigue, originating from deep within your genes, washes over you. The SCP-500 information encoded in your genetics kicks in, causing the host's body to secrete a special hormone, [DATA EXPUNGED], to counteract this deadly exhaustion.",
+        "maze_choice_north": "Go North",
+        "maze_choice_east": "Go East",
+        "maze_choice_south": "Go South",
+        "maze_choice_west": "Go West",
+        "toast_maze_failed": "You got lost in the forest and had to return...",
+        "toast_warehouse_unlocked": "New Location Unlocked: Abandoned Warehouse",
+
         // --- Store Items (Placeholders, requires UI implementation) ---
         "store_item_destroy_cameras_1": "Destroy Hidden Cameras (Removes suspicion weight from Huili's home)",
         "store_item_destroy_cameras_2": "Destroy Cameras Blatantly (Removes suspicion weight from public areas)",
         "store_item_scp500_clone": "Special Gene (SCP-500 Clone)",
 
         // --- Store UI and Items ---
+        "store_item_cost": "Cost: ", // New: Translation for cost
+        "store_item_level": " (Level {level})", // Translation for level display
+        "store_btn_buy": "Buy",
+        "store_btn_acquired": "Acquired", // Translation for Acquired
         "modal_title_special_store": "Living Terminal",
         "event_investigate_machine_btn": "Living Terminal",
         "store_current_mutation_points": "Current Mutation Points:",
         "store_btn_purchased": "Acquired",
+        // 文件: language.js (英文)
+
+        // --- Store Items (Revised) ---
         "store_item_destroy_cameras_1_name": "Destroy Hidden Cameras",
-        "store_item_destroy_cameras_1_desc": "Cost: 5 Mutation Points. Silently destroy all micro-cameras installed in Zhang Huili's house, significantly reducing the risk of being detected there.",
+        "store_item_destroy_cameras_1_desc": "Cost: 5 Mutation Points. The 'vending machine' will silently destroy all micro-cameras in Zhang Huili's house, significantly reducing the risk of being detected there.",
         "store_item_destroy_cameras_2_name": "Destroy Cameras Blatantly",
-        "store_item_destroy_cameras_2_desc": "Cost: 13 Mutation Points. Create an 'accident' that destroys all surveillance equipment in the village's public areas. For a short time, this place will be your playground.",
+        "store_item_destroy_cameras_2_desc": "Cost: 13 Mutation Points. The 'vending machine' will create an 'accident' to destroy all surveillance equipment in the public areas. For a short time, this place will be your playground.",
         "store_item_scp500_clone_name": "Special Gene (SCP-500 Clone)",
-        "store_item_scp500_clone_desc": "Cost: 25 Mutation Points. A genetic sample of the Panacea, allowing you to temporarily resist the deadly 'insect plague' in the forest.",
-        "toast_not_enough_mutation_points": "Not enough mutation points!",
+        "store_item_scp500_clone_desc": "Cost: 25 Mutation Points. The 'vending machine' provides you with a genetic sample of the Panacea, allowing you to temporarily resist a powerful and deadly biological threat that seems to permeate the forest.",
+        "store_item_puppet_maintenance_name": "Provide 'Maintenance' Service",
+        "store_item_puppet_maintenance_desc": "Cost: 5 Mutation Points. The 'vending machine' will visit the puppet standby point daily to 'maintain' your stored vessels. Each level purchased allows one 'puppet' host to generate 1 mutation point for you per day (max 6 levels).",
+
+        // --- Purchase Feedback ---
+        "toast_purchase_success_maintenance": "'Maintenance' service has been upgraded to level {level}!",
+        "toast_maintenance_income": "Your puppets have generated {POINTS} mutation points for you through 'maintenance'.", "toast_not_enough_mutation_points": "Not enough mutation points!",
         "toast_purchase_success_cameras_home": "You feel the sense of being watched has diminished.",
         "toast_purchase_success_cameras_public": "The 'eyes' in the public areas have been temporarily blinded.",
         "toast_purchase_success_scp500": "You've acquired a special gene that can resist unknown threats.",
@@ -1546,6 +1634,12 @@ const LANGS = {
         "event_mem_plunder_success_lm_p3": "The superior chuckles and replies in fluent English: '(Translated) Precisely because of the target's nature, it cannot directly control males. That's why they are necessary as the final failsafe. Of course, if you insist, you can replace one of them, but one must remain.' Then, the superior receives a communication, their expression hardening. '...Another specimen has been located, just outside the village. I'm taking a team to deploy a contingency plan. I'll be in touch.' That was the last time Liu Min saw her superior. From that day on, she would watch from the lake every day, because she knew, if they were alive, they would return. If they had met their end, her own fate... was also death.",
         "toast_mem_plunder_success_lm": "You finally understand everything. This village was a double-layered trap, set just for you.",
 
+        // --- Liu Min - Control Events ---
+        "event_reenter_lm_title": "Consciousness Return (Liu Min)",
+        "event_reenter_lm_desc": "The slime's consciousness reconnects to this highly-trained agent's vessel, and her body once again becomes the sharpest blade in your hand.",
+        "event_perm_takeover_title_lm": "Consciousness Assimilation Complete (Liu Min)",
+        "event_perm_takeover_desc_lm": "Even the elite agent of the Chaos Insurgency could not resist your erosion. The will known as 'Liu Min' has completely dissipated. Now, this powerful and beautiful vessel is entirely yours.",
+
         // --- New NSFW Text Placeholders ---
         "songxin_c2_nsfw_desc_office_slime": "PLACEHOLDER: Song Xin masturbates in the village office (SLIME) - Description Text",
         "nsfw_desc_huili_in_liumin_bedroom_host": "PLACEHOLDER: Zhang Huili masturbates in Liu Min's bedroom (HOST) - Description Text",
@@ -1578,7 +1672,7 @@ const LANGS = {
 
         //--- Chapter 2 NSFW Event Texts ---
         "nsfw_choice_cost_suffix": " (Stamina -{COST})", // [ADD] Generic stamina cost suffix
-        "nsfw_choice_invite_zq_MS": "Primal Embrace",
+        "nsfw_choice_invite_zq_MS": "Physical Surrender",
 
         // Song Xin (Chapter 2)
         "nsfw_event_sx_c2_title": "Vessel Maintenance",
@@ -1602,7 +1696,22 @@ const LANGS = {
         "zq_nsfw_desc_zh_slime_BJ": "The slime directs the exquisite puppet 'Zhang Huili' to kneel actively between Zhao Qimin's legs. With an almost experimental calmness, it drives her lips and tongue to mechanically explore his groin, carefully observing and recording the man's every physiological reaction. This is not just energy harvesting; it is a live study of the 'weaknesses of the human male'.",
         "zq_nsfw_desc_zh_host_MS": "Zhang Huili's body feels as if it's no longer her own. She actively undresses and, like a broken doll, straddles Zhao Qimin, letting him do as he pleases. Her consciousness has drifted far away, leaving only her body here to endure everything. There is no pain, no pleasure, only an endless void.",
         "zq_nsfw_desc_zh_slime_MS": "Under the slime's absolute control, 'Zhang Huili's' body becomes a cold, seductive machine, actively straddling Zhao Qimin and igniting his desires with the most primitive movements. In this frigid ritual of conquest, his reason and resistance crumble under her mechanical allure, utterly consumed.",
+        // --- MS NSFW Event Titles with Zhao Qimin ---
+        "nsfw_event_zq_title_MS": "Primal Ritual", // Song Xin (SLIME mode only)
 
+        "zq_nsfw_desc_zh_host_MS_title": "Shattered Embrace", // Zhang Huili (HOST mode)
+        "zq_nsfw_desc_zh_slime_MS_title": "Conquest of Cold Flame", // Zhang Huili (SLIME mode)
+
+        "zq_nsfw_desc_lm_host_MS_title": "The Agent's Sacrifice", // Liu Min (HOST mode)
+        "zq_nsfw_desc_lm_slime_MS_title": "The Elite's Fall", // Liu Min (SLIME mode)
+        // --- BJ NSFW Event Titles with Zhao Qimin ---
+        "nsfw_event_zq_title_BJ": "The First Hunt", // Song Xin (SLIME mode only)
+
+        "zq_nsfw_desc_zh_host_BJ_title": "Whispers in the Fog", // Zhang Huili (HOST mode)
+        "zq_nsfw_desc_zh_slime_BJ_title": "The Puppet's Test", // Zhang Huili (SLIME mode)
+
+        "zq_nsfw_desc_lm_host_BJ_title": "A Necessary Humiliation", // Liu Min (HOST mode)
+        "zq_nsfw_desc_lm_slime_BJ_title": "The Prey's Assessment", // Liu Min (SLIME mode)
         // --- Liu Min & Zhao Qimin Interaction NSFW (Revised) ---
         "zq_nsfw_desc_lm_host_BJ": "To obtain intelligence, Liu Min suppresses her inner humiliation and actively approaches Zhao Qimin. She kneels, and with a mix of disgust and self-abandonment, lets her lips and tongue unskillfully explore his groin. Every touch feels like a slow death to her self-respect, but for the mission, she can only swallow this disgust along with the uncontrollable, perverse pleasure welling up from deep within.",
         "zq_nsfw_desc_lm_slime_BJ": "The slime views this interaction as a perfect demonstration. It manipulates Liu Min's body to kneel actively, using her highly-trained lips and tongue to perform a 'show' capable of breaking any man's will. It calmly savors the target's escalating loss of control, each touch a declaration: behold, the elite agent you pride yourselves on is now merely my plaything.",
