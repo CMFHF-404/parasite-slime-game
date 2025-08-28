@@ -889,7 +889,7 @@ const allEventData = {
             choices: [{
                 textKey: 'event_continue_ellipsis',
                 action: [
-                    { type: 'modifyFavor', npcId: 'liu_min', value: 15 },
+                    { type: 'modifyFavor', npcId: 'liu_min', value: 10 },
                     { type: 'showMessage', key: 'toast_favor_up_npc', messageType: 'success', replacements: { NPC_NAME: '{lang:npc_name_liu_min}', FAVOR: 15 } },
                     { type: 'advanceTime' }
                 ]
@@ -904,7 +904,7 @@ const allEventData = {
             choices: [{
                 textKey: 'event_continue_ellipsis',
                 action: [
-                    { type: 'modifyFavor', npcId: 'liu_min', value: 20 },
+                    { type: 'modifyFavor', npcId: 'liu_min', value: 10 },
                     { type: 'showMessage', key: 'toast_favor_up_npc', messageType: 'success', replacements: { NPC_NAME: '{lang:npc_name_liu_min}', FAVOR: 20 } },
                     { type: 'advanceTime' }
                 ]
@@ -1000,6 +1000,49 @@ const allEventData = {
             }
         ]
     },
+    'ask_zhao_about_warehouse': {
+        titleKey: 'event_ask_zhao_warehouse_title',
+        pages: [
+            {
+                textKey: 'event_ask_zhao_warehouse_p1',
+                image: 'image/第二章事件/刘敏质问赵齐民.png' // 假设图片
+            },
+            {
+                textKey: 'event_ask_zhao_warehouse_p2',
+                image: 'image/第二章事件/赵齐民暗示.png', // 假设图片
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'story.flags.chapter2.quests.warehouse_info_gathered', value: true },
+                        { type: 'showMessage', key: 'toast_task_list_updated', messageType: 'success' },
+                        { type: 'advanceTime' }
+                    ]
+                }]
+            }
+        ]
+    },
+
+    //===史莱姆商店
+    'discover_special_store': {
+        titleKey: 'event_discover_store_title',
+        pages: [
+            {
+                textKey: 'event_discover_store_p1',
+                image: 'image/事件/特殊商店/第一张.png' // 假设图片
+            },
+            {
+                textKey: 'event_discover_store_p2',
+                image: 'image/事件/特殊商店/第二张.png', // 假设图片
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'story.flags.chapter2.upgrades.special_store_discovered', value: true },
+                        { type: 'showMessage', key: 'toast_special_store_unlocked', messageType: 'success' }
+                    ]
+                }]
+            }
+        ]
+    },
 
     //===赵齐民相关事件===
     'chat_zhao_qimin_generic': {
@@ -1028,6 +1071,14 @@ const allEventData = {
 const allNpcInteractions = {
     // === 赵齐民的所有可用互动 ===
     'zhao_qimin': [
+        {
+            id: 'zhao_qimin_ask_warehouse',
+            buttonTextKey: 'event_ask_about_warehouse_btn',
+            condition: (state) => state.activeHostId === 'liu_min' && state.npcs.zhao_qimin.favorability >= 50 && !state.story.flags.chapter2.quests.warehouse_info_gathered,
+            check: (state, skillManager) => state.controlState.includes('SLIME') && skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+            action: { type: 'triggerEvent', eventName: 'ask_zhao_about_warehouse' },
+            failAction: { type: 'showMessage', key: 'toast_need_socialization_control', messageType: 'warning' }
+        },
         {
             id: 'zhao_qimin_ask_warehouse',
             buttonTextKey: 'event_ask_about_warehouse_btn',
@@ -1105,31 +1156,42 @@ const allNpcInteractions = {
         }
     ],
     // ▼▼▼ 新增刘敏的互动 ▼▼▼
+    // 文件: data.js
+
     'liu_min': [
+        {
+            id: 'liumin_takeover',
+            buttonTextKey: 'event_takeover_liumin_btn',
+            color: 'bg-red-700',
+            condition: (state) => state.story.mainQuest === 'scent_of_a_woman' && state.npcs.liu_min.favorability >= 80 && !state.hosts.liu_min.wasEverPossessed && state.activeHostId === 'zhang_huili' && state.controlState.includes('SLIME'),
+            action: { type: 'triggerEvent', eventName: 'takeover_host_liu_min' }
+        },
         {
             id: 'liumin_request_visit',
             buttonTextKey: 'event_request_visit_lm_btn',
             condition: (state) => state.npcs.liu_min.favorability >= 30 && !state.story.flags.chapter2.quests.liumin_home_unlocked,
             action: { type: 'triggerEvent', eventName: 'request_visit_liumin_home_event' }
         },
+        // ▼▼▼ 核心修正：让对话的出现条件互斥 ▼▼▼
         {
-            id: 'liumin_chat_eager', // 优先判断
+            id: 'liumin_chat_eager', // 热切 (71-100)
             buttonTextKey: 'event_chat_with_liumin_btn',
             condition: (state) => state.npcs.liu_min.favorability > 70,
             action: { type: 'triggerEvent', eventName: 'chat_liumin_eager' }
         },
         {
-            id: 'liumin_chat_calm', // 其次判断
+            id: 'liumin_chat_calm', // 缓和 (31-70)
             buttonTextKey: 'event_chat_with_liumin_btn',
-            condition: (state) => state.npcs.liu_min.favorability > 30,
+            condition: (state) => state.npcs.liu_min.favorability > 30 && state.npcs.liu_min.favorability <= 70,
             action: { type: 'triggerEvent', eventName: 'chat_liumin_calm' }
         },
         {
-            id: 'liumin_chat_alert', // 保底
+            id: 'liumin_chat_alert', // 警觉 (0-30)
             buttonTextKey: 'event_chat_with_liumin_btn',
-            condition: (state) => state.npcs.liu_min.met,
+            condition: (state) => state.npcs.liu_min.met && state.npcs.liu_min.favorability <= 30,
             action: { type: 'triggerEvent', eventName: 'chat_liumin_alert' }
         }
+        // ▲▲▲ 修正结束 ▲▲▲
     ],
 
     // === 张超的所有可用互动 (示例) ===
@@ -1534,6 +1596,20 @@ const taskData = {
             }
         ]
     },
+    //好奇心害死猫
+    'curiosity_kills_the_cat': {
+        titleKey: 'task_curiosity_kills_the_cat_title',
+        descriptionKey: 'task_curiosity_kills_the_cat_desc',
+        steps: [
+            { textKey: 'task_curiosity_kills_the_cat_step1', isDone: (state) => state.story.flags.chapter2.quests.warehouse_info_gathered, isVisible: (state) => true },
+            { textKey: 'task_curiosity_kills_the_cat_step2', isDone: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased, isVisible: (state) => state.story.flags.chapter2.quests.warehouse_info_gathered },
+            { textKey: 'task_curiosity_kills_the_cat_step3', isDone: (state) => state.story.flags.chapter2.quests.forest_entered, isVisible: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased },
+            { textKey: 'task_curiosity_kills_the_cat_step4', isDone: (state) => state.story.flags.chapter2.quests.mysterious_figure_met, isVisible: (state) => state.story.flags.chapter2.quests.forest_entered },
+        ],
+        hintsKeys: [
+            { key: 'task_curiosity_kills_the_cat_hint1', condition: (state) => true }
+        ]
+    },
     'bomb_countdown': {
         countdownTextKey: 'task_bomb_countdown'
     }
@@ -1717,13 +1793,6 @@ const locationEventData = {
         action: (game) => { game.openNpcInteractionModal('liu_min'); }
     },
     //===刘敏相关事件====
-    'takeover_liu_min_entry': {
-        location: 'liumin_home_bedroom',
-        buttonTextKey: 'event_takeover_liumin_btn',
-        color: 'bg-red-700',
-        condition: (state) => state.story.mainQuest === 'scent_of_a_woman' && state.npcs.liu_min.favorability >= 80 && !state.hosts.liu_min.wasEverPossessed && state.activeHostId === 'zhang_huili' && state.controlState.includes('SLIME'),
-        action: (game) => { game.eventManager.triggerEvent('takeover_host_liu_min'); }
-    },
     'memory_plunder_liu_min': {
         location: ['liumin_home_bedroom', 'liumin_home_bathroom'],
         buttonTextKey: 'event_memory_plunder_btn',
@@ -1736,6 +1805,19 @@ const locationEventData = {
             );
         },
         action: (game) => { game.eventManager.startMemoryPlunderGame('liu_min'); }
+    },
+
+    'access_special_store': {
+        location: 'special_store',
+        buttonTextKey: 'event_access_store_btn', // 确保这个key在语言文件中存在
+        // ▼▼▼ 核心修改：只有在已发现后才显示按钮 ▼▼▼
+        condition: (state) =>
+            state.controlState === 'SLIME_DETACHED' &&
+            state.story.flags.chapter2.upgrades.special_store_discovered, // 必须已经发现过
+        // ▼▼▼ 核心修改：直接打开商店，不再检查首次访问 ▼▼▼
+        action: (game) => {
+            game.uiManager.openStoreModal(); // 直接打开购买菜单
+        }
     },
 
     // --- 任务【身在他乡为异客】的调查事件 ---
@@ -1828,15 +1910,6 @@ const locationEventData = {
             messageType: 'warning'
         }
     },
-
-    // === 史莱姆商店 ===
-    'access_special_store': {
-        location: 'special_store',
-        buttonTextKey: 'event_investigate_machine_btn',
-        // 条件：只有史莱姆单体能进入
-        condition: (state) => state.controlState === 'SLIME_DETACHED',
-        action: (game) => { game.uiManager.openStoreModal(); }
-    }
 };
 
 const chapterSetupData = {
@@ -1862,6 +1935,54 @@ const chapterSetupData = {
     }
     // ... 未来可以继续添加更多章节
 };
+// 文件: data.js
+
+const storeItemsData = {
+    'destroy_cameras_home': {
+        nameKey: 'store_item_destroy_cameras_1_name',
+        descKey: 'store_item_destroy_cameras_1_desc',
+        cost: 5,
+        isPurchased: (state) => state.story.flags.chapter2.upgrades.cameras_home_destroyed,
+        effect: (game) => {
+            const state = game.stateManager.getState();
+            state.story.flags.chapter2.upgrades.cameras_home_destroyed = true;
+            // ▼▼▼ 核心修正：直接使用 allLocationData ▼▼▼
+            Object.values(allLocationData[2]).forEach(location => {
+                if (location.category === 'huili_home') {
+                    location.suspicionModifier = Math.max(0.1, (location.suspicionModifier || 1.0) - 0.5);
+                }
+            });
+            game.uiManager.showMessage('toast_purchase_success_cameras_home', 'success');
+        }
+    },
+    'destroy_cameras_public': {
+        nameKey: 'store_item_destroy_cameras_2_name',
+        descKey: 'store_item_destroy_cameras_2_desc',
+        cost: 13,
+        isPurchased: (state) => state.story.flags.chapter2.upgrades.cameras_public_destroyed,
+        effect: (game) => {
+            const state = game.stateManager.getState();
+            state.story.flags.chapter2.upgrades.cameras_public_destroyed = true;
+            // ▼▼▼ 核心修正：直接使用 allLocationData ▼▼▼
+            Object.values(allLocationData[2]).forEach(location => {
+                if (location.category === 'village_in' || location.category === 'village_out') {
+                    location.suspicionModifier = Math.max(0.1, (location.suspicionModifier || 1.0) - 0.5);
+                }
+            });
+            game.uiManager.showMessage('toast_purchase_success_cameras_public', 'success');
+        }
+    },
+    'scp500_clone': {
+        nameKey: 'store_item_scp500_clone_name',
+        descKey: 'store_item_scp500_clone_desc',
+        cost: 25,
+        isPurchased: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased,
+        effect: (game) => {
+            game.stateManager.getState().story.flags.chapter2.upgrades.scp500_clone_purchased = true;
+            game.uiManager.showMessage('toast_purchase_success_scp500', 'success');
+        }
+    }
+};
 
 // 在 data.js 文件末尾
 export {
@@ -1878,5 +1999,6 @@ export {
     allEventData,
     allNpcInteractions,
     generalHints,
-    chapterSetupData
+    chapterSetupData,
+    storeItemsData
 };
