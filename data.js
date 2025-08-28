@@ -90,6 +90,8 @@ const allLocationData = {
         },
     },
     // 第二章...
+    // 文件: data.js
+
     2: {
         'huili_home_your_bedroom': {
             nameKey: 'location_huili_home_your_bedroom',
@@ -99,7 +101,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/乡村卧室.png",
             accessTags: ['song_xin', 'zhang_huili'],
-            suspicionModifier: 1.5
+            slimeRisk: 5 // 安全区，风险低
         },
         'huili_home_huili_bedroom': {
             nameKey: 'location_huili_home_huili_bedroom',
@@ -109,7 +111,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/张慧丽卧室.png",
             accessTags: ['zhang_huili'],
-            suspicionModifier: 1.5
+            slimeRisk: 10 // 有一定风险
         },
         'huili_home_livingroom': {
             nameKey: 'location_huili_home_livingroom',
@@ -119,7 +121,7 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/乡村客厅.png",
             accessTags: ['song_xin', 'zhang_huili', 'guest'],
-            suspicionModifier: 1.5
+            slimeRisk: 15 // 风险稍高
         },
         'huili_home_bathroom': {
             nameKey: 'location_huili_home_bathroom',
@@ -129,9 +131,8 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/乡村厕所.png",
             accessTags: ['song_xin', 'zhang_huili'],
-            suspicionModifier: 1.5
+            slimeRisk: 5 // 安全区
         },
-        // === 刘敏家 (liumin_home) ===
         'liumin_home_bedroom': {
             nameKey: 'location_liumin_home_bedroom',
             descriptionKey: 'location_desc_liumin_bedroom',
@@ -140,8 +141,8 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/刘敏卧室.png",
             accessTags: ['liu_min'],
-            unlockFlag: 'chapter2.quests.liumin_home_unlocked', // 【新增】
-            suspicionModifier: 1.0
+            unlockFlag: 'chapter2.quests.liumin_home_unlocked',
+            slimeRisk: 25 // 风险较高
         },
         'liumin_home_bathroom': {
             nameKey: 'location_liumin_home_bathroom',
@@ -151,10 +152,9 @@ const allLocationData = {
             isPublic: false,
             image: "image/环境/刘敏厕所.png",
             accessTags: ['liu_min'],
-            unlockFlag: 'chapter2.quests.liumin_home_unlocked', // 【新增】
-            suspicionModifier: 1.0
+            unlockFlag: 'chapter2.quests.liumin_home_unlocked',
+            slimeRisk: 20 // 风险较高
         },
-        // === 村内 (village_in) ===
         'village_square': {
             nameKey: 'location_village_square',
             descriptionKey: 'location_desc_village_square',
@@ -163,7 +163,7 @@ const allLocationData = {
             isPublic: true,
             image: "image/环境/村广场.png",
             accessTags: ['public', 'guest'],
-            suspicionModifier: 1.5
+            slimeRisk: 40 // 高风险
         },
         'village_office': {
             nameKey: 'location_village_office',
@@ -173,18 +173,17 @@ const allLocationData = {
             isPublic: true,
             image: "image/环境/办事处.png",
             accessTags: ['public', 'guest'],
-            suspicionModifier: 1.5
+            slimeRisk: 50 // 极高风险
         },
-        // === 村外 (village_out) ===
         'village_lake': {
             nameKey: 'location_village_lake',
             descriptionKey: 'location_desc_village_lake',
             slimeDescriptionKey: 'slime_desc_village_lake',
             category: 'village_out',
-            isPublic: false,
+            isPublic: true,
             image: "image/环境/湖泊.png",
             accessTags: ['public'],
-            suspicionModifier: 1.0
+            slimeRisk: 20 // 中等风险
         },
         'special_store': {
             nameKey: 'location_special_store',
@@ -193,8 +192,8 @@ const allLocationData = {
             category: 'village_out',
             isPublic: false,
             image: "image/环境/特殊商店.png",
-            accessTags: ['slime_only'],
-            suspicionModifier: 1.0
+            accessTags: ['slime_only'], // 只有史莱姆单体能去
+            slimeRisk: 0 // 安全区
         },
         'abandoned_warehouse': {
             nameKey: 'location_abandoned_warehouse',
@@ -203,9 +202,9 @@ const allLocationData = {
             category: 'village_out',
             isPublic: false,
             image: "image/环境/废弃仓库.png",
-            accessTags: ['public'],
+            accessTags: ['jane','liu_min'],
             unlockFlag: 'chapter2.quests.warehouse_found',
-            suspicionModifier: 1.0
+            slimeRisk: 0 
         },
     }
 };
@@ -365,12 +364,9 @@ const allEventData = {
                 textKey: 'event_continue_ellipsis',
                 action: [
                     { type: 'setFlag', path: 'story.flags.chapter2.quests.forest_entered', value: true },
-                    // ▼▼▼ 核心修正 ▼▼▼
-                    // 1. 设置正确的解锁标记
                     { type: 'setFlag', path: 'story.flags.chapter2.quests.warehouse_found', value: true },
-                    // 2. 移动玩家到新地点
+                    // ▼▼▼ 核心修正：使用我们新增的移动指令 ▼▼▼
                     { type: 'moveActiveHost', locationId: 'abandoned_warehouse' },
-                    // ▲▲▲ 修正结束 ▲▲▲
                     { type: 'showMessage', key: 'toast_warehouse_unlocked', messageType: 'success' },
                     { type: 'advanceTime' }
                 ]
@@ -1146,7 +1142,8 @@ const allEventData = {
                     textKey: 'event_continue_ellipsis',
                     action: [
                         { type: 'setFlag', path: 'story.flags.chapter2.quests.forest_entered', value: true },
-                        { type: 'setFlag', path: 'locations.abandoned_warehouse.unlocked', value: true }, // 解锁棚屋
+                        { type: 'setFlag', path: 'story.flags.chapter2.quests.warehouse_found', value: true },
+                        { type: 'moveActiveHost', locationId: 'abandoned_warehouse' }, // ✅ 添加这行
                         { type: 'showMessage', key: 'toast_warehouse_unlocked', messageType: 'success' },
                         { type: 'advanceTime' }
                     ]
@@ -1185,7 +1182,12 @@ const allNpcInteractions = {
         {
             id: 'zhao_qimin_ask_warehouse',
             buttonTextKey: 'event_ask_about_warehouse_btn',
-            condition: (state) => state.activeHostId === 'liu_min' && state.npcs.zhao_qimin.favorability >= 50 && !state.story.flags.chapter2.quests.warehouse_info_gathered,
+            condition: (state) => {
+                return state.story.flags.chapter2.npc_liu_min.memoryPlundered && // 必须先读取刘敏记忆
+                    state.activeHostId === 'liu_min' &&
+                    state.npcs.zhao_qimin.favorability >= 50 &&
+                    !state.story.flags.chapter2.quests.warehouse_info_gathered;
+            },
             check: (state, skillManager) => state.controlState.includes('SLIME') && skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             action: { type: 'triggerEvent', eventName: 'ask_zhao_about_warehouse' },
             failAction: { type: 'showMessage', key: 'toast_need_socialization_control', messageType: 'warning' }
@@ -1209,9 +1211,11 @@ const allNpcInteractions = {
         {
             id: 'zhao_qimin_generic_chat',
             buttonTextKey: 'event_chat_with_zhao_qimin_btn',
-            // 条件：作为保底选项，只要见过面就可以闲聊
             condition: (state) => state.npcs.zhao_qimin.met,
-            action: { type: 'triggerEvent', eventName: 'chat_zhao_qimin_generic' }
+            // ▼▼▼ 在这里添加检查逻辑 ▼▼▼
+            check: (state, skillManager) => !state.controlState.includes('SLIME') || skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+            action: { type: 'triggerEvent', eventName: 'chat_zhao_qimin_generic' },
+            failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' }
         }
     ],
 
@@ -1266,7 +1270,16 @@ const allNpcInteractions = {
             id: 'liumin_takeover',
             buttonTextKey: 'event_takeover_liumin_btn',
             color: 'bg-red-700',
-            condition: (state) => state.story.mainQuest === 'scent_of_a_woman' && state.npcs.liu_min.favorability >= 80 && !state.hosts.liu_min.wasEverPossessed && state.activeHostId === 'zhang_huili' && state.controlState.includes('SLIME'),
+            // ▼▼▼ 核心修正：增加对当前地点的判断 ▼▼▼
+            condition: (state) => {
+                const activeHost = state.hosts[state.activeHostId];
+                return activeHost && activeHost.currentLocationId === 'liumin_home_bedroom' && // 必须在刘敏卧室
+                    state.story.mainQuest === 'scent_of_a_woman' &&
+                    state.npcs.liu_min.favorability >= 80 &&
+                    !state.hosts.liu_min.wasEverPossessed &&
+                    state.activeHostId === 'zhang_huili' &&
+                    state.controlState.includes('SLIME');
+            },
             action: { type: 'triggerEvent', eventName: 'takeover_host_liu_min' }
         },
         {
@@ -1280,17 +1293,20 @@ const allNpcInteractions = {
             id: 'liumin_chat_eager', // 热切 (71-100)
             buttonTextKey: 'event_chat_with_liumin_btn',
             condition: (state) => state.npcs.liu_min.favorability > 70,
+            check: (state, skillManager) => !state.controlState.includes('SLIME') || skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             action: { type: 'triggerEvent', eventName: 'chat_liumin_eager' }
         },
         {
             id: 'liumin_chat_calm', // 缓和 (31-70)
             buttonTextKey: 'event_chat_with_liumin_btn',
+            check: (state, skillManager) => !state.controlState.includes('SLIME') || skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             condition: (state) => state.npcs.liu_min.favorability > 30 && state.npcs.liu_min.favorability <= 70,
             action: { type: 'triggerEvent', eventName: 'chat_liumin_calm' }
         },
         {
             id: 'liumin_chat_alert', // 警觉 (0-30)
             buttonTextKey: 'event_chat_with_liumin_btn',
+            check: (state, skillManager) => !state.controlState.includes('SLIME') || skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             condition: (state) => state.npcs.liu_min.met && state.npcs.liu_min.favorability <= 30,
             action: { type: 'triggerEvent', eventName: 'chat_liumin_alert' }
         }
@@ -1680,7 +1696,12 @@ const taskData = {
             // ▼▼▼ 新增/修改的步骤 ▼▼▼
             { textKey: 'task_scent_of_woman_step1', isDone: (state) => state.story.flags.chapter2.npc_zhang_huili.memoryPlundered, isVisible: (state) => state.hosts.zhang_huili.wasEverPossessed }
         ],
-        hintsKeys: ['task_stranger_hint1', 'task_stranger_hint2']
+        hintsKeys: [
+            'task_stranger_hint1',
+            'task_stranger_hint2',
+            'task_stranger_hint3', // 新提示1
+            'task_stranger_hint4'  // 新提示2
+        ]
     },
     'scent_of_a_woman': {
         titleKey: 'task_scent_of_woman_title',
@@ -1930,19 +1951,27 @@ const locationEventData = {
     },
     //进入 森林
     'enter_forest_maze': {
-        location: 'village_lake', // 从湖边进入森林
+        location: 'village_lake',
         buttonTextKey: 'event_enter_forest_btn',
         condition: (state) => state.story.flags.chapter2.quests.warehouse_info_gathered && !state.story.flags.chapter2.quests.forest_entered,
+        // ▼▼▼ 核心修正：将所有判断逻辑都放入 action 中 ▼▼▼
         action: (game) => {
             const state = game.stateManager.getState();
-            if (state.activeHostId === 'liu_min' && state.controlState.includes('SLIME')) {
-                if (state.story.flags.chapter2.upgrades.scp500_clone_purchased) {
-                    game.eventManager.triggerEvent('forest_maze_event');
-                } else {
-                    game.uiManager.showMessage('toast_forest_no_scb500', 'error');
-                }
-            } else {
+            // 1. 首先检查是否是刘敏
+            if (state.activeHostId !== 'liu_min') {
                 game.uiManager.showMessage('toast_forest_wrong_host', 'warning');
+                return; // 直接退出
+            }
+            // 2. 其次检查是否是接管模式
+            if (!state.controlState.includes('SLIME')) {
+                game.uiManager.showMessage('toast_forest_need_control_mode', 'warning');
+                return; // 直接退出
+            }
+            // 3. 最后检查是否购买了SCP-500
+            if (state.story.flags.chapter2.upgrades.scp500_clone_purchased) {
+                game.eventManager.triggerEvent('forest_maze_event');
+            } else {
+                game.uiManager.showMessage('toast_forest_no_scb500', 'error');
             }
         }
     },
