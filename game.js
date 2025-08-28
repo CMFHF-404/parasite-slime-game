@@ -252,7 +252,12 @@ class StateManager {
                         npc_zhang_huili: {},
                         npc_liu_min: {},
                         npc_zhao_qimin: {},
-                        upgrades: {}
+                        upgrades: {
+                            special_store_discovered: false, // 你可能已经有这个了
+                            cameras_home_destroyed: false,
+                            cameras_public_destroyed: false,
+                            scp500_clone_purchased: false
+                        }
                     }
                 }
             },
@@ -840,6 +845,41 @@ class UIManager {
         if (!dataKey || !LANG[dataKey]) return;
         this.dom.gameoverModal.classList.remove('hidden');
         this.dom.gameoverText.innerHTML = LANG[dataKey];
+    }
+
+    // 文件: game.js
+
+    // 在 UIManager 类中...
+    openStoreModal() {
+        const LANG = this.languageManager.getCurrentLanguageData();
+        const state = this.game.stateManager.getState();
+        const template = document.getElementById('store-item-template');
+
+        this.openModal(LANG['modal_title_special_store'], (contentEl) => {
+            contentEl.innerHTML = `<p class="text-center text-gray-400 mb-4">${LANG['store_current_mutation_points']} <span class="font-bold text-lime-400">${state.slime.mutationPoints}</span></p>`;
+            const container = document.createElement('div');
+            container.className = 'space-y-4';
+            contentEl.appendChild(container);
+
+            Object.entries(gameData.storeItemsData).forEach(([itemId, itemData]) => {
+                const itemNode = template.content.cloneNode(true);
+                itemNode.querySelector('.item-name').textContent = LANG[itemData.nameKey];
+                itemNode.querySelector('.item-desc').textContent = LANG[itemData.descKey];
+                itemNode.querySelector('.item-cost').textContent = `成本: ${itemData.cost}`;
+
+                const buyButton = itemNode.querySelector('.buy-button');
+                if (itemData.isPurchased(state)) {
+                    buyButton.textContent = LANG['store_btn_purchased'];
+                    buyButton.disabled = true;
+                } else if (state.slime.mutationPoints < itemData.cost) {
+                    buyButton.disabled = true;
+                } else {
+                    buyButton.onclick = () => this.game.purchaseStoreItem(itemId);
+                }
+
+                container.appendChild(itemNode);
+            });
+        });
     }
 }
 
@@ -3179,7 +3219,8 @@ class Game {
     }
 
 
-    // 在 Game 类中
+    // 修改 game.js 中的 moveToLocation 函数
+    // 在移动逻辑的最后添加特殊区域检查
 
     moveToLocation(locationId) {
         const LANG = this.languageManager.getCurrentLanguageData();
@@ -3189,23 +3230,18 @@ class Game {
 
         const currentChapterLocations = this.getCurrentChapterLocations();
         const locationData = currentChapterLocations[locationId];
-        if (!locationData) return; // 安全检查
+        if (!locationData) return;
 
         const locationName = LANG[locationData.nameKey];
 
         if (isDetached) {
-            // 【核心修改】
-            // 1. 读取地点的风险值，如果未定义则默认为 20
             const riskValue = locationData.slimeRisk !== undefined ? locationData.slimeRisk : 20;
-
             state.slime.currentLocationId = locationId;
             state.slime.suspicion += riskValue;
 
-            // 2. 在提示信息中动态显示增加的怀疑值
             let message = LANG['toast_slime_moved_prefix'] + locationName + LANG['toast_slime_moved_suffix'];
             message = message.replace('{RISK}', riskValue);
             this.uiManager.showMessage(message, 'warning');
-
         } else {
             const activeHost = this.stateManager.getActiveHost();
             if (activeHost) {
@@ -3213,7 +3249,56 @@ class Game {
                 this.uiManager.showMessage(`${LANG['toast_host_moved_prefix'].replace('{HOST_NAME}', activeHost.name)}${locationName}${LANG['toast_host_moved_suffix']}`, 'info');
             }
         }
+
+        // ▼▼▼ 新增：特殊区域自动事件触发检查 ▼▼▼
+        this.checkSpecialLocationEvents(locationId);
+        // ▲▲▲ 新增结束 ▲▲▲
+
         this.timeManager.advanceSegment();
+    }
+
+    // ▼▼▼ 新增：特殊区域事件检查函数 ▼▼▼
+    checkSpecialLocationEvents(locationId) {
+        const state = this.stateManager.getState();
+
+        // 检查神秘商店初见事件
+        if (locationId === 'special_store' &&
+            state.controlState === 'SLIME_DETACHED' &&
+            !state.story.flags.chapter2.upgrades.special_store_discovered) {
+
+            // 延迟触发，确保移动提示显示完毕后再弹出事件
+            setTimeout(() => {
+                this.eventManager.triggerEvent('discover_special_store');
+            }, 1000);
+        }
+
+        // 未来可以在这里添加其他特殊区域的自动事件
+        // if (locationId === 'another_special_location' && condition) {
+        //     this.eventManager.triggerEvent('another_auto_event');
+        // }
+    }
+    // ▲▲▲ 新增函数结束 ▲▲▲
+
+    // 在 Game 类中...
+    purchaseStoreItem(itemId) {
+        const state = this.stateManager.getState();
+        const itemData = gameData.storeItemsData[itemId];
+        const LANG = this.languageManager.getCurrentLanguageData();
+
+        if (!itemData || itemData.isPurchased(state) || state.slime.mutationPoints < itemData.cost) {
+            this.uiManager.showMessage(LANG['toast_not_enough_mutation_points'], 'warning');
+            return;
+        }
+
+        // 扣除点数
+        state.slime.mutationPoints -= itemData.cost;
+
+        // 执行效果
+        itemData.effect(this);
+
+        // 重新打开商店并更新UI
+        this.uiManager.openStoreModal();
+        this.update();
     }
 }
 
