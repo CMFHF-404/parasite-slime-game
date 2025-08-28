@@ -259,9 +259,7 @@ const LANGS = {
         "task_stranger_desc": "张超的表现让史莱姆难以忘怀，难道自己陷入圈套了？还是自己想多了？接下来是享用送到口的美食，还是小心为上？",
         "task_stranger_step1": "了解周围环境 (可选)",
         "task_stranger_step2": "夺取张慧丽",
-        "task_stranger_hint1": "初来乍到，先四处转转了解环境，或许能发现新的“猎物”。",
-        "task_stranger_hint2": "这个村子似乎并不像表面上那么简单，小心行事。",
-
+      
         "event_talk_to_zc_btn": "和张超聊聊",
         "event_ask_escape_btn": "询问关于疫情的事 (重要)",
         "event_memory_plunder_btn": "记忆侵夺",
@@ -582,7 +580,8 @@ const LANGS = {
         // 游戏提示 (Hints)
         "task_stranger_hint1": "作为史莱姆，你的首要任务是寻找新的容器和能量。张慧丽是一个完美的目标，但贸然行动可能会导致失败。",
         "task_stranger_hint2": "仔细调查环境中的每一个细节，它们可能会揭示出意想不到的突破口。特别是那个连接着后院的供水系统……",
-
+        "task_stranger_hint3": "不同地区有不同的怀疑权重增值，请谨慎行动！",
+        "task_stranger_hint4": "史莱姆单体，有时候可以移动到常人找不到的地方……",
         //---闻香识女人---
         "task_stranger_step7": "侵蚀张慧丽",
         "task_scent_of_woman_title": "闻香识女人",
@@ -684,7 +683,7 @@ const LANGS = {
         "store_item_destroy_cameras_2_name": "明目张胆地破坏摄像头",
         "store_item_destroy_cameras_2_desc": "消耗13突变点。“售货机”会制造一场“意外”，摧毁村内所有公共区域的监控设备。短期内，这里将成为你的游乐场。",
         "store_item_scp500_clone_name": "特殊基因（“万能药”SCP-500克隆体）", // 修改：为500加上前缀
-        "store_item_scp500_clone_desc": "消耗25突变点。“售货机”为你提供一种万能药的基因样本，能让你暂时抵御森林中那些致命的“虫灾”。",
+        "store_item_scp500_clone_desc": "消耗25突变点。“售货机”为你提供一种万能药的基因样本，能让你暂时抵御潜在的威胁。",
         "store_item_puppet_maintenance_name": "提供“保养”服务",
         "store_item_puppet_maintenance_desc": "消耗5突变点。“售货机”每天会前往傀儡待机点，“保养”你停放的容器。每购买一级，每天就能让一个“傀儡”状态的宿主为你产生1个突变点（最多6级）。",
 
@@ -879,6 +878,8 @@ const LANGS = {
         "task_bomb_countdown": "距离协议执行还剩",
         "gameover_bomb_detonated": "<strong>行动评估：失败</strong><br><br>在预定的回收窗口关闭时，落坡村发生剧烈爆炸，地表被完全清除，所有生物信号消失。情报分析认为，潜伏于此的混沌分裂者小组在回收‘母体’样本的行动中遭遇失败或不可控因素，最终选择启动‘焦土协议’以销毁所有证据并撤离。<br><br><strong>结论：</strong>针对母体的捕获行动已失败，目标样本推定已在爆炸中被销毁。混沌分裂者对‘史莱姆’异常的兴趣等级已被提升至最高。",
 
+        "toast_forest_need_control_mode": "在这种环境下，只有完全掌控这具身体才能确保生存。",
+        "toast_need_socialization": "你需要“社会化”能力才能进行有效的沟通。",
     },  
     'en': {
         // Meta
@@ -1136,8 +1137,7 @@ const LANGS = {
         "task_stranger_desc": "Zhang Chao's behavior is unforgettable to the slime. Was it a trap? Or is it overthinking? Should it enjoy the meal served, or proceed with caution?",
         "task_stranger_step1": "Scout the surroundings (Optional)",
         "task_stranger_step2": "Take over Zhang Huili",
-        "task_stranger_hint1": "You're new here. Look around to get familiar with the environment; you might find new 'prey'.",
-        "task_stranger_hint2": "This village doesn't seem as simple as it looks. Be careful.",
+        
         "event_talk_to_zc_btn": "Chat with Zhang Chao",
         "event_ask_escape_btn": "Ask about the epidemic (Important)",
         "event_memory_plunder_btn": "Memory Plunder",
@@ -1439,6 +1439,8 @@ const LANGS = {
         // Game Hints
         "task_stranger_hint1": "As a slime, your primary mission is to find new vessels and energy. Zhang Huili is a perfect target, but a rash move could lead to failure.",
         "task_stranger_hint2": "Carefully investigate every detail in the environment; they might reveal unexpected breakthroughs. Especially that water supply system connected to the backyard...",
+        "task_stranger_hint3": "Different areas have different suspicion multipliers. Move with caution!",
+        "task_stranger_hint4": "As a lone slime, you can sometimes move to places ordinary people can't find...",
 
         "event_investigate_environment_btn": "Investigate Area",
 
@@ -1760,6 +1762,9 @@ const LANGS = {
         // --- Chapter 2 Countdown and Game Over ---
         "task_bomb_countdown": "Time until protocol execution:",
         "gameover_bomb_detonated": "<strong>Operation Assessment: FAILURE</strong><br><br>At the close of the scheduled recovery window, a massive explosion occurred in Luopo Village, completely clearing the surface and eliminating all biological signals. Intelligence analysis suggests that the Chaos Insurgency cell operating in the area failed in their attempt to recover the 'Matriarch' specimen or encountered uncontrollable factors, ultimately choosing to enact a 'Scorched Earth Protocol' to destroy all evidence and evacuate.<br><br><strong>Conclusion:</strong> The operation to capture the Matriarch has failed; the target specimen is presumed destroyed in the blast. The Chaos Insurgency's interest level in the 'Slime' anomaly has been elevated to maximum priority.",
+
+        "toast_forest_need_control_mode": "In this environment, only full control of this body can ensure survival.",
+        "toast_need_socialization": "You need the 'Socialization' skill for effective communication.",
     }
 }
 export { LANGS };
