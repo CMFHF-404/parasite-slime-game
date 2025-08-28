@@ -591,7 +591,14 @@ const LANGS = {
         "task_scent_of_woman_step3": "和刘敏打好关系 (好感度 >= 80)",
         "task_scent_of_woman_step4": "想办法侵蚀刘敏",
         "task_scent_of_woman_hint1": "刘敏只在晚上出现在村广场。你需要以“张慧丽”的身份，在接管模式下与她接触。",
-
+        // --- 好奇心害死猫 ---
+        "task_curiosity_kills_the_cat_title": "好奇心害死猫",
+        "task_curiosity_kills_the_cat_desc": "事情开始变得紧张起来了。一个同类？兜底方案？为什么前往棚屋的人都有去无回？找到知情人士询问一下。",
+        "task_curiosity_kills_the_cat_step1": "向赵齐民打探关于棚屋的消息",
+        "task_curiosity_kills_the_cat_step2": "找到抵御特殊昆虫的办法",
+        "task_curiosity_kills_the_cat_step3": "进入森林",
+        "task_curiosity_kills_the_cat_step4": "和神秘人影交谈",
+        "task_curiosity_kills_the_cat_hint1": "那个神秘的售货机似乎不仅仅是个摆设……",
         // 事件系列
         "event_investigate_environment_btn": "调查环境",
 
@@ -620,6 +627,39 @@ const LANGS = {
         "event_make_plan_c2_desc": "回到卧室，你将所有的线索在脑中串联起来：无处不在的监控、奇怪的供水系统、神秘的村支书、湖对岸的仓库……这一切都证明这个村庄是一个巨大的陷阱。但陷阱，同样也可以成为猎场。那个连接着所有房间的供水系统，将是你送出“礼物”的最佳渠道。是时候了，该让张慧丽成为你在这里的第一个“眼睛”了。",
         "event_make_plan_btn": "制定侵蚀计划",
         "event_execute_plan_btn": "执行侵蚀计划",
+
+        //史莱姆商店事件
+        "event_ask_about_warehouse_btn": "询问关于棚屋的事",
+        "event_ask_zhao_warehouse_title": "一次警告",
+        "event_ask_zhao_warehouse_p1": "你操控着刘敏的身体，开门见山地向赵齐民询问湖对岸废弃棚屋的事情，并表示你准备过去调查。赵齐民的脸色瞬间变了，他厉声说道：‘别去送死！前段时间那里闹虫灾，被咬到的人不出几日就会毙命！之前派去灭虫的人都有去无回！’",
+        "event_ask_zhao_warehouse_p2": "史莱姆的意识无法理解这种人类的情绪，但赵齐民似乎察觉到了你的“不理解”。他低下头，用一种只有你能听懂的、充满暗示的语气说：‘如果你非要过去，可以走条近路……进入森林后，记住，先北、后西、再北、最后南。这样，也许能躲开那些“虫子”。’",
+        // --- 商店初见事件 ---
+        "event_access_store_btn": "活体终端",
+        "event_discover_store_title": "活体终端",
+        "event_discover_store_p1": "你以史莱姆形态靠近了那个奇怪的“售货机”。它根本不是机器，而是一个面容姣好、但双眼空洞到没有任何灵魂迹象的女人。她的身体似乎与某种装置融合在了一起，你甚至无法尝试接管，她已经不是一个完整的生物了。",
+        "event_discover_store_p2": "她“感应”到了你的到来，并主动向你开放了她的“大脑”。你惊恐地发现，她的大脑内部被彻底改造成了一个生物科技平台，专门用于吸收突变点，并将其转化为其他物质或能力。你瞬间明白了，能做出这种事情的，恐怕是级别远高于你的、恐怖的同类。",
+        "toast_special_store_unlocked": "你解锁了特殊商店！现在可以通过区域事件访问。",
+
+        //商店商品
+        "store_item_destroy_cameras_1": "破坏隐藏摄像头 (解除张慧丽家怀疑权重)",
+        "store_item_destroy_cameras_2": "明目张胆地破坏摄像头 (解除公共区域怀疑权重)",
+        "store_item_scp500_clone": "特殊基因(SCP-500克隆体)",
+
+        // --- 商店UI和商品 ---
+        "modal_title_special_store": "活体终端",
+        "event_investigate_machine_btn": "活体终端",
+        "store_current_mutation_points": "当前突变点：",
+        "store_btn_purchased": "已获取",
+        "store_item_destroy_cameras_1_name": "破坏隐藏摄像头",
+        "store_item_destroy_cameras_1_desc": "消耗5突变点。悄无声息地摧毁安装在张慧丽家中的所有微型摄像头，大幅降低在此处行动被察觉的风险。",
+        "store_item_destroy_cameras_2_name": "明目张胆地破坏摄像头",
+        "store_item_destroy_cameras_2_desc": "消耗13突变点。制造一场“意外”，摧毁村内所有公共区域的监控设备。短期内，这里将成为你的游乐场。",
+        "store_item_scp500_clone_name": "特殊基因（SCP-500克隆体）",
+        "store_item_scp500_clone_desc": "消耗25突变点。一种万能药的基因样本，能让你暂时抵御森林中那些致命的“虫灾”。",
+        "toast_not_enough_mutation_points": "突变点不足！",
+        "toast_purchase_success_cameras_home": "你感受到周围的窥视感减弱了。",
+        "toast_purchase_success_cameras_public": "公共区域的“眼睛”暂时失明了。",
+        "toast_purchase_success_scp500": "你获得了一种能抵御未知威胁的特殊基因。",
 
         //===赵启民正常互动系列===
         "event_chat_with_zhao_qimin_btn": "和赵齐民聊聊",
@@ -1356,6 +1396,14 @@ const LANGS = {
         "task_scent_of_woman_step4": "Find a way to erode Liu Min",
         "task_scent_of_woman_hint1": "Liu Min only appears in the village square at night. You need to approach her as 'Zhang Huili' while in control mode.",
 
+        // --- New Quest ---
+        "task_curiosity_kills_the_cat_title": "Curiosity Kills the Cat",
+        "task_curiosity_kills_the_cat_desc": "Things are getting tense. A kindred? A contingency plan? Why does no one who goes to the warehouse ever return? I need to find someone in the know and ask.",
+        "task_curiosity_kills_the_cat_step1": "Ask Zhao Qimin about the warehouse",
+        "task_curiosity_kills_the_cat_step2": "Find a way to resist the special insects",
+        "task_curiosity_kills_the_cat_step3": "Enter the forest",
+        "task_curiosity_kills_the_cat_step4": "Talk to the mysterious figure",
+        "task_curiosity_kills_the_cat_hint1": "That mysterious vending machine seems to be more than just a decoration...",
 
         // 1. Investigate Bedroom
         "event_investigate_bedroom_c2_title": "Eyes in the Corner",
@@ -1383,6 +1431,39 @@ const LANGS = {
         "event_make_plan_c2_desc": "Back in the bedroom, you connect all the clues in your mind: the ubiquitous surveillance, the strange water system, the mysterious village chief, the warehouse across the lake... It all proves this village is a giant trap. But a trap can also be a hunting ground. The water system, connecting all the rooms, will be the perfect channel to deliver your 'gift.' It is time to make Zhang Huili your first pair of 'eyes' here.",
         "event_make_plan_btn": "Formulate Erosion Plan",
         "event_execute_plan_btn": "Execute Erosion Plan",
+
+        // --- New Events ---
+        "event_ask_about_warehouse_btn": "Ask about the warehouse",
+        "event_ask_zhao_warehouse_title": "A Warning",
+        "event_ask_zhao_warehouse_p1": "Controlling Liu Min's body, you cut to the chase and ask Zhao Qimin about the abandoned warehouse across the lake, stating your intention to investigate. His expression changes instantly. 'Don't get yourself killed!' he snaps. 'There was a severe insect infestation there a while back. Anyone bitten dies within days! The pest control team we sent in never came back!'",
+        "event_ask_zhao_warehouse_p2": "The slime's consciousness cannot comprehend this human emotion, but Zhao Qimin seems to notice your 'lack of understanding.' He lowers his head and says in a suggestive tone only you could understand, 'If you insist on going, there's a shortcut... After entering the forest, remember: first North, then West, then North again, and finally South. That way, you might just avoid the 'insects'.'",
+        // --- Store First Encounter Event ---
+        "event_access_store_btn": "Living Terminal",
+        "event_discover_store_title": "Living Terminal",
+        "event_discover_store_p1": "In your slime form, you approach the strange 'vending machine.' It's not a machine at all, but a beautiful woman with eyes so empty they hold no trace of a soul. Her body seems to be fused with some kind of device. You can't even attempt to take over; she is no longer a complete living being.",
+        "event_discover_store_p2": "She 'senses' your arrival and willingly opens her 'mind' to you. To your horror, you find her brain has been completely converted into a biotech platform, specifically designed to absorb mutation points and transform them into other substances or abilities. You understand instantly: only a terrifyingly high-level kindred, far superior to you, could have done this.",
+        "toast_special_store_unlocked": "You've unlocked the Special Store! It can now be accessed via Area Events.",
+
+        // --- Store Items (Placeholders, requires UI implementation) ---
+        "store_item_destroy_cameras_1": "Destroy Hidden Cameras (Removes suspicion weight from Huili's home)",
+        "store_item_destroy_cameras_2": "Destroy Cameras Blatantly (Removes suspicion weight from public areas)",
+        "store_item_scp500_clone": "Special Gene (SCP-500 Clone)",
+
+        // --- Store UI and Items ---
+        "modal_title_special_store": "Living Terminal",
+        "event_investigate_machine_btn": "Living Terminal",
+        "store_current_mutation_points": "Current Mutation Points:",
+        "store_btn_purchased": "Acquired",
+        "store_item_destroy_cameras_1_name": "Destroy Hidden Cameras",
+        "store_item_destroy_cameras_1_desc": "Cost: 5 Mutation Points. Silently destroy all micro-cameras installed in Zhang Huili's house, significantly reducing the risk of being detected there.",
+        "store_item_destroy_cameras_2_name": "Destroy Cameras Blatantly",
+        "store_item_destroy_cameras_2_desc": "Cost: 13 Mutation Points. Create an 'accident' that destroys all surveillance equipment in the village's public areas. For a short time, this place will be your playground.",
+        "store_item_scp500_clone_name": "Special Gene (SCP-500 Clone)",
+        "store_item_scp500_clone_desc": "Cost: 25 Mutation Points. A genetic sample of the Panacea, allowing you to temporarily resist the deadly 'insect plague' in the forest.",
+        "toast_not_enough_mutation_points": "Not enough mutation points!",
+        "toast_purchase_success_cameras_home": "You feel the sense of being watched has diminished.",
+        "toast_purchase_success_cameras_public": "The 'eyes' in the public areas have been temporarily blinded.",
+        "toast_purchase_success_scp500": "You've acquired a special gene that can resist unknown threats.",
 
         //===ZhaoQiminNormalInteract===
         "event_chat_with_zhao_qimin_btn": "Chat with Zhao Qimin",
