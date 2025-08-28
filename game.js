@@ -257,8 +257,8 @@ class StateManager {
                             liumin_home_unlocked: false, // 【新增】
                             warehouse_found: false 
                         },
-                        npc_zhang_huili: {},
-                        npc_liu_min: {},
+                        npc_zhang_huili: { memoryPlundered: false },
+                        npc_liu_min: { memoryPlundered: false },
                         npc_zhao_qimin: {},
                         upgrades: {
                             special_store_discovered: false, // 你可能已经有这个了
