@@ -8,6 +8,8 @@
 import * as gameData from './data.js';
 import { LanguageManager } from './languageManager.js';
 import { LANGS } from './language.js';
+window.gameData = gameData; // <-- 添加这一行代码
+
 const NUM_SAVE_SLOTS = 8; // <-- 【新增】定义存档栏位总数为 8
 // 在 game.js 文件顶部
 const GAME_VERSION = 2; // 定义当前游戏的最新版本号
@@ -165,29 +167,34 @@ class StateManager {
                     expectedLocationId: 'liumin_home_bedroom',
                     isAiControlled: true,
                     status: 'INACTIVE',
-                    isPuppet: false, // 【新增】
+                    isPuppet: false,
                     nsfwUsedThisSegment: false,
                     wasEverPossessed: false,
                     tags: ['liu_min', 'public'],
-                    portraits: { // ▼▼▼ 新增 ▼▼▼
-                        normal: "image/特写/刘敏正常.png", // (假设的图片路径)
-                        controlled: "image/特写/刘敏控制.png" // (假设的图片路径)
+                    portraits: {
+                        normal: "image/特写/刘敏正常.png",
+                        controlled: "image/特写/刘敏控制.png"
                     },
+                    // ▼▼▼ 核心修正：补全所有缺失的事件配置 ▼▼▼
                     events: {
                         reEnterEvent: 're_enter_liu_min',
-                        initialTakeoverEvent: 'initial_takeover_liu_min', 
+                        initialTakeoverEvent: 'initial_takeover_liu_min', // 这是一个占位符，指向侵蚀事件
                         detachImage: {
-                            // 宋欣没有normal/puppet之分，但结构要保持一致
                             normal: "image/CG/刘敏/宿主模式/常规脱离躯体.png",
                             puppet: "image/CG/刘敏/接管模式/永久接管脱离身体.png"
                         },
-                        returnControlDesc: { // 新增
-                            mismatch: 'return_control_mismatch_desc', // "咦？我怎么会在这里..."
-                            match: 'return_control_match_desc'      // "大脑中一段空白..."
+                        sanityLossImage: "image/CG/刘敏/失去理智.png", // 假设的图片路径
+                        reEnterImage: {
+                            normal: "image/CG/刘敏/宿主模式/常规返回躯体.png",
+                            puppet: "image/CG/刘敏/接管模式/永久接管返回躯体.png"
+                        },
+                        returnControlDesc: {
+                            mismatch: 'return_control_mismatch_desc',
+                            match: 'return_control_match_desc'
                         }
-                    },
-                    sanityLossImage: "image/CG/刘敏/失去理智.png"
-                }, // 修正：使用角色ID 'liu_min' 作为Tag
+                    }
+                    // ▲▲▲ 修正结束 ▲▲▲
+                },
                 'jane': {
                     name: initialLang['host_name_jane'],
                     stamina: 100, sanity: 100,
@@ -247,7 +254,8 @@ class StateManager {
                             plan_made: false
                         },
                         quests: {
-                            liumin_home_unlocked: false // 【新增】
+                            liumin_home_unlocked: false, // 【新增】
+                            warehouse_found: false 
                         },
                         npc_zhang_huili: {},
                         npc_liu_min: {},
@@ -256,7 +264,8 @@ class StateManager {
                             special_store_discovered: false, // 你可能已经有这个了
                             cameras_home_destroyed: false,
                             cameras_public_destroyed: false,
-                            scp500_clone_purchased: false
+                            scp500_clone_purchased: false,
+                            puppet_maintenance_level: 0 // <-- 添加这一行
                         }
                     }
                 }
@@ -773,7 +782,7 @@ class UIManager {
         this.dom.tetrisModal.classList.add('hidden');
         this.closeHostManagementModal();
     }
-    
+
     closeHostManagementModal() {
         if (this.dom.hostModal) {
             this.dom.hostModal.classList.add('hidden');
@@ -849,7 +858,6 @@ class UIManager {
 
     // 文件: game.js
 
-    // 在 UIManager 类中...
     openStoreModal() {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.game.stateManager.getState();
@@ -865,17 +873,34 @@ class UIManager {
                 const itemNode = template.content.cloneNode(true);
                 itemNode.querySelector('.item-name').textContent = LANG[itemData.nameKey];
                 itemNode.querySelector('.item-desc').textContent = LANG[itemData.descKey];
-                itemNode.querySelector('.item-cost').textContent = `成本: ${itemData.cost}`;
+                itemNode.querySelector('.item-cost').textContent = `${LANG['store_item_cost'] || '成本: '}${itemData.cost}`;
 
                 const buyButton = itemNode.querySelector('.buy-button');
-                if (itemData.isPurchased(state)) {
-                    buyButton.textContent = LANG['store_btn_purchased'];
+
+                // ▼▼▼ 核心修正：使用语言文件中的文本替换所有硬编码 ▼▼▼
+                const currentPurchases = state.story.flags.chapter2.upgrades[itemId + '_level'] || (itemData.isPurchased(state) ? 1 : 0);
+                const maxPurchases = itemData.maxPurchases || 1;
+
+                if (currentPurchases >= maxPurchases) {
+                    // 使用 'store_btn_acquired' 文本键
+                    buyButton.textContent = LANG['store_btn_acquired'] + (maxPurchases > 1 ? ` (${currentPurchases}/${maxPurchases})` : '');
                     buyButton.disabled = true;
                 } else if (state.slime.mutationPoints < itemData.cost) {
+                    // 使用 'store_btn_buy' 文本键
+                    buyButton.textContent = LANG['store_btn_buy'] || '购买';
                     buyButton.disabled = true;
                 } else {
+                    // 使用 'store_btn_buy' 文本键
+                    buyButton.textContent = LANG['store_btn_buy'] || '购买';
                     buyButton.onclick = () => this.game.purchaseStoreItem(itemId);
                 }
+
+                if (maxPurchases > 1 && currentPurchases > 0) {
+                    // 使用 'store_item_level' 文本键
+                    const levelText = LANG['store_item_level'] || ' (等级 {level})';
+                    itemNode.querySelector('.item-name').textContent += levelText.replace('{level}', currentPurchases);
+                }
+                // ▲▲▲ 修正结束 ▲▲▲
 
                 container.appendChild(itemNode);
             });
@@ -1085,7 +1110,7 @@ class TimeManager {
             this.onTimeAdvanced();
         }
     }
-    // 在 TimeManager 类中
+    // 文件: game.js
 
     nextDay() {
         const LANG = this.languageManager.getCurrentLanguageData();
@@ -1096,7 +1121,6 @@ class TimeManager {
         state.story.dailyFlow = (state.time.dayOfWeek > 5) ? 'weekend' : 'none';
         state.story.nsfwActsToday = 0;
 
-        // 重置所有宿主的“欲望激荡”标记
         Object.values(state.hosts).forEach(host => {
             host.nsfwUsedThisSegment = false;
         });
@@ -1107,8 +1131,8 @@ class TimeManager {
                 if (state.story.countdown.key === 'health_check_main') {
                     this.onTimeAdvanced({ gameEvent: 'health_check_failed' });
                     return;
-                } else if (state.story.countdown.key === 'bomb_countdown') { // <-- 检查新的key
-                    this.onTimeAdvanced({ gameEvent: 'bomb_detonated' }); // <-- 触发新的事件
+                } else if (state.story.countdown.key === 'bomb_countdown') {
+                    this.onTimeAdvanced({ gameEvent: 'bomb_detonated' });
                     return;
                 }
             }
@@ -1118,15 +1142,11 @@ class TimeManager {
         state.slime.suspicion = Math.max(0, state.slime.suspicion - suspicionReduction);
         this.uiManager.showMessage('toast_new_day_started', 'success', { AMOUNT: suspicionReduction });
 
-        // ▼▼▼ 最终版体力与理智恢复逻辑 ▼▼▼
         Object.entries(state.hosts).forEach(([hostId, host]) => {
             const isPlayerControlledSlime = (hostId === state.activeHostId) && (state.controlState === 'SLIME' || state.controlState === 'PERMANENT_SLIME');
-
             if (!isPlayerControlledSlime) {
                 host.stamina = 100;
             }
-
-            // 【核心修改】同样增加 isPlayerControlledSlime 判断，防止为被控制的宿主恢复理智
             if (host.isAiControlled && !isPlayerControlledSlime) {
                 host.sanity = 50;
             } else if (host.sanity > 0 && !isPlayerControlledSlime) {
@@ -1140,9 +1160,23 @@ class TimeManager {
             this.uiManager.showMessage('toast_sanity_recovered_sleep', 'success');
         }
 
+        // ▼▼▼ 核心修正：修复傀儡保养收益的计算逻辑 ▼▼▼
+        const maintenanceLevel = state.story.flags.chapter2.upgrades.puppet_maintenance_level || 0;
+        if (maintenanceLevel > 0) {
+            const puppetCount = Object.values(state.hosts).filter(h => h.isPuppet).length;
+            // 正确的公式：每个傀儡的产量 = 保养等级
+            const pointsGained = puppetCount * maintenanceLevel;
+            if (pointsGained > 0) {
+                state.slime.mutationPoints += pointsGained;
+                this.uiManager.showMessage('toast_maintenance_income', 'success', { POINTS: pointsGained });
+            }
+        }
+        // ▲▲▲ 修正结束 ▲▲▲
+
         this.updateOnTimePassage(true);
         this.onTimeAdvanced();
     }
+
     // 文件: game.js
 
     updateOnTimePassage(isNewDay = false) {
@@ -1382,6 +1416,21 @@ class EventManager {
                 case 'modifyFavor': // effect: { type: 'modifyFavor', npcId: 'zhang_chao', value: 10 }
                     if (state.npcs[effect.npcId]) {
                         state.npcs[effect.npcId].favorability = Math.min(100, state.npcs[effect.npcId].favorability + effect.value);
+                    }
+                    break;
+                case 'advanceMaze':
+                    // 这个逻辑会直接显示迷宫事件的下一页
+                    this.showEventPage(gameData.allEventData['forest_maze_event'], effect.stage - 1);
+                    return; // 阻止后续的 game.update()
+
+                case 'failMaze':
+                    this.uiManager.closeEventModal();
+                    this.uiManager.showMessage('toast_maze_failed', 'warning');
+                    this.game.timeManager.advanceSegment();
+                    return;
+                case 'moveActiveHost':
+                    if (state.activeHostId && state.hosts[state.activeHostId]) {
+                        state.hosts[state.activeHostId].currentLocationId = effect.locationId;
                     }
                     break;
                 case 'startNewChapter':
@@ -1648,8 +1697,8 @@ class NpcManager {
             // 赵齐民: 只在工作时间 (周一至周五) 的中午和下午出现在办事处
             const zhao_qimin = state.npcs.zhao_qimin;
             if (zhao_qimin.met) {
-                const isWorkTime = state.time.dayOfWeek <= 5 && (state.time.segment.startsWith('noon') || state.time.segment.startsWith('afternoon'));
-                if (isWorkTime && currentLocation === 'village_office') {
+                const isOfficeHours = state.time.segment.startsWith('noon') || state.time.segment.startsWith('afternoon');
+                if (isOfficeHours && currentLocation === 'village_office') {
                     zhao_qimin.isPresent = true;
                 }
             }
@@ -1828,38 +1877,39 @@ class NpcManager {
         const calculateSuspicion = (baseSuspicion, interactionSuspicion = 0) => {
             const currentLocation = this.game.getCurrentChapterLocations()[activeHost.currentLocationId];
             const isInPublic = currentLocation && currentLocation.isPublic;
-            const locationModifier = currentLocation?.suspicionModifier || 1;
 
-            // A. 计算个人怀疑度（基础+互动）
+            // 1. 获取基础地区权重
+            let locationModifier = currentLocation?.suspicionModifier || 1;
+
+            // 2. 动态应用商店升级效果
+            const upgrades = state.story.flags.chapter2.upgrades;
+            if (upgrades.cameras_home_destroyed && currentLocation.category === 'huili_home') {
+                locationModifier = Math.max(0.1, locationModifier - 0.5);
+            }
+            if (upgrades.cameras_public_destroyed && (currentLocation.category === 'village_in' || currentLocation.category === 'village_out')) {
+                locationModifier = Math.max(0.1, locationModifier - 0.5);
+            }
+
             let personalSuspicion = 0;
-
-            // A1. 个人基础怀疑度（只在每日第4次NSFW+HOST模式下计算）
             if (baseSuspicion > 0 && state.story.nsfwActsToday > 3 && controlState === 'HOST') {
                 personalSuspicion += baseSuspicion;
             }
-
-            // A2. 互动风险怀疑度（每次都计算）
             if (interactionSuspicion > 0) {
                 personalSuspicion += interactionSuspicion;
             }
 
-            // A3. 应用记忆侵夺技能减免（每级减少20%）
             if (personalSuspicion > 0) {
                 const memoryReduction = 1 - (memoryPlunderRank * 0.2);
                 personalSuspicion = Math.round(personalSuspicion * memoryReduction * locationModifier);
             }
 
-            // B. 计算公共场所怀疑度
             let publicSuspicion = 0;
             if (isInPublic) {
-                publicSuspicion = 50; // 公共场所基础怀疑度
-
-                // B1. 应用激素诱惑技能减免（每级减少20%）
+                publicSuspicion = 50;
                 const hormoneReduction = 1 - (hormoneAllureRank * 0.2);
                 publicSuspicion = Math.round(publicSuspicion * hormoneReduction * locationModifier);
             }
 
-            // C. 合并最终怀疑度
             return {
                 personal: personalSuspicion,
                 public: publicSuspicion,
@@ -1875,7 +1925,7 @@ class NpcManager {
             const finalSanityLoss = Math.round(Math.abs(effects.sanity || 0) * sanityMultiplier);
 
             // 计算怀疑度
-            const suspicionResult = calculateSuspicion(effects.suspicion || 0);
+            const suspicionResult = calculateSuspicion(effects.baseSuspicion || 0);
 
             // 应用体力和理智效果
             if (staminaLoss > 0 && controlState === 'HOST') {
@@ -3299,6 +3349,156 @@ class Game {
         // 重新打开商店并更新UI
         this.uiManager.openStoreModal();
         this.update();
+    }
+    // 怀疑值计算控制台反馈
+    debugSuspicionCalculation() {
+        const state = this.stateManager.getState();
+        const activeHost = this.stateManager.getActiveHost();
+
+        if (!activeHost) {
+            console.log("❌ 没有活跃宿主");
+            return;
+        }
+
+        console.log("=".repeat(60));
+        console.log("🔍 怀疑值计算规则检查");
+        console.log("=".repeat(60));
+
+        // 基础信息
+        console.log("📊 基础状态信息:");
+        console.log(`  当前宿主: ${activeHost.name} (${state.activeHostId})`);
+        console.log(`  控制模式: ${state.controlState}`);
+        console.log(`  当前怀疑值: ${state.slime.suspicion}/200`);
+        console.log(`  今日NSFW次数: ${state.story.nsfwActsToday}`);
+        console.log("");
+
+        // 地点信息
+        const currentLocation = this.getCurrentChapterLocations()[activeHost.currentLocationId];
+        console.log("🏠 地点信息:");
+        console.log(`  当前地点ID: ${activeHost.currentLocationId}`);
+        console.log(`  地点名称: ${currentLocation ? this.languageManager.getCurrentLanguageData()[currentLocation.nameKey] : '未知'}`);
+        console.log(`  是否公共场所: ${currentLocation?.isPublic ? '是' : '否'}`);
+        console.log(`  地区权重系数: ${currentLocation?.suspicionModifier || 1.0}`);
+        console.log("");
+
+        // 技能信息
+        const memoryPlunderRank = this.skillManager.getSkillRank('memory_plunder', state.activeHostId);
+        const hormoneAllureRank = this.skillManager.getSkillRank('hormone_allure', state.activeHostId);
+
+        console.log("🛡️ 相关技能等级:");
+        console.log(`  记忆侵夺: ${memoryPlunderRank}级 (减少${memoryPlunderRank * 20}%个人怀疑值)`);
+        console.log(`  激素诱惑: ${hormoneAllureRank}级 (减少${hormoneAllureRank * 20}%公共怀疑值)`);
+        console.log("");
+
+        // NSFW数据分析
+        const hostNsfwData = gameData.allNsfwData[state.activeHostId];
+        if (hostNsfwData) {
+            console.log("💋 NSFW行为怀疑值数据:");
+            console.log("  【自慰行为】:");
+            if (hostNsfwData.self) {
+                const selfEffects = hostNsfwData.self.baseEffects;
+                console.log(`    基础个人怀疑值: ${selfEffects.baseSuspicion || 0}`);
+                console.log(`    触发条件: 每日第4次+ & 宿主模式`);
+            }
+
+            console.log("  【互动行为】:");
+            if (hostNsfwData.partnered) {
+                Object.entries(hostNsfwData.partnered).forEach(([key, data]) => {
+                    const npcName = state.npcs[data.npcId]?.name || data.npcId;
+                    console.log(`    与${npcName}(${key}):`);
+                    console.log(`      基础个人怀疑值: ${data.effects.baseSuspicion || 0}`);
+                    console.log(`      互动风险怀疑值: ${data.effects.interactionSuspicion || 0}`);
+                    console.log(`      突变几率: ${(data.effects.mutationChance || 0) * 100}%`);
+                });
+            }
+            console.log("");
+        }
+
+        // 计算示例
+        console.log("🧮 怀疑值计算示例 (模拟自慰行为):");
+        this.simulateSuspicionCalculation('self');
+        console.log("");
+
+        if (hostNsfwData && hostNsfwData.partnered) {
+            const firstPartner = Object.keys(hostNsfwData.partnered)[0];
+            if (firstPartner) {
+                console.log(`🧮 怀疑值计算示例 (模拟互动行为 - ${firstPartner}):`);
+                this.simulateSuspicionCalculation('partnered', firstPartner);
+            }
+        }
+
+        console.log("=".repeat(60));
+        console.log("使用方法: 在控制台输入 game.debugSuspicionCalculation()");
+        console.log("=".repeat(60));
+    }
+
+    // 怀疑值计算模拟
+    simulateSuspicionCalculation(nsfwType, interactionKey = null) {
+        const state = this.stateManager.getState();
+        const activeHost = this.stateManager.getActiveHost();
+        const currentLocation = this.getCurrentChapterLocations()[activeHost.currentLocationId];
+        const hostNsfwData = gameData.allNsfwData[state.activeHostId];
+
+        const memoryPlunderRank = this.skillManager.getSkillRank('memory_plunder', state.activeHostId);
+        const hormoneAllureRank = this.skillManager.getSkillRank('hormone_allure', state.activeHostId);
+        const isInPublic = currentLocation && currentLocation.isPublic;
+        const locationModifier = currentLocation?.suspicionModifier || 1;
+        const controlState = state.controlState.includes('SLIME') ? 'SLIME' : 'HOST';
+
+        let baseSuspicion = 0;
+        let interactionSuspicion = 0;
+
+        if (nsfwType === 'self' && hostNsfwData.self) {
+            baseSuspicion = hostNsfwData.self.baseEffects.baseSuspicion || 0;
+        } else if (nsfwType === 'partnered' && interactionKey && hostNsfwData.partnered[interactionKey]) {
+            const data = hostNsfwData.partnered[interactionKey];
+            baseSuspicion = data.effects.baseSuspicion || 0;
+            interactionSuspicion = data.effects.interactionSuspicion || 0;
+        }
+
+        // A. 计算个人怀疑度
+        let personalSuspicion = 0;
+
+        // A1. 个人基础怀疑度（只在每日第4次NSFW+HOST模式下计算）
+        let basePersonalSuspicion = 0;
+        if (baseSuspicion > 0 && state.story.nsfwActsToday > 3 && controlState === 'HOST') {
+            basePersonalSuspicion = baseSuspicion;
+            console.log(`  个人基础怀疑值: ${baseSuspicion} (今日第${state.story.nsfwActsToday + 1}次, ${controlState}模式)`);
+        } else {
+            console.log(`  个人基础怀疑值: 0 (今日第${state.story.nsfwActsToday + 1}次, ${controlState}模式, 不满足触发条件)`);
+        }
+
+        // A2. 互动风险怀疑度
+        if (interactionSuspicion > 0) {
+            console.log(`  互动风险怀疑值: ${interactionSuspicion}`);
+            personalSuspicion += interactionSuspicion;
+        }
+
+        personalSuspicion += basePersonalSuspicion;
+
+        // A3. 应用记忆侵夺技能减免
+        let finalPersonalSuspicion = personalSuspicion;
+        if (personalSuspicion > 0) {
+            const memoryReduction = 1 - (memoryPlunderRank * 0.2);
+            finalPersonalSuspicion = Math.round(personalSuspicion * memoryReduction * locationModifier);
+            console.log(`  记忆侵夺减免: ${personalSuspicion} × ${memoryReduction.toFixed(1)} × ${locationModifier} = ${finalPersonalSuspicion}`);
+        }
+
+        // B. 计算公共场所怀疑度
+        let publicSuspicion = 0;
+        if (isInPublic) {
+            publicSuspicion = 50; // 公共场所基础怀疑度
+            const hormoneReduction = 1 - (hormoneAllureRank * 0.2);
+            publicSuspicion = Math.round(publicSuspicion * hormoneReduction * locationModifier);
+            console.log(`  公共场所怀疑值: 50 × ${hormoneReduction.toFixed(1)} × ${locationModifier} = ${publicSuspicion}`);
+        } else {
+            console.log(`  公共场所怀疑值: 0 (非公共场所)`);
+        }
+
+        // C. 合并最终怀疑度
+        const totalSuspicion = finalPersonalSuspicion + publicSuspicion;
+        console.log(`  → 总计怀疑值增加: ${totalSuspicion} (个人${finalPersonalSuspicion} + 公共${publicSuspicion})`);
+        console.log(`  → 怀疑值变化: ${state.slime.suspicion} → ${Math.min(200, state.slime.suspicion + totalSuspicion)}`);
     }
 }
 
