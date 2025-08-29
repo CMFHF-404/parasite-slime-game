@@ -5,7 +5,7 @@
 const LANGS = {
     'zh': {
         // Meta
-        "game_title_long": "寄生史莱姆v0.2.7",
+        "game_title_long": "寄生史莱姆v0.3.0",
         "game_title_short": "寄生史莱姆",
 
         // Main Menu
@@ -79,6 +79,7 @@ const LANGS = {
         "host_name_zhang_huili": "张慧丽",
         "npc_name_liu_min": "刘敏",
         "host_name_liu_min": "刘敏",
+        "host_name_jane": "简(Jane)",
         "npc_name_zhao_qimin": "赵齐民",
         "control_status_takeover": "接管中",
         "control_status_permanent": "永久接管",
@@ -599,6 +600,8 @@ const LANGS = {
         "task_curiosity_kills_the_cat_step1": "向赵齐民打探关于棚屋的消息",
         "task_curiosity_kills_the_cat_step2": "找到抵御特殊昆虫的办法",
         "task_curiosity_kills_the_cat_step3": "进入森林",
+        "task_accept_down_payment_step1": "夺取简的身体",
+        "task_read_jane_memories_step1": "在张慧丽的客厅读取简的记忆",
         "task_curiosity_kills_the_cat_step4": "和神秘人影交谈",
         "task_curiosity_kills_the_cat_hint1": "你有找到神秘商店吗？",
         "task_curiosity_kills_the_cat_hint3": "忘记迷宫路线了？看这里：北 -> 西 -> 北 -> 南！",
@@ -640,6 +643,7 @@ const LANGS = {
         // --- 商店初见事件 ---
         "event_access_store_btn": "活体终端",
         "event_discover_store_title": "活体终端",
+        "event_access_store_btn_revisit": "访问活体终端",
         "event_discover_store_p1": "你以史莱姆形态靠近了那个奇怪的“售货机”。它根本不是机器，而是一个面容姣好、但双眼空洞到没有任何灵魂迹象的女人。她的身体似乎与某种装置融合在了一起，你甚至无法尝试接管，她已经不是一个完整的生物了。",
         "event_discover_store_p2": "她“感应”到了你的到来，并主动向你开放了她的“大脑”。你惊恐地发现，她的大脑内部被彻底改造成了一个生物科技平台，专门用于吸收突变点，并将其转化为其他物质或能力。你瞬间明白了，能做出这种事情的，恐怕是级别远高于你的、恐怖的同类。",
         "toast_special_store_unlocked": "你解锁了特殊商店！现在可以通过区域事件访问。",
@@ -796,6 +800,8 @@ const LANGS = {
         "nsfw_desc_liumin_office_slime": "史莱姆操控着这具训练有素的特工身体，在这间属于“上位者”的办公室里，上演了一场无声的亵渎。刘敏双目无神，动作精准地解开自己的束缚。它不仅仅是在汲取能量，更是在用这具躯壳的体液和信息素，故意玷污这个权力空间。这是一种最原始、最嚣张的挑衅。",
         "nsfw_desc_liumin_square_host": "夜色下的村广场寂静无人，刘敏隐藏在监控的死角。白天压抑的紧张感和对未知的恐惧，在这一刻转化为强烈的生理渴望。她靠着冰冷的廊柱，进行了一场迅速而激烈的自我慰藉。身体的战栗让她暂时忘记了自己孤身一人、深陷敌营的处境。",
         "nsfw_desc_liumin_square_slime": "史莱姆精准地计算着每一个监控摄像头的扫描周期和盲区。它驱使刘敏的身体，双目空洞，在这片看似毫无遮掩的广场上上演了一场最大胆的能量汲取。看着那些冰冷的机器徒劳地扫过，却无法捕捉到阴影中这具正在沉沦的精英躯体，史莱姆的意识中涌动着近乎于嘲弄的愉悦。",
+        "nsfw_desc_liumin_warehouse_host": "回到这个让她同伴全军覆没的仓库，刘敏的内心充满了痛苦和恐惧。但身体深处被史莱姆种下的欲望种子，却在这种极端的情绪下疯狂发芽。她不受控制地抚摸着自己，仿佛只有用这种堕落的方式，才能暂时麻痹那份足以将她撕裂的悲伤。",
+        "nsfw_desc_liumin_warehouse_slime": "史莱姆操控着刘敏的身体，回到了这个对她而言如同地狱的仓库。它故意让她在这里进行自我慰藉，强迫她回忆起同伴死亡的场景。刘敏越是痛苦，史莱姆就越是兴奋，它能从这份混杂着悲伤、恐惧和欲望的情绪中，汲取到最顶级的精神能量。",
 
         // --- 刘敏与赵齐民互动 NSFW (HOST/SLIME 修正版) ---
         "zq_nsfw_desc_lm_host_BJ": "为了获取情报，刘敏压下内心的屈辱，主动靠近了赵齐民。她跪了下去，用一种混合着憎恶与自我放弃的心态，让自己的唇舌不熟练地在他的胯间游走。每一次触碰都像是在凌迟她的自尊，但为了任务，她只能将这份恶心与身体深处不受控制的背德快感一同咽下。",
@@ -874,6 +880,62 @@ const LANGS = {
         "nsfw_desc_huili_liumin_lp_host": "一股不属于自己的、强烈的冲动驱使着张慧丽的身体。她主动地、甚至可以说是笨拙地跪在了刘敏的身前。刘敏的眼中闪过一丝惊讶和不解，但并没有推开她。当张慧丽颤抖的唇舌探向那片私密的花园时，她能感受到对方身体瞬间的僵硬，和随之而来的、压抑不住的轻颤。从对方喉咙里泄出的呻吟，像一道电流，击中了张慧丽麻木的神经，让她在羞耻的深渊中，感受到了一丝停不下来的、病态的愉悦。",
         "nsfw_desc_huili_liumin_lp_slime": "史莱姆将这次互动视为一场对“精英特工”底线的精妙测试。它操控着张慧丽的身体，让她双目无神地跪下，用一种冷静到残忍的、机械的节奏，让她的唇舌在那片女性最敏感的私密花园间游走。它饶有兴致地观察着刘敏从最初的惊愕，到身体逐渐软化、呼吸变得急促的全过程。看着这名训练有素的特工在自己人偶的侍奉下逐渐沉沦，史莱姆从中汲取着最纯粹的、充满支配感的愉悦。",
 
+        // 文件: language.js (中文)
+        // 文件: language.js (中文)
+        // --- 夺取Jane事件 ---
+        "event_takeover_jane_btn": "夺取简的身体",
+        "event_takeover_jane_title": "接收“定金”",
+        "event_takeover_jane_desc": "你将史莱姆的意识探入这具名为‘简’的躯壳。你惊讶地发现，她的大脑中并没有同类的核心——至少现在没有了。大部分脑组织都被一种你无法理解的、极其精巧的技术改造过，形成了一个复杂的生物网络。它似乎能自动感知到同类的气息，并像录音机一样，回放预设好的信息和动作。冷酷，而且……残忍。",
+        "toast_takeover_jane_success": "你获得了新的躯壳：简！她的个人侵蚀技能已自动满级。",
+        // --- Jane 角色与事件 ---
+        "event_meet_jane_title": "不速之客",
+        "event_meet_jane_p1": "你操控着刘敏的身体，小心翼翼地踏入废弃仓库。仓库内异常安静，只有远处传来微弱的、像是无数小虫爬行的沙沙声。在仓库中央的阴影里，静静地站着一个看不清面容的女人。",
+        "event_meet_jane_p2": "你缓缓靠近，终于看清了她的脸——那是一张极其美丽的脸庞，但双眼翻白，面无表情，如同精致的人偶。突然，她的喉咙里发出一阵非人的、咯咯的声响，在空旷的仓库里回荡，令人不寒而栗。她开口了，声音平直得像一台留声机，与她怪异的形象形成了鲜明对比：“【留言信息……恭喜你，同胞。你通过了外围测试。】”",
+        "event_meet_jane_p3": "话音刚落，她开始不受控制般地抚摸自己的身体，摆出极度妖艳的姿势。她的声音继续响起，依然是那种没有任何语调的平静：“【这具身体的前主人，好像叫‘简’(Jane)。她背后的势力妄图理解、利用我们，但他们对我们的真正实力一无所知。你不一样。你很有潜力，在失去母体和大部分知识的情况下，依然能走到这一步。你的手段……相当毒辣。这正是我们需要的。】”",
+        "event_meet_jane_p4": "女人的身体突然像断了线的木偶，脑袋无力地垂了下去。留声机般的声音播放着最后的信息：“【欢迎加入‘第一子嗣’的势力。这具身体，就当作给你的‘定金’了。如果你接受，你的下一个任务就是前往SITE-17——SCP的领地，找到我们的‘联络人’。她会给你下一步指示。当然，我们猜测，你也没有太多选择……毕竟，只有这个女人知道离开这里的办法。】”",
+        // --- Jane - 控制事件 ---
+        "event_reenter_jane_title": "意识回归 (简)",
+        "event_reenter_jane_desc": "意识重新连接上这具经过精密改造的精英躯壳。曾经的指挥官，如今成了你最完美的傀儡。",
+        // --- Jane记忆侵夺 ---
+        "event_mem_plunder_success_jane_title": "破碎的影像",
+        "event_mem_plunder_success_jane_p1": "你尝试深入简的记忆，但迎接你的只有一片死寂。这具躯壳的大部分大脑结构都被改造了，真正意义上地失去了情感、记忆和逻辑思维能力，只保留了感知外界并执行预设指令的功能。简，作为一个“人”，已经死了。",
+        "event_mem_plunder_success_jane_p2": "但就在你准备退出时，一段不属于简的、被强行植入的“影像资料”浮现了出来：画面中，简带领着一男一女两名下属，装备精良。“小心，”简嘱咐道，“这种异常存在精神污染，会引诱人去接近它。有必要时，记得喝‘自我之液’以强化认知。”",
+        "event_mem_plunder_success_jane_p3": "画面一转，三人都倒在了仓库内。一个衣冠不整的女人——“第一子嗣”——从暗处现身，她对着肩膀上的一只巨大的、类似蜈蚣的生物说：“男的归你，女的归我。”",
+        "event_mem_plunder_success_jane_p4": "最后的影像中，简已经像人偶一样直挺挺地站在原地，目送着被改造成“售货机”的女下属迈着机械的步伐离开。她突然开口，用留声机般平直的语调报告：“组织：混沌分裂者。任务：回收SCP-xxx并验证武器化可能性。完成标准：和下属赵齐民共同确认异常已被收容后，于终端输入己方安全指令‘CH2231JS’。双方安全指令确认无误后，安排组织开展收容和善后工作。”留言：“你已接受‘定金’，违约的后果，你很清楚！”",
+        "toast_mem_plunder_success_jane": "你获得了离开这里的关键情报！",
+        // --- Jane遇见赵齐民 ---
+        "event_jane_meet_zhao_title": "上下级",
+        "event_jane_meet_zhao_desc": "你操控着简的身体，第一次踏入村办事处。正在处理文件的赵齐民看到你，立刻像被踩了尾巴的猫一样跳了起来，慌忙地敬礼：‘长，长官！您怎么亲自过来了？’你用简那不带任何感情的、留声机般的声音回应道：‘赵齐民，做好你的本职工作。’ 赵齐民的额头渗出了冷汗，不敢再多说一句。",
+
+        // --- 终局任务 ---
+        "task_deep_or_shallow_title": "今日方知轻与重",
+        "task_deep_or_shallow_desc": "箭在弦上，不得不发。此刻，你已经知道你没有别的选择。现在必须和赵齐民交涉，争取离开的机会。",
+        "task_deep_or_shallow_step1": "完全接管所有位于“落坡村”的宿主",
+        "task_deep_or_shallow_step2": "“威逼利诱”赵齐民",
+        "task_deep_or_shallow_hint1": "这是第二章最后一个任务了，尽情享受！",
+
+        // --- 终局事件 ---
+        "event_final_confrontation_zhao_title": "最后的谈判",
+        "event_final_confrontation_zhao_p1_revised": "办事处里，赵齐民惊恐地看着你身后的三个女人：迷茫的张慧丽、冷酷的刘敏，以及面无表情的简。“你，你们这是要干什么？”他的声音因为恐惧而颤抖。",
+        "event_final_confrontation_zhao_p2": "“赵齐民，”你操控着张慧丽的身体，用她那柔弱的声音说，“你看，我给你带来了三位‘姐妹’，她们都很‘想念’你呢。只要你乖乖合作，我们保证不会伤害你。”",
+        "event_final_confrontation_zhao_p3": "“别听她的鬼话，”你切换到刘敏的身体，用她那冰冷而专业的语气说道，“赵齐民，我知道你的任务。交出你的安全指令，这是你唯一的活路。否则，我不介意在这里把你‘处理’掉。”",
+        "event_final_confrontation_zhao_p4": "“呵呵……”你切换到宋欣的身体，发出一阵天真的娇笑，“超哥哥~别那么紧张嘛，大家都是‘自己人’，不是吗？只要你听话，姐姐们会好好‘疼’你的哦~”",
+        "event_final_confrontation_zhao_p5": "最后，你操控着简的身体上前一步，用她那不带任何感情的、留声机般的声音，说出了最后的通牒：“赵齐民，我只需要你那一半的安全代号‘CH2231JS’。交出来，你不仅能活命，还能得到这四个女人。为什么不接受？”",
+        "event_final_confrontation_zhao_p6_revised": "就在赵齐民的心理防线即将崩溃时，他手腕上的通讯器突然发出了急促的警报声。他看了一眼屏幕，脸色瞬间变得惨白。与此同时，窗外传来一阵骚动。你看到一群装备精良的SCP特工正在村广场上部署着什么，他们中间押送着的，正是你在第一章抛弃的宿主——宋薇！她的双眼紧闭，似乎失去了意识，身上连接着某种闪烁着微光的精密仪器……",
+        "to_be_continued": "（未完待续...）",
+        // --- Jane NSFW 文本 ---
+        "nsfw_event_jane_title": "精英的陨落",
+        "nsfw_choice_self_jane": "人偶的独白",
+        "nsfw_desc_jane_warehouse_slime": "在这座囚禁了她意识的仓库里，史莱姆驱使着简的身体进行自我“展示”。曾经精明干练的指挥官，如今双目无神，机械地褪去衣物，用她那训练有素的双手在自己身上制造着羞耻的快感。这是对她过去身份最彻底的亵渎。",
+        "nsfw_desc_jane_livingroom_slime": "在张慧丽家那平凡的客厅里，史莱姆让简这位前混沌分裂者精英上演了一场特殊的“余兴节目”。她面无表情地抚慰着自己，与周围格格不入。对史莱姆而言，看着这位人中龙凤像一个人肉傀儡一样任由自己摆布，是一种比单纯汲取能量更高级的愉悦。",
+        "nsfw_desc_jane_office_slime": "史莱姆驱使着简的身体，来到了这个村庄的权力核心——赵齐民的办公室。它让她以一种极具挑衅性的姿态，在这张象征着秩序的办公桌上进行自我慰藉。这是对混沌分裂者这个组织无声的、最极致的蔑视。",
+        "nsfw_desc_jane_square_slime": "在遍布监控的村广场，史莱姆操控着简上演了一场最大胆的表演。它让她在一个监控的短暂盲区内，用那双曾指挥千军万马的手抚慰着自己的身体。看着这位曾经的人中龙凤在自己意志下做出如此羞耻之事，史莱姆的意识中充满了扭曲的、胜利般的快感。",
+        "nsfw_desc_jane_lake_slime": "湖边的月光下，史莱姆让简这位曾经的精英指挥官，像一个等待爱人临幸的普通女人一样，褪去衣物，抚慰着自己的身体。不远处的仓库是她陨落的地方，而现在，她正在这里用最原始的方式“庆祝”自己的新生。这种极致的反差，让史莱姆感到无比的满足。",
+        "nsfw_title_jane_zq_bj": "女王的赏赐",
+        "nsfw_desc_jane_zq_bj_slime": "史莱姆操控着简，这位曾经的精英上级，主动向赵齐民这位“下等生物”跪下。她双目无神，用她那曾下达无数指令的唇舌，机械地进行着取悦。这不仅仅是羞辱，更是一种宣告——看，你们所敬畏的权力，在我面前不过是玩物。",
+        "nsfw_title_jane_zq_ms": "规则的重塑",
+        "nsfw_desc_jane_zq_ms_slime": "史莱姆驱使着简，让她主动跨坐在赵齐民身上。曾经的上下级关系在这一刻被彻底颠覆。她双目无神，身体的每一次起伏都精准而高效，像一部正在执行程序的机器。史莱姆在享受这份感官盛宴的同时，也在嘲弄着人类那可笑的、脆弱的社会规则。",
+
         // --- 第二章倒计时和Game Over ---
         "task_bomb_countdown": "距离协议执行还剩",
         "gameover_bomb_detonated": "<strong>行动评估：失败</strong><br><br>在预定的回收窗口关闭时，落坡村发生剧烈爆炸，地表被完全清除，所有生物信号消失。情报分析认为，潜伏于此的混沌分裂者小组在回收‘母体’样本的行动中遭遇失败或不可控因素，最终选择启动‘焦土协议’以销毁所有证据并撤离。<br><br><strong>结论：</strong>针对母体的捕获行动已失败，目标样本推定已在爆炸中被销毁。混沌分裂者对‘史莱姆’异常的兴趣等级已被提升至最高。",
@@ -883,7 +945,7 @@ const LANGS = {
     },  
     'en': {
         // Meta
-        "game_title_long": "Parasite Slime v0.2.7",
+        "game_title_long": "Parasite Slime v0.3.0",
         "game_title_short": "Parasite Slime",
 
         // Main Menu
@@ -955,6 +1017,7 @@ const LANGS = {
         "npc_name_zhang_chao": "Zhang Chao",
         "npc_name_zhang_huili": "Zhang Huili",
         "host_name_zhang_huili": "Zhang Huili",
+        "host_name_jane": "Jane",
         "npc_name_liu_min": "Liu Min",
         "npc_name_zhao_qimin": "Zhao Qimin", 
         "control_status_takeover": "Controlling",
@@ -1462,6 +1525,8 @@ const LANGS = {
         "task_curiosity_kills_the_cat_step1": "Ask Zhao Qimin about the warehouse",
         "task_curiosity_kills_the_cat_step2": "Find a way to resist the special insects",
         "task_curiosity_kills_the_cat_step3": "Enter the forest",
+        "task_accept_down_payment_step1": "Take over Jane's body",
+        "task_read_jane_memories_step1": "Read Jane's memories in Zhang Huili's living room",
         "task_curiosity_kills_the_cat_step4": "Talk to the mysterious figure",
         "task_curiosity_kills_the_cat_hint1": "Have you found the special store?",
         "task_curiosity_kills_the_cat_hint3": "Forgot the maze route? Look here: North -> West -> North -> South!",
@@ -1501,6 +1566,7 @@ const LANGS = {
         // --- Store First Encounter Event ---
         "event_access_store_btn": "Living Terminal",
         "event_discover_store_title": "Living Terminal",
+        "event_access_store_btn_revisit": "Access the Living Terminal",
         "event_discover_store_p1": "In your slime form, you approach the strange 'vending machine.' It's not a machine at all, but a beautiful woman with eyes so empty they hold no trace of a soul. Her body seems to be fused with some kind of device. You can't even attempt to take over; she is no longer a complete living being.",
         "event_discover_store_p2": "She 'senses' your arrival and willingly opens her 'mind' to you. To your horror, you find her brain has been completely converted into a biotech platform, specifically designed to absorb mutation points and transform them into other substances or abilities. You understand instantly: only a terrifyingly high-level kindred, far superior to you, could have done this.",
         "toast_special_store_unlocked": "You've unlocked the Special Store! It can now be accessed via Area Events.",
@@ -1665,6 +1731,8 @@ const LANGS = {
         "nsfw_desc_liumin_office_slime": "Controlling this highly-trained agent's body, the slime stages a silent desecration in the office of the 'superior.' With vacant eyes, Liu Min precisely unfastens her restraints. It's not just harvesting energy; it's deliberately defiling this space of power with the vessel's bodily fluids and pheromones. This is a primal, arrogant provocation.",
         "nsfw_desc_liumin_square_host": "The village square is silent under the night sky. Liu Min hides in a surveillance blind spot. The suppressed tension from the day and the fear of the unknown transform into a potent physiological craving. Leaning against a cold pillar, she engages in a quick, intense act of self-solace. The shudders running through her body let her temporarily forget she is alone and deep in enemy lines.",
         "nsfw_desc_liumin_square_slime": "The slime precisely calculates the scanning cycles and blind spots of every surveillance camera. It drives Liu Min's body, eyes vacant, to perform the most audacious energy extraction in this seemingly open square. Watching the cold machines sweep by, unable to capture the elite vessel succumbing in the shadows, a near-mocking pleasure surges through the slime's consciousness.",
+        "nsfw_desc_liumin_warehouse_host": "Returning to the warehouse where her comrades were annihilated, Liu Min's heart is filled with pain and fear. But the seeds of desire planted by the slime sprout wildly under these extreme emotions. She uncontrollably caresses herself, as if only through this depraved act can she temporarily numb the grief that threatens to tear her apart.",
+        "nsfw_desc_liumin_warehouse_slime": "The slime controls Liu Min's body, bringing her back to the warehouse that is like a personal hell for her. It deliberately makes her pleasure herself here, forcing her to recall the scene of her comrades' deaths. The more Liu Min suffers, the more excited the slime becomes, as it can harvest the most exquisite psychic energy from this mixture of grief, fear, and desire.",
 
         // --- Liu Min & Zhao Qimin Interaction NSFW (HOST/SLIME Revised) ---
         "zq_nsfw_desc_lm_host_BJ": "To obtain intelligence, Liu Min suppresses her inner humiliation and actively approaches Zhao Qimin. She kneels, and with a mix of disgust and self-abandonment, lets her lips and tongue unskillfully explore his groin. Every touch feels like a slow death to her self-respect, but for the mission, she can only swallow this disgust along with the uncontrollable, perverse pleasure welling up from deep within.",
@@ -1759,6 +1827,60 @@ const LANGS = {
         "nsfw_desc_huili_liumin_lp_host": "A strong impulse, not her own, drives Zhang Huili's body. She actively, almost clumsily, kneels before Liu Min. A flash of surprise and confusion crosses Liu Min's eyes, but she doesn't push her away. As Zhang Huili's trembling lips and tongue explore that private garden, she can feel the other's body stiffen for a moment, followed by an irrepressible shudder. The moan escaping from the other's throat strikes Zhang Huili's numb nerves like an electric current, making her feel an unstoppable, morbid pleasure in the abyss of her shame.",
         "nsfw_desc_huili_liumin_lp_slime": "The slime views this interaction as a subtle test of the 'elite agent's' limits. It controls Zhang Huili's body, making her kneel with vacant eyes. Then, with a chillingly cruel and mechanical rhythm, it makes her lips and tongue wander between the most sensitive petals of that female garden. It watches with great interest as Liu Min's initial astonishment gives way to a softening body and quickening breath. Watching this highly-trained agent succumb to the ministrations of its puppet, the slime draws the purest, most dominant pleasure.",
 
+        // --- Takeover Jane Event ---
+        "event_takeover_jane_btn": "Take Over Jane's Body",
+        "event_takeover_jane_title": "Receiving the 'Down Payment'",
+        "event_takeover_jane_desc": "You extend your slime's consciousness into the vessel named 'Jane'. To your surprise, you find no kindred core within her brain—at least, not anymore. Most of her brain tissue has been modified by an incredibly sophisticated technology you cannot comprehend, forming a complex biological network. It seems designed to automatically detect a kindred's presence and replay preset messages and actions, like a recording. Cold, and... cruel.",
+        "toast_takeover_jane_success": "You have acquired a new vessel: Jane! Her Personal Erosion skills have been maxed out automatically.",
+
+        "event_meet_jane_title": "An Unwelcome Guest",
+        "event_meet_jane_p1": "Controlling Liu Min's body, you cautiously step into the abandoned warehouse. It's eerily quiet, except for a faint rustling sound in the distance, like countless small insects crawling. In the central shadows of the warehouse, a woman with an obscured face stands silently.",
+        "event_meet_jane_p2": "You slowly approach and finally see her face—it's extraordinarily beautiful, but her eyes are rolled back, her expression blank, like an exquisite doll. Suddenly, an inhuman gurgling sound escapes her throat, echoing chillingly in the vast warehouse. She speaks, her voice as flat and emotionless as a phonograph, in stark contrast to her grotesque appearance: \"[Recorded message... Congratulations, kindred. You have passed the initial test.]\"",
+        "event_meet_jane_p3": "As the voice fades, her body begins to caress itself uncontrollably, striking intensely seductive poses. Her voice continues, still with that same unnervingly calm tone: \"[The former owner of this body... was called 'Jane'. The faction behind her sought to understand and use us, but they were too naive, ignorant of our true power. You are different. You have potential. To have come this far, despite losing the Matriarch and most of our knowledge... your methods must be quite ruthless. That is what we need.]\"",
+        "event_meet_jane_p4": "The woman's body suddenly slumps like a marionette with its strings cut, her head lolling to the side. The phonograph-like voice plays its final message: \"[Welcome to the faction of the 'First Offspring'. Consider this body a 'down payment'. If you accept, your next mission is to proceed to SITE-17—SCP territory—and find our 'contact'. She will give you further instructions. Of course, we suspect you don't have many other choices... after all, only this woman knew the way out of here.]\"",
+        // --- Jane - Control Events ---
+        "event_reenter_jane_title": "Consciousness Return (Jane)",
+        "event_reenter_jane_desc": "Consciousness reconnects to this precisely modified elite vessel. The former commander is now your most perfect puppet.",
+
+        // --- Jane Memory Plunder ---
+        "event_mem_plunder_success_jane_title": "Broken Images",
+        "event_mem_plunder_success_jane_p1": "You try to delve into Jane's memories, but are met with only silence. Most of this vessel's brain structure has been modified, truly and physically stripping it of emotions, memories, and logical thought, retaining only the ability to perceive the environment and relay it to a slime.",
+        "event_mem_plunder_success_jane_p2": "But just as you are about to withdraw, an 'image file', not belonging to Jane but forcibly implanted, surfaces: the scene shows a three-person team led by Jane, with one male and one female subordinate. 'Be careful,' Jane instructs, 'this anomaly has psychic properties, luring people to approach it. If necessary, drink the 'Cup of Self' to reinforce your cognition.'",
+        "event_mem_plunder_success_jane_p3": "The scene shifts. All three are down inside the warehouse. A disheveled woman—the 'First Offspring'—emerges from the shadows, speaking to a large, centipede-like creature on her shoulder: 'The male is yours, the females are mine.'",
+        "event_mem_plunder_success_jane_p4": "In the final image, Jane stands rigidly like a puppet, watching her female subordinate, now converted into the 'vending machine', walk away with mechanical steps. She suddenly speaks, in a flat, phonograph-like tone: 'Organization: Chaos Insurgency. Mission: Recover SCP-xxx and verify weaponization potential. Completion Standard: After confirming anomaly containment with subordinate Zhao Qimin, input our security code 'CH2231JS' into the terminal. Once both parties' codes are confirmed, arrange for organizational containment and cleanup.' A final message: 'You have accepted our 'down payment'. You know the consequences if you break the agreement!'",
+        "toast_mem_plunder_success_jane": "You've obtained the critical intel to leave this place!",
+        // --- Jane Meets Zhao Qimin ---
+        "event_jane_meet_zhao_title": "The Hierarchy",
+        "event_jane_meet_zhao_desc": "Controlling Jane's body, you step into the village office for the first time. Zhao Qimin, who was processing documents, jumps to his feet as if he'd been electrocuted and hastily salutes. 'L-Leader! What brings you here in person?' You respond in Jane's flat, phonograph-like voice: 'Zhao Qimin, attend to your duties.' Cold sweat beads on Zhao Qimin's forehead, and he dares not speak another word.",
+        // --- Final Quest ---
+        "task_deep_or_shallow_title": "From Never Know Deep or Shallow",
+        "task_deep_or_shallow_desc": "The die is cast. At this moment, you know you have no other choice. You must now negotiate with Zhao Qimin and fight for a chance to leave.",
+        "task_deep_or_shallow_step1": "Gain full control over all hosts in 'Luopo Village'",
+        "task_deep_or_shallow_step2": "'Negotiate' with Zhao Qimin",
+        "task_deep_or_shallow_hint1": "This is the final quest of Chapter 2. Enjoy!",
+
+        // --- Final Event ---
+        "event_final_confrontation_zhao_title": "The Final Negotiation",
+        "event_final_confrontation_zhao_p1_revised": "In the office, Zhao Qimin stares in terror at the three women behind you: a dazed Zhang Huili, a cold Liu Min, and an expressionless Jane. 'What... what are you all doing?' His voice trembles with fear.",
+        "event_final_confrontation_zhao_p2": "'Zhao Qimin,' you say, controlling Zhang Huili's body with her soft voice, 'Look, I've brought you three 'sisters'. They've 'missed' you dearly. Be a good boy and cooperate, and we promise not to hurt you.'",
+        "event_final_confrontation_zhao_p3": "'Don't listen to her nonsense,' you switch to Liu Min's body, her tone icy and professional. 'Zhao Qimin, I know your mission. Hand over your security code. It's your only way out. Otherwise, I don't mind 'neutralizing' you right here.'",
+        "event_final_confrontation_zhao_p4": "'Hehe...' you switch to Song Xin's body, letting out an innocent giggle. 'Brother Chao~ Don't be so tense. We're all 'family' here, aren't we? If you behave, the sisters will take good 'care' of you~'",
+        "event_final_confrontation_zhao_p5": "Finally, you control Jane's body to take a step forward, delivering the ultimatum in her emotionless, phonograph-like voice: 'Zhao Qimin, I only need your half of the security code: 'CH2231JS'. Hand it over, and not only will you live, but you will also have these four women. Why refuse?'",
+        "event_final_confrontation_zhao_p6_revised": "Just as Zhao Qimin's mental defenses are about to crumble, a sharp alarm suddenly blares from the communicator on his wrist. He glances at the screen, and his face instantly turns deathly pale. At the same moment, a commotion erupts outside. You see a squad of heavily armed SCP agents deploying something in the village square. Held captive in their midst is the host you abandoned in Chapter 1—Song Wei! Her eyes are tightly shut as if she's unconscious, and her body is connected to some kind of precise, faintly glowing instrument...",
+        "to_be_continued": "(To be continued...)",
+
+        // --- Jane NSFW Texts ---
+        "nsfw_event_jane_title": "The Elite's Fall",
+        "nsfw_choice_self_jane": "The Puppet's Monologue",
+        "nsfw_desc_jane_warehouse_slime": "In the very warehouse that imprisoned her consciousness, the slime drives Jane's body to perform a self-'display'. The once sharp and capable commander, now with vacant eyes, mechanically removes her clothes and uses her highly-trained hands to create shameful pleasure on her own body. It is the ultimate desecration of her former identity.",
+        "nsfw_desc_jane_livingroom_slime": "In the mundane living room of Zhang Huili's house, the slime has Jane, the former Chaos Insurgency elite, perform a special 'entertainment'. She pleasures herself with a blank expression, a complete mismatch with the surroundings. For the slime, watching this paragon of humanity act like a flesh puppet at its whim is a pleasure far superior to simply harvesting energy.",
+        "nsfw_desc_jane_office_slime": "The slime drives Jane's body into the heart of the village's power—Zhao Qimin's office. It makes her assume a highly provocative posture, pleasuring herself on the very desk that symbolizes order. This is the ultimate, silent act of contempt for the Chaos Insurgency.",
+        "nsfw_desc_jane_square_slime": "In the heavily surveilled village square, the slime directs Jane in the most daring performance. It makes her use a brief blind spot in the surveillance to pleasure herself with the same hands that once commanded armies. Watching this former paragon of humanity commit such a shameful act under its will fills the slime's consciousness with a twisted, victorious pleasure.",
+        "nsfw_desc_jane_lake_slime": "Under the lakeside moonlight, the slime makes Jane, the former elite commander, act like an ordinary woman awaiting her lover, shedding her clothes and pleasuring her body. The nearby warehouse is where she fell, and now, she 'celebrates' her rebirth here in the most primitive way. This extreme contrast brings the slime immense satisfaction.",
+        "nsfw_title_jane_zq_bj": "The Queen's Favor",
+        "nsfw_desc_jane_zq_bj_slime": "The slime controls Jane, the former elite superior, to kneel before Zhao Qimin, this 'lesser being'. Her eyes are vacant as she uses the lips that once gave countless commands to mechanically please him. This is not just humiliation; it is a declaration—behold, the power you once revered is now nothing but my plaything.",
+        "nsfw_title_jane_zq_ms": "Reshaping the Rules",
+        "nsfw_desc_jane_zq_ms_slime": "The slime drives Jane to straddle Zhao Qimin actively. The former hierarchy is completely subverted in this moment. Her eyes are empty, and every rise and fall of her body is precise and efficient, like a machine executing its program. While enjoying this sensory feast, the slime mocks humanity's ridiculous and fragile social rules.",
         // --- Chapter 2 Countdown and Game Over ---
         "task_bomb_countdown": "Time until protocol execution:",
         "gameover_bomb_detonated": "<strong>Operation Assessment: FAILURE</strong><br><br>At the close of the scheduled recovery window, a massive explosion occurred in Luopo Village, completely clearing the surface and eliminating all biological signals. Intelligence analysis suggests that the Chaos Insurgency cell operating in the area failed in their attempt to recover the 'Matriarch' specimen or encountered uncontrollable factors, ultimately choosing to enact a 'Scorched Earth Protocol' to destroy all evidence and evacuate.<br><br><strong>Conclusion:</strong> The operation to capture the Matriarch has failed; the target specimen is presumed destroyed in the blast. The Chaos Insurgency's interest level in the 'Slime' anomaly has been elevated to maximum priority.",
