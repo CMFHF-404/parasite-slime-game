@@ -1,6 +1,6 @@
 // =================================================================
 //
-//                      寄生史莱姆 - v0.2.8 (架构重构)
+//                      寄生史莱姆 - v0.3.0 (新增第二章)
 //                      Game Logic File
 //
 // =================================================================
@@ -170,7 +170,7 @@ class StateManager {
                     isPuppet: false,
                     nsfwUsedThisSegment: false,
                     wasEverPossessed: false,
-                    tags: ['liu_min', 'public'],
+                    tags: ['liu_min', 'public', 'guest'],
                     portraits: {
                         normal: "image/特写/刘敏正常.png",
                         controlled: "image/特写/刘敏控制.png"
@@ -202,29 +202,28 @@ class StateManager {
                     expectedLocationId: 'abandoned_warehouse',
                     isAiControlled: true,
                     status: 'INACTIVE',
-                    isPuppet: false, // 【新增】
+                    isPuppet: false,
                     nsfwUsedThisSegment: false,
                     wasEverPossessed: false,
-                    tags: ['jane', 'public', 'chaos_insurgency_agent'],
-
-                    // ▼▼▼ 【核心新增】补全Jane的事件元数据 ▼▼▼
-                    portraits: { // ▼▼▼ 新增 ▼▼▼
-                        normal: "image/特写/Jane正常.png", // (假设的图片路径)
-                        controlled: "image/特写/Jane控制.png" // (假设的图片路径)
+                    tags: ['jane', 'public', 'guest'], // 新增 guest 标签
+                    portraits: {
+                        normal: "image/特写/Jane正常.png", // 假设图片路径
+                        controlled: "image/特写/Jane控制.png" // 假设图片路径
                     },
                     events: {
-                        // “回归”事件的ID
                         reEnterEvent: 're_enter_jane',
-                        // “初次夺取”事件的ID (来自史莱姆母体的“礼物”)
-                        initialTakeoverEvent: 'initial_takeover_jane',
-                        // “脱离”事件的图片
+                        initialTakeoverEvent: 'takeover_host_jane_event', // 指向新的夺取事件
+                        sanityLossImage: "image/CG/Jane/失去理智.png", // 假设图片路径
                         detachImage: {
-                            normal: "image/CG/Jane/常规脱离.png", // (假设的图片路径)
-                            puppet: "image/CG/Jane/永久接管脱离.png" // (假设的图片路径)
+                            normal: "image/CG/Jane/常规脱离.png",
+                            puppet: "image/CG/Jane/永久接管脱离.png"
                         },
-                        // “归还控制权”事件的描述
+                        reEnterImage: {
+                            normal: "image/CG/Jane/常规返回躯体.png",
+                            puppet: "image/CG/Jane/永久接管返回躯体.png"
+                        },
                         returnControlDesc: {
-                            mismatch: 'return_control_mismatch_desc', // 可以复用通用的Key
+                            mismatch: 'return_control_mismatch_desc',
                             match: 'return_control_match_desc'
                         }
                     }
@@ -255,11 +254,14 @@ class StateManager {
                         },
                         quests: {
                             liumin_home_unlocked: false, // 【新增】
-                            warehouse_found: false 
+                            warehouse_found: false ,
+                            jane_met: false,
+                            jane_met_zhao: false 
                         },
                         npc_zhang_huili: { memoryPlundered: false },
                         npc_liu_min: { memoryPlundered: false },
-                        npc_zhao_qimin: {},
+                        npc_jane: { memoryPlundered: false },
+                        npc_zhao_qimin: { },
                         upgrades: {
                             special_store_discovered: false, // 你可能已经有这个了
                             cameras_home_destroyed: false,
@@ -1376,12 +1378,19 @@ class EventManager {
                     this.uiManager.showMessage(effect.key, effect.messageType || 'info', replacements);
                     break;
                 case 'takeoverHost':
+                    // ▼▼▼ 核心修正：增加对函数值的处理 ▼▼▼
+                    const previousHostIdValue = typeof effect.previousHostId === 'function'
+                        ? effect.previousHostId(state)
+                        : effect.previousHostId;
+
                     state.activeHostId = effect.hostId;
                     state.hosts[effect.hostId].wasEverPossessed = true;
                     state.hosts[effect.hostId].isAiControlled = false;
-                    if (effect.previousHostId) {
-                        state.hosts[effect.previousHostId].isAiControlled = true;
+
+                    if (previousHostIdValue && state.hosts[previousHostIdValue]) {
+                        state.hosts[previousHostIdValue].isAiControlled = true;
                     }
+                    // ▲▲▲ 修正结束 ▲▲▲
                     break;
                 case 'reEnterHost':
                     const targetHost = state.hosts[effect.hostId];
@@ -1516,6 +1525,9 @@ class EventManager {
                     successEventName = 'memory_plunder_success_zh';
                 } else if (hostId === 'liu_min') {
                     successEventName = 'memory_plunder_success_lm';
+                }
+                else if (hostId === 'jane') {
+                    successEventName = 'memory_plunder_success_jane';
                 }
 
                 if (successEventName) {
@@ -2198,9 +2210,30 @@ class Game {
         this.update();
     }
 
+    // ▼▼▼ 在 Game 类中，添加这个全新的函数 ▼▼▼
+    checkLocationTriggers() {
+        const state = this.stateManager.getState();
+        const activeHost = this.stateManager.getActiveHost();
+        if (!activeHost) return false;
+
+        for (const trigger of gameData.locationTriggerEvents) {
+            // 检查：1. 地点是否匹配  2. 触发条件是否满足
+            if (activeHost.currentLocationId === trigger.locationId && trigger.condition(state)) {
+                this.eventManager.triggerEvent(trigger.eventName);
+                return true;
+            }
+        }
+        return false;
+    }
+
     // 在 Game 类中
     update() {
         const state = this.stateManager.getState();
+
+        if (this.checkLocationTriggers()) {
+            return; // 如果触发了事件，则立即停止本次update，防止逻辑冲突
+        }
+
         const activeHost = this.stateManager.getActiveHost();
 
         // 1. 玩家控制的宿主，根据日程更新期望地点
