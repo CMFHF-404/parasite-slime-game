@@ -120,8 +120,9 @@ const allLocationData = {
             category: 'huili_home',
             isPublic: false,
             image: "image/环境/乡村客厅.png",
+            // ▼▼▼ 核心修正：添加 'guest' 标签 ▼▼▼
             accessTags: ['song_xin', 'zhang_huili', 'guest'],
-            slimeRisk: 15 // 风险稍高
+            slimeRisk: 15
         },
         'huili_home_bathroom': {
             nameKey: 'location_huili_home_bathroom',
@@ -680,6 +681,20 @@ const allEventData = {
         }]
     },
 
+    'jane_meet_zhao_event': {
+        titleKey: 'event_jane_meet_zhao_title',
+        pages: [{
+            textKey: 'event_jane_meet_zhao_desc',
+            image: 'image/第二章事件/Jane遇见赵齐民.png', // 假设图片路径
+            choices: [{
+                textKey: 'event_continue_ellipsis',
+                action: [
+                    { type: 'setFlag', path: 'story.flags.chapter2.quests.jane_met_zhao', value: true },
+                    { type: 'advanceTime' }
+                ]
+            }]
+        }]
+    },
     // --- 章节结束事件 ---
     'leave_city_sequence': {
         titleKey: 'event_leave_city_title',
@@ -1152,6 +1167,97 @@ const allEventData = {
         ]
     },
 
+    //===Jane相关事件===
+    'meet_jane_warehouse': {
+        titleKey: 'event_meet_jane_title',
+        pages: [
+            { textKey: 'event_meet_jane_p1', image: 'image/第二章事件/遇见Jane/第一张.png' },
+            { textKey: 'event_meet_jane_p2', image: 'image/第二章事件/遇见Jane/第二张.png' },
+            { textKey: 'event_meet_jane_p3', image: 'image/第二章事件/遇见Jane/第三张.png' },
+            {
+                textKey: 'event_meet_jane_p4',
+                image: 'image/第二章事件/遇见Jane/第四张.png',
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'story.flags.chapter2.quests.jane_met', value: true },
+                        { type: 'showMessage', key: 'toast_task_list_updated', messageType: 'success' }
+                    ]
+                }]
+            }
+        ]
+    },
+    'takeover_host_jane_event': {
+        titleKey: 'event_takeover_jane_title',
+        pages: [{
+            textKey: 'event_takeover_jane_desc',
+            image: 'image/CG/Jane/夺取简.png',
+            choices: [{
+                textKey: 'event_continue_ellipsis',
+                action: [
+                    { type: 'setFlag', path: 'npcs.jane.met', value: true },
+                    { type: 'takeoverHost', hostId: 'jane', previousHostId: state => state.activeHostId },
+                    { type: 'setFlag', path: 'controlState', value: 'PERMANENT_SLIME' },
+                    { type: 'setFlag', path: 'hosts.jane.isPuppet', value: true },
+                    { type: 'maxOutErosionSkills', hostId: 'jane' },
+                    // ▼▼▼ 核心修正：删除错误的任务切换指令 ▼▼▼
+                    // { type: 'setFlag', path: 'story.mainQuest', value: 'read_jane_memories' }, // <-- 删除或注释掉这一行
+                    { type: 'showMessage', key: 'toast_takeover_jane_success', messageType: 'success' }
+                ]
+            }]
+        }]
+    },
+    're_enter_jane': {
+        titleKey: 'event_reenter_jane_title',
+        pages: [{
+            textKey: 'event_reenter_jane_desc',
+            image: '{dynamic}',
+            choices: [{
+                textKey: 'btn_continue',
+                action: [{ type: 'reEnterHost', hostId: 'jane' }]
+            }]
+        }]
+    },
+    'memory_plunder_success_jane': {
+        titleKey: 'event_mem_plunder_success_jane_title',
+        pages: [
+            { textKey: 'event_mem_plunder_success_jane_p1', image: 'image/第二章事件/侵蚀Jane记忆/第一张.png' },
+            { textKey: 'event_mem_plunder_success_jane_p2', image: 'image/第二章事件/侵蚀Jane记忆/第二张.png' },
+            { textKey: 'event_mem_plunder_success_jane_p3', image: 'image/第二章事件/侵蚀Jane记忆/第三张.png' },
+            {
+                textKey: 'event_mem_plunder_success_jane_p4',
+                image: 'image/第二章事件/侵蚀Jane记忆/第四张.png',
+                choices: [{
+                    textKey: 'event_continue_ellipsis',
+                    action: [
+                        { type: 'setFlag', path: 'story.flags.chapter2.npc_jane.memoryPlundered', value: true },
+                        { type: 'setFlag', path: 'story.mainQuest', value: 'from_never_know_deep_or_shallow' }, // 切换到新任务
+                        { type: 'showMessage', key: 'toast_task_list_updated', messageType: 'success' }
+                    ]
+                }]
+            }
+        ]
+    },
+    'final_confrontation_zhao': {
+        titleKey: 'event_final_confrontation_zhao_title',
+        pages: [
+            // ▼▼▼ 核心修正 ▼▼▼
+            { textKey: 'event_final_confrontation_zhao_p1_revised', image: 'image/第二章事件/最终对峙/第一张.png' },
+            { textKey: 'event_final_confrontation_zhao_p2', image: 'image/第二章事件/最终对峙/第二张.png' },
+            { textKey: 'event_final_confrontation_zhao_p3', image: 'image/第二章事件/最终对峙/第三张.png' },
+            { textKey: 'event_final_confrontation_zhao_p4', image: 'image/第二章事件/最终对峙/第四张.png' },
+            { textKey: 'event_final_confrontation_zhao_p5', image: 'image/第二章事件/最终对峙/第五张.png' },
+            {
+                textKey: 'event_final_confrontation_zhao_p6_revised',
+                // ▲▲▲ 修正结束 ▲▲▲
+                image: 'image/第二章事件/最终对峙/第六张.png',
+                choices: [{
+                    textKey: 'to_be_continued',
+                    action: []
+                }]
+            }
+        ]
+    },
     //===赵齐民相关事件===
     'chat_zhao_qimin_generic': {
         titleKey: 'event_chat_zq_generic_title',
@@ -1182,37 +1288,16 @@ const allNpcInteractions = {
         {
             id: 'zhao_qimin_ask_warehouse',
             buttonTextKey: 'event_ask_about_warehouse_btn',
-            condition: (state) => {
-                return state.story.flags.chapter2.npc_liu_min.memoryPlundered && // 必须先读取刘敏记忆
-                    state.activeHostId === 'liu_min' &&
-                    state.npcs.zhao_qimin.favorability >= 50 &&
-                    !state.story.flags.chapter2.quests.warehouse_info_gathered;
-            },
+            condition: (state) => state.activeHostId === 'liu_min' && state.npcs.zhao_qimin.favorability >= 50 && !state.story.flags.chapter2.quests.warehouse_info_gathered,
             check: (state, skillManager) => state.controlState.includes('SLIME') && skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             action: { type: 'triggerEvent', eventName: 'ask_zhao_about_warehouse' },
             failAction: { type: 'showMessage', key: 'toast_need_socialization_control', messageType: 'warning' }
         },
-        {
-            id: 'zhao_qimin_final_confrontation',
-            buttonTextKey: 'event_final_confrontation_btn',
-            color: 'bg-red-700', // 可以定义特殊颜色
-            // 条件：只有当玩家控制Jane，且接到最终任务时，这个选项才会出现
-            condition: (state) => state.activeHostId === 'jane' && state.story.mainQuest === 'from_never_know_deep_or_shallow',
-            // 动作：调用一个特殊的、无法完全数据化的复杂逻辑函数
-            action: { type: 'runSpecialLogic', functionName: 'triggerFinalConfrontation' }
-        },
-        {
-            id: 'zhao_qimin_generic_chat_jane',
-            buttonTextKey: 'event_chat_with_zhao_qimin_btn',
-            // 条件：当玩家控制Jane，但不满足最终对峙条件时，显示这个闲聊选项
-            condition: (state) => state.activeHostId === 'jane',
-            action: { type: 'triggerEvent', eventName: 'chat_zhao_qimin_generic_jane' }
-        },
+        // ▼▼▼ 核心修正：只保留一个通用聊天作为保底选项 ▼▼▼
         {
             id: 'zhao_qimin_generic_chat',
             buttonTextKey: 'event_chat_with_zhao_qimin_btn',
             condition: (state) => state.npcs.zhao_qimin.met,
-            // ▼▼▼ 在这里添加检查逻辑 ▼▼▼
             check: (state, skillManager) => !state.controlState.includes('SLIME') || skillManager.getSkillRank('socialization', state.activeHostId) > 0,
             action: { type: 'triggerEvent', eventName: 'chat_zhao_qimin_generic' },
             failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' }
@@ -1640,7 +1725,8 @@ const allNsfwData = {
                 'village_lake': { images: { HOST: "image/CG/刘敏/宿主模式/湖泊.png", SLIME: "image/CG/刘敏/接管模式/湖泊.png" }, descriptions: { HOST: "nsfw_desc_liumin_lake_host", SLIME: "nsfw_desc_liumin_lake_slime" } },
                 // ▼▼▼ 在这里添加新地点 ▼▼▼
                 'village_office': { images: { HOST: "image/CG/刘敏/宿主模式/办公室.png", SLIME: "image/CG/刘敏/接管模式/办公室.png" }, descriptions: { HOST: "nsfw_desc_liumin_office_host", SLIME: "nsfw_desc_liumin_office_slime" } },
-                'village_square': { images: { HOST: "image/CG/刘敏/宿主模式/广场.png", SLIME: "image/CG/刘敏/接管模式/广场.png" }, descriptions: { HOST: "nsfw_desc_liumin_square_host", SLIME: "nsfw_desc_liumin_square_slime" } }
+                'village_square': { images: { HOST: "image/CG/刘敏/宿主模式/广场.png", SLIME: "image/CG/刘敏/接管模式/广场.png" }, descriptions: { HOST: "nsfw_desc_liumin_square_host", SLIME: "nsfw_desc_liumin_square_slime" } },
+                'abandoned_warehouse': { images: { HOST: "image/CG/刘敏/宿主模式/仓库.png", SLIME: "image/CG/刘敏/接管模式/仓库.png" }, descriptions: { HOST: "nsfw_desc_liumin_warehouse_host", SLIME: "nsfw_desc_liumin_warehouse_slime" } }
             }
         },
         // ▼▼▼ 在这里添加与赵齐民的互动 ▼▼▼
@@ -1662,6 +1748,42 @@ const allNsfwData = {
                 images: { HOST: "image/CG/刘敏/宿主模式/与赵齐民MS.png", SLIME: "image/CG/刘敏/接管模式/与赵齐民MS.png" },
                 descriptions: { HOST: "zq_nsfw_desc_lm_host_MS", SLIME: "zq_nsfw_desc_lm_slime_MS" },
                 effects: { favorability: 30, stamina: -50, baseSuspicion: 25, interactionSuspicion: 40, mutationChance: 0.6, mutationPoints: 2 }
+            }
+        }
+    },
+    'jane': {
+        self: {
+            titleKey: "nsfw_event_jane_title",
+            choiceKey: "nsfw_choice_self_jane",
+            baseEffects: { stamina: 0, sanity: 0, baseSuspicion: 10 },
+            locations: {
+                'default': { images: { SLIME: "image/CG/Jane/仓库.png" }, descriptions: { SLIME: "nsfw_desc_jane_warehouse_slime" } },
+                'abandoned_warehouse': { images: { SLIME: "image/CG/Jane/仓库.png" }, descriptions: { SLIME: "nsfw_desc_jane_warehouse_slime" } },
+                'huili_home_livingroom': { images: { SLIME: "image/CG/Jane/客厅.png" }, descriptions: { SLIME: "nsfw_desc_jane_livingroom_slime" } },
+                // ▼▼▼ 在这里添加新地点 ▼▼▼
+                'village_office': { images: { SLIME: "image/CG/Jane/办公室.png" }, descriptions: { SLIME: "nsfw_desc_jane_office_slime" } },
+                'village_square': { images: { SLIME: "image/CG/Jane/广场.png" }, descriptions: { SLIME: "nsfw_desc_jane_square_slime" } },
+                'village_lake': { images: { SLIME: "image/CG/Jane/湖泊.png" }, descriptions: { SLIME: "nsfw_desc_jane_lake_slime" } }
+            }
+        },
+        partnered: {
+            'zhao_qimin_BJ': {
+                npcId: 'zhao_qimin',
+                buttonTextKey: 'nsfw_choice_invite_zq_BJ',
+                condition: (state) => state.npcs.zhao_qimin.isPresent, // 无好感度要求
+                titleKey: "nsfw_title_jane_zq_bj",
+                images: { SLIME: "image/CG/Jane/与赵齐民BJ.png" },
+                descriptions: { SLIME: "nsfw_desc_jane_zq_bj_slime" },
+                effects: { favorability: 25, stamina: 0, baseSuspicion: 10, interactionSuspicion: 30, mutationChance: 0.5, mutationPoints: 2 }
+            },
+            'zhao_qimin_MS': {
+                npcId: 'zhao_qimin',
+                buttonTextKey: 'nsfw_choice_invite_zq_MS',
+                condition: (state) => state.npcs.zhao_qimin.isPresent, // 无好感度要求
+                titleKey: "nsfw_title_jane_zq_ms",
+                images: { SLIME: "image/CG/Jane/与赵齐民MS.png" },
+                descriptions: { SLIME: "nsfw_desc_jane_zq_ms_slime" },
+                effects: { favorability: 40, stamina: 0, baseSuspicion: 10, interactionSuspicion: 50, mutationChance: 0.7, mutationPoints: 3 }
             }
         }
     },
@@ -1729,15 +1851,27 @@ const taskData = {
             { textKey: 'task_curiosity_kills_the_cat_step1', isDone: (state) => state.story.flags.chapter2.quests.warehouse_info_gathered, isVisible: (state) => true },
             { textKey: 'task_curiosity_kills_the_cat_step2', isDone: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased, isVisible: (state) => state.story.flags.chapter2.quests.warehouse_info_gathered },
             { textKey: 'task_curiosity_kills_the_cat_step3', isDone: (state) => state.story.flags.chapter2.quests.forest_entered, isVisible: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased },
-            { textKey: 'task_curiosity_kills_the_cat_step4', isDone: (state) => state.story.flags.chapter2.quests.mysterious_figure_met, isVisible: (state) => state.story.flags.chapter2.quests.forest_entered },
+            // ▼▼▼ 在这里整合新的任务步骤 ▼▼▼
+            { textKey: 'task_accept_down_payment_step1', isDone: (state) => state.hosts.jane.wasEverPossessed, isVisible: (state) => state.story.flags.chapter2.quests.forest_entered },
+            { textKey: 'task_read_jane_memories_step1', isDone: (state) => state.story.flags.chapter2.npc_jane.memoryPlundered, isVisible: (state) => state.hosts.jane.wasEverPossessed }
         ],
         hintsKeys: [
             { key: 'task_curiosity_kills_the_cat_hint1', condition: (state) => true },
             {
-                key: 'task_curiosity_kills_the_cat_hint3', // 新提示的key
-                // 条件：和“进入森林”清单出现的条件完全一样
+                key: 'task_curiosity_kills_the_cat_hint3',
                 condition: (state) => state.story.flags.chapter2.upgrades.scp500_clone_purchased
             }
+        ]
+    },
+    'from_never_know_deep_or_shallow': {
+        titleKey: 'task_deep_or_shallow_title',
+        descriptionKey: 'task_deep_or_shallow_desc',
+        steps: [
+            { textKey: 'task_deep_or_shallow_step1', isDone: (state) => state.hosts.zhang_huili.isPuppet && state.hosts.liu_min.isPuppet && state.hosts.jane.isPuppet, isVisible: (state) => true },
+            { textKey: 'task_deep_or_shallow_step2', isDone: (state) => false, isVisible: (state) => state.hosts.zhang_huili.isPuppet && state.hosts.liu_min.isPuppet && state.hosts.jane.isPuppet },
+        ],
+        hintsKeys: [
+            { key: 'task_deep_or_shallow_hint1', condition: (state) => true }
         ]
     },
     'bomb_countdown': {
@@ -1939,14 +2073,13 @@ const locationEventData = {
 
     'access_special_store': {
         location: 'special_store',
-        buttonTextKey: 'event_access_store_btn', // 确保这个key在语言文件中存在
-        // ▼▼▼ 核心修改：只有在已发现后才显示按钮 ▼▼▼
-        condition: (state) =>
-            state.controlState === 'SLIME_DETACHED' &&
-            state.story.flags.chapter2.upgrades.special_store_discovered, // 必须已经发现过
-        // ▼▼▼ 核心修改：直接打开商店，不再检查首次访问 ▼▼▼
+        buttonTextKey: 'event_access_store_btn_revisit', // 使用一个新的、表示“再次访问”的文本键
+        // ▼▼▼ 核心修正：修改出现条件和执行动作 ▼▼▼
+        // 条件：是史莱姆形态，并且“商店已发现”的标记为 true
+        condition: (state) => state.controlState === 'SLIME_DETACHED' && state.story.flags.chapter2.upgrades.special_store_discovered,
+        // 动作：直接打开商店，不再需要判断
         action: (game) => {
-            game.uiManager.openStoreModal(); // 直接打开购买菜单
+            game.uiManager.openStoreModal();
         }
     },
     //进入 森林
@@ -2065,6 +2198,28 @@ const locationEventData = {
             messageType: 'warning'
         }
     },
+    'takeover_jane_button': {
+        location: 'abandoned_warehouse',
+        buttonTextKey: 'event_takeover_jane_btn',
+        // ▼▼▼ 核心修正：将条件改为检查“是否见过Jane” ▼▼▼
+        condition: (state) => state.story.flags.chapter2.quests.jane_met && !state.hosts.jane.wasEverPossessed,
+        action: (game) => {
+            game.eventManager.triggerEvent('takeover_host_jane_event');
+        }
+    },
+    'memory_plunder_jane': {
+        location: 'huili_home_livingroom', // 只能在张慧丽家客厅进行
+        buttonTextKey: 'event_memory_plunder_btn',
+        color: 'bg-purple-800',
+        condition: (state, skillManager) => {
+            return (
+                skillManager.getSkillRank('memory_plunder', state.activeHostId) > 0 &&
+                !state.story.flags.chapter2.npc_jane.memoryPlundered &&
+                state.activeHostId === 'jane' // 必须控制Jane
+            );
+        },
+        action: (game) => { game.eventManager.startMemoryPlunderGame('jane'); }
+    },
 };
 
 const chapterSetupData = {
@@ -2154,6 +2309,30 @@ const storeItemsData = {
     }
 };
 
+const locationTriggerEvents = [
+    {
+        id: 'trigger_meet_jane',
+        locationId: 'abandoned_warehouse',
+        // ▼▼▼ 添加章节检查 ▼▼▼
+        condition: (state) => state.chapter === 2 && !state.story.flags.chapter2.quests.jane_met,
+        eventName: 'meet_jane_warehouse'
+    },
+    {
+        id: 'trigger_jane_meet_zhao',
+        locationId: 'village_office',
+        // ▼▼▼ 添加章节检查 ▼▼▼
+        condition: (state) => state.chapter === 2 && state.activeHostId === 'jane' && !state.story.flags.chapter2.quests.jane_met_zhao,
+        eventName: 'jane_meet_zhao_event'
+    },
+    {
+        id: 'trigger_discover_store',
+        locationId: 'special_store',
+        // ▼▼▼ 添加章节检查 ▼▼▼
+        condition: (state) => state.chapter === 2 && state.controlState === 'SLIME_DETACHED' && !state.story.flags.chapter2.upgrades.special_store_discovered,
+        eventName: 'discover_special_store'
+    }
+];
+
 // 在 data.js 文件末尾
 export {
     introData,
@@ -2170,5 +2349,6 @@ export {
     allNpcInteractions,
     generalHints,
     chapterSetupData,
-    storeItemsData
+    storeItemsData,
+    locationTriggerEvents
 };
