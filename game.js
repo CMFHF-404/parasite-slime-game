@@ -306,6 +306,24 @@ class StateManager {
             try {
                 let loadedState = JSON.parse(data);
 
+                // ==========================================================
+                // ▼▼▼ 【新增功能】存档兼容：强制更新角色访问权限Tag ▼▼▼
+                // ==========================================================
+                console.log("Applying latest character access tags for compatibility...");
+                const currentHostTags = this.initialState.hosts;
+                if (loadedState.hosts) {
+                    for (const hostId in loadedState.hosts) {
+                        if (loadedState.hosts.hasOwnProperty(hostId) && currentHostTags[hostId] && currentHostTags[hostId].tags) {
+                            // 强制使用当前 data.js 中定义的最新 tags 覆盖旧存档的 tags
+                            loadedState.hosts[hostId].tags = currentHostTags[hostId].tags;
+                        }
+                    }
+                }
+                // ==========================================================
+                // ▲▲▲ 新增功能结束 ▲▲▲
+                // ==========================================================
+
+
                 // 1. 获取存档版本，如果不存在则视为最老的版本 (版本0)
                 const saveVersion = loadedState.version || 0;
 
@@ -344,6 +362,7 @@ class StateManager {
         }
         return false;
     }
+
 }
 
 class UIManager {
@@ -2892,9 +2911,7 @@ class Game {
         });
     }
 
-    // 在 game.js 的 Game 类中
-    // ▼▼▼ 使用这个新版本，完整替换掉旧的 openNpcInteractionModal 函数 ▼▼▼
-
+    // 在 Game 类中
     openNpcInteractionModal(npcId) {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
@@ -2903,19 +2920,16 @@ class Game {
 
         if (!npc || !interactionList) {
             console.error(`Interaction data not found for NPC: ${npcId}`);
-            // 提供一个友好的后备UI，而不是让玩家卡住
             this.uiManager.openModal(LANG['modal_title_npc_interaction'].replace('{NPC_NAME}', npc.name), (contentEl) => {
                 contentEl.innerHTML = `<p class="text-center text-gray-400">${LANG['no_interactions_available']}</p>`;
             });
             return;
         }
 
-        // 1. 根据 condition 筛选出当前所有可用的互动选项
         const availableInteractions = interactionList.filter(interaction =>
             interaction.condition(state, this.skillManager)
         );
 
-        // 2. 动态生成互动菜单UI
         this.uiManager.openModal(LANG['modal_title_npc_interaction'].replace('{NPC_NAME}', npc.name), (contentEl) => {
             if (availableInteractions.length === 0) {
                 contentEl.innerHTML = `<p class="text-center text-gray-400">${LANG['no_interactions_available']}</p>`;
@@ -2933,14 +2947,21 @@ class Game {
                     () => {
                         this.uiManager.closeModal();
 
-                        // 添加check检查逻辑
+                        // ▼▼▼ 核心修改：增加对函数类型action的处理 ▼▼▼
+                        const processAction = (action) => {
+                            if (typeof action === 'function') {
+                                action(this); // 直接执行函数，并传入game实例
+                            } else if (action) {
+                                this.executeNpcAction(action); // 按原有方式处理对象
+                            }
+                        };
+
                         if (interaction.check && !interaction.check(state, this.skillManager)) {
-                            // 如果二次验证失败，则执行失败动作
-                            this.executeNpcAction(interaction.failAction);
+                            processAction(interaction.failAction);
                         } else {
-                            // 如果没有二次验证或验证成功，则执行成功动作
-                            this.executeNpcAction(interaction.action);
+                            processAction(interaction.action);
                         }
+                        // ▲▲▲ 修改结束 ▲▲▲
                     }
                 );
                 container.appendChild(button);
