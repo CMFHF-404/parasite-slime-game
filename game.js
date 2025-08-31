@@ -40,6 +40,8 @@ const migrationScripts = {
     }
 };
 
+// 在 game.js 文件中
+// ▼▼▼ 请用这个代码块，完整替换掉现有的 StateManager 类 ▼▼▼
 class StateManager {
     constructor() {
         const initialLang = new LanguageManager().getCurrentLanguageData();
@@ -49,7 +51,7 @@ class StateManager {
             activeHostId: 'song_wei',
             chapter: 1,
             hosts: {
-                // === 第一章角色 ===
+                // ... (您原有的 hosts 对象内容)
                 'song_wei': {
                     name: initialLang['host_name_song_wei'],
                     stamina: 100, sanity: 100,
@@ -57,28 +59,27 @@ class StateManager {
                     expectedLocationId: 'home_bedroom',
                     isAiControlled: false,
                     status: 'ACTIVE',
-                    isPuppet: false, // 【新增】被永久接管
+                    isPuppet: false,
                     nsfwUsedThisSegment: false,
-                    wasEverPossessed: false,//被接管过
+                    wasEverPossessed: false,
                     tags: ['song_wei_home', 'work', 'public', 'guest'],
-                    // ▼▼▼ 新增元数据 ▼▼▼
-                    portraits: { // ▼▼▼ 新增 ▼▼▼
+                    portraits: {
                         normal: "image/特写/songwei_mormal.png",
                         controlled: "image/特写/songwei_ctrol.png"
                     },
                     events: {
-                        reEnterEvent: 're_enter_song_wei', // 回归事件的ID
+                        reEnterEvent: 're_enter_song_wei',
                         detachImage: {
                             normal: "image/CG/宋薇/宿主模式/常规脱离躯体.png",
-                            puppet: "image/CG/宋薇/接管模式/永久接管脱离身体.png"
+                            puppet: "image/CG/宋薇/接管模式/永久接管脱离躯体.png"
                         },
-                        reEnterImage: { // 【新增】
+                        reEnterImage: {
                             normal: "image/CG/宋薇/宿主模式/常规返回躯体.png",
                             puppet: "image/CG/宋薇/接管模式/永久接管返回躯体.png"
                         },
-                        returnControlDesc: { // 新增
-                            mismatch: 'return_control_mismatch_desc', // "咦？我怎么会在这里..."
-                            match: 'return_control_match_desc'      // "大脑中一段空白..."
+                        returnControlDesc: {
+                            mismatch: 'return_control_mismatch_desc',
+                            match: 'return_control_match_desc'
                         },
                         sanityLossImage: "image/CG/宋薇/失去理智.png",
                     }
@@ -91,37 +92,32 @@ class StateManager {
                     expectedLocationId: 'home_livingroom',
                     isAiControlled: false,
                     status: 'INACTIVE',
-                    isPuppet: false, // 【新增】
+                    isPuppet: false,
                     nsfwUsedThisSegment: false,
                     wasEverPossessed: false,
                     tags: ['guest', 'public', 'song_xin', 'song_wei_home'],
-                    portraits: { // ▼▼▼ 新增 ▼▼▼
-                        normal: "image/特写/宋欣正常.png", // (假设的图片路径)
+                    portraits: {
+                        normal: "image/特写/宋欣正常.png",
                         controlled: "image/特写/宋欣肖像.png"
                     },
-                    // ▼▼▼ 新增元数据 ▼▼▼
                     events: {
                         reEnterEvent: 're_enter_song_xin',
-                        initialTakeoverEvent: 'initial_song_xin_takeover', // 宋欣独有的“初次夺取”事件
+                        initialTakeoverEvent: 'initial_song_xin_takeover',
                         detachImage: {
-                            // 宋欣没有normal/puppet之分，但结构要保持一致
                             normal: "image/CG/宋欣/离开躯体.png",
                             puppet: "image/CG/宋欣/离开躯体.png"
                         },
-                        reEnterImage: { // 【新增】
+                        reEnterImage: {
                             normal: "image/CG/宋欣/返回躯体.png",
-                            puppet: "image/CG/宋欣/返回躯体.png"// 宋欣只有一种状态，复用图片
+                            puppet: "image/CG/宋欣/返回躯体.png"
                         },
-                        returnControlDesc: { // 新增
-                            mismatch: 'return_control_mismatch_desc', // "咦？我怎么会在这里..."
-                            match: 'return_control_match_desc'      // "大脑中一段空白..."
+                        returnControlDesc: {
+                            mismatch: 'return_control_mismatch_desc',
+                            match: 'return_control_match_desc'
                         }
                     }
 
-                }, // 为宋欣也加上自己的ID Tag
-
-                // 文件: game.js
-
+                },
                 'zhang_huili': {
                     name: initialLang['host_name_zhang_huili'],
                     stamina: 100, sanity: 100,
@@ -137,29 +133,24 @@ class StateManager {
                         normal: "image/特写/张慧丽正常.png",
                         controlled: "image/特写/张慧丽控制.png"
                     },
-                    // ▼▼▼ 核心修正：补全所有缺失的事件配置 ▼▼▼
                     events: {
                         reEnterEvent: 're_enter_zhang_huili',
                         initialTakeoverEvent: 'initial_takeover_zhang_huili',
                         detachImage: {
                             normal: "image/CG/张慧丽/宿主模式/常规脱离躯体.png",
-                            puppet: "image/CG/张慧丽/接管模式/永久接管脱离身体.png"
+                            puppet: "image/CG/张慧丽/接管模式/永久接管脱离躯体.png"
                         },
                         sanityLossImage: "image/CG/张慧丽/失去理智.png",
-                        // 补全缺失的 reEnterImage 数据
                         reEnterImage: {
                             normal: "image/CG/张慧丽/宿主模式/常规返回躯体.png",
                             puppet: "image/CG/张慧丽/接管模式/永久接管返回躯体.png"
                         },
-                        // 补全缺失的 returnControlDesc 数据
                         returnControlDesc: {
                             mismatch: 'return_control_mismatch_desc',
                             match: 'return_control_match_desc'
                         }
                     }
-                    // ▲▲▲ 修正结束 ▲▲▲
                 },
-                // 刘敏
                 'liu_min': {
                     name: initialLang['host_name_liu_min'],
                     stamina: 100, sanity: 100,
@@ -175,15 +166,14 @@ class StateManager {
                         normal: "image/特写/刘敏正常.png",
                         controlled: "image/特写/刘敏控制.png"
                     },
-                    // ▼▼▼ 核心修正：补全所有缺失的事件配置 ▼▼▼
                     events: {
                         reEnterEvent: 're_enter_liu_min',
-                        initialTakeoverEvent: 'initial_takeover_liu_min', // 这是一个占位符，指向侵蚀事件
+                        initialTakeoverEvent: 'initial_takeover_liu_min',
                         detachImage: {
                             normal: "image/CG/刘敏/宿主模式/常规脱离躯体.png",
-                            puppet: "image/CG/刘敏/接管模式/永久接管脱离身体.png"
+                            puppet: "image/CG/刘敏/接管模式/永久接管脱离躯体.png"
                         },
-                        sanityLossImage: "image/CG/刘敏/失去理智.png", // 假设的图片路径
+                        sanityLossImage: "image/CG/刘敏/失去理智.png",
                         reEnterImage: {
                             normal: "image/CG/刘敏/宿主模式/常规返回躯体.png",
                             puppet: "image/CG/刘敏/接管模式/永久接管返回躯体.png"
@@ -193,7 +183,6 @@ class StateManager {
                             match: 'return_control_match_desc'
                         }
                     }
-                    // ▲▲▲ 修正结束 ▲▲▲
                 },
                 'jane': {
                     name: initialLang['host_name_jane'],
@@ -205,15 +194,15 @@ class StateManager {
                     isPuppet: false,
                     nsfwUsedThisSegment: false,
                     wasEverPossessed: false,
-                    tags: ['jane', 'public', 'guest'], // 新增 guest 标签
+                    tags: ['jane', 'public', 'guest'],
                     portraits: {
-                        normal: "image/特写/Jane正常.png", // 假设图片路径
-                        controlled: "image/特写/Jane控制.png" // 假设图片路径
+                        normal: "image/特写/Jane正常.png",
+                        controlled: "image/特写/Jane控制.png"
                     },
                     events: {
                         reEnterEvent: 're_enter_jane',
-                        initialTakeoverEvent: 'takeover_host_jane_event', // 指向新的夺取事件
-                        sanityLossImage: "image/CG/Jane/失去理智.png", // 假设图片路径
+                        initialTakeoverEvent: 'takeover_host_jane_event',
+                        sanityLossImage: "image/CG/Jane/失去理智.png",
                         detachImage: {
                             normal: "image/CG/Jane/常规脱离.png",
                             puppet: "image/CG/Jane/永久接管脱离.png"
@@ -253,21 +242,21 @@ class StateManager {
                             plan_made: false
                         },
                         quests: {
-                            liumin_home_unlocked: false, // 【新增】
-                            warehouse_found: false ,
+                            liumin_home_unlocked: false,
+                            warehouse_found: false,
                             jane_met: false,
-                            jane_met_zhao: false 
+                            jane_met_zhao: false
                         },
                         npc_zhang_huili: { memoryPlundered: false },
                         npc_liu_min: { memoryPlundered: false },
                         npc_jane: { memoryPlundered: false },
-                        npc_zhao_qimin: { },
+                        npc_zhao_qimin: {},
                         upgrades: {
-                            special_store_discovered: false, // 你可能已经有这个了
+                            special_store_discovered: false,
                             cameras_home_destroyed: false,
                             cameras_public_destroyed: false,
                             scp500_clone_purchased: false,
-                            puppet_maintenance_level: 0 // <-- 添加这一行
+                            puppet_maintenance_level: 0
                         }
                     }
                 }
@@ -276,9 +265,10 @@ class StateManager {
                 'zhang_chao': { name: initialLang['npc_name_zhang_chao'], favorability: 0, isPresent: false, met: false },
                 'song_xin': { name: initialLang['host_name_song_xin'], favorability: 0, isPresent: false, met: false },
                 'zhang_huili': { name: initialLang['npc_name_zhang_huili'], favorability: 0, isPresent: false, met: false },
-                'liu_min': { name: initialLang['npc_name_liu_min'], favorability: 0, isPresent: false, met: false },
+                'liu_min': { name: initialLang['host_name_liu_min'], favorability: 0, isPresent: false, met: false },
                 'zhao_qimin': { name: initialLang['npc_name_zhao_qimin'], favorability: 0, isPresent: false, met: false }
             },
+            logs: [],
         });
         this.state = JSON.parse(JSON.stringify(this.initialState));
     }
@@ -306,51 +296,47 @@ class StateManager {
             try {
                 let loadedState = JSON.parse(data);
 
-                // ==========================================================
-                // ▼▼▼ 【新增功能】存档兼容：强制更新角色访问权限Tag ▼▼▼
-                // ==========================================================
-                console.log("Applying latest character access tags for compatibility...");
-                const currentHostTags = this.initialState.hosts;
-                if (loadedState.hosts) {
-                    for (const hostId in loadedState.hosts) {
-                        if (loadedState.hosts.hasOwnProperty(hostId) && currentHostTags[hostId] && currentHostTags[hostId].tags) {
-                            // 强制使用当前 data.js 中定义的最新 tags 覆盖旧存档的 tags
-                            loadedState.hosts[hostId].tags = currentHostTags[hostId].tags;
-                        }
+                // 【最终修复】定义一个健壮的存档合并/修补函数
+                const deepMerge = (target, source) => {
+                    let output = Array.isArray(target) ? [] : {};
+
+                    Object.assign(output, target);
+
+                    if (typeof target === 'object' && target !== null && typeof source === 'object' && source !== null) {
+                        Object.keys(source).forEach(key => {
+                            const sourceValue = source[key];
+                            const targetValue = target[key];
+
+                            if (sourceValue !== undefined) {
+                                if (typeof targetValue === 'object' && targetValue !== null && typeof sourceValue === 'object' && sourceValue !== null && !Array.isArray(targetValue)) {
+                                    output[key] = deepMerge(targetValue, sourceValue);
+                                } else {
+                                    output[key] = sourceValue;
+                                }
+                            }
+                        });
                     }
-                }
-                // ==========================================================
-                // ▲▲▲ 新增功能结束 ▲▲▲
-                // ==========================================================
+                    return output;
+                };
 
-
-                // 1. 获取存档版本，如果不存在则视为最老的版本 (版本0)
                 const saveVersion = loadedState.version || 0;
 
-                // 2. 如果存档版本低于当前游戏版本，则执行迁移
                 if (saveVersion < GAME_VERSION) {
                     console.log(`Old save detected (v${saveVersion}), updating to v${GAME_VERSION}...`);
-                    // 从存档版本的下一个版本开始，依次运行所有必要的迁移脚本
                     for (let v = saveVersion + 1; v <= GAME_VERSION; v++) {
                         if (migrationScripts[v]) {
                             loadedState = migrationScripts[v](loadedState);
                         }
                     }
-                    loadedState.version = GAME_VERSION; // 更新存档的版本号
                 }
 
-                // 3. 使用“合并式加载”作为最后的保险，确保结构完整
-                let newState = JSON.parse(JSON.stringify(this.initialState));
-                const deepMerge = (target, source) => {
-                    for (const key in source) {
-                        if (source[key] instanceof Object && key in target) {
-                            Object.assign(source[key], deepMerge(target[key], source[key]));
-                        }
-                    }
-                    Object.assign(target || {}, source);
-                    return target;
-                };
-                this.state = deepMerge(newState, loadedState);
+                let freshState = JSON.parse(JSON.stringify(this.initialState));
+                this.state = deepMerge(freshState, loadedState);
+                this.state.version = GAME_VERSION;
+
+                if (!Array.isArray(this.state.logs)) {
+                    this.state.logs = [];
+                }
 
                 console.log("Save file successfully loaded and patched.");
                 return true;
@@ -362,7 +348,6 @@ class StateManager {
         }
         return false;
     }
-
 }
 
 class UIManager {
@@ -386,7 +371,10 @@ class UIManager {
             'favor-ui-container', 'extra-actions-container', 'location-event-button', 'enter-host-button', 'detach-status-display', 'detach-status-text', 'detach-button',
             'skill-tree-button', 'save-button', 'load-button', 'reset-button', 'cheat-button',
             'host-management-button', 'host-modal', 'host-modal-content', 'host-modal-close-button',
-            'clicker-modal', 'clicker-progress-bar', 'clicker-timer', 'clicker-button'
+            'clicker-modal', 'clicker-progress-bar', 'clicker-timer', 'clicker-button',
+            // ▼▼▼ 【核心修复】确保这两个新增的ID在这里被正确添加 ▼▼▼
+            'chapter-select-modal', 'chapter-select-close-button',
+            'modal-extra-buttons', 'import-save-button', 'import-file-input'
         ];
         return ids.reduce((acc, id) => {
             const propName = id.replace(/-(\w)/g, (_, g) => g.toUpperCase());
@@ -729,32 +717,36 @@ class UIManager {
     }
     // 在 UIManager 类中
     // 用这个函数【替换】掉旧的 showMessage 函数
-
     showMessage(messageKey, type = 'info', replacements = {}) {
-        // 1. 获取当前语言的文本数据
         const LANG = this.languageManager.getCurrentLanguageData();
-
-        // 2. 根据 messageKey (例如 'toast_new_day_started') 查找对应的翻译文本
-        // 如果找不到，就直接显示 key 本身，方便调试
         let message = LANG[messageKey] || messageKey;
 
-        // 3. 处理文本中的变量替换，例如把 {AMOUNT} 替换成具体的数值
         for (const key in replacements) {
             message = message.replace(`{${key}}`, replacements[key]);
         }
 
-        // 4. 创建并显示 toast 元素 (这部分逻辑不变)
+        // --- 【新增】日志记录逻辑 ---
+        const state = this.game.stateManager.getState();
+        const time = state.time;
+        const timeOfDayText = LANG['time_segment'][time.segment.split('-')[0]];
+        const timestamp = `Day ${time.day} - ${timeOfDayText}`;
+
+        state.logs.push({ timestamp, message, type });
+        // 为了防止存档过大，只保留最新的100条日志
+        if (state.logs.length > 100) {
+            state.logs.shift();
+        }
+        // --- 新增逻辑结束 ---
+
         const colors = { info: 'bg-blue-500', success: 'bg-green-500', warning: 'bg-yellow-500', error: 'bg-red-500' };
         const toast = document.createElement('div');
-        toast.className = `p-4 rounded-lg text-white shadow-lg animate-fade-in-out ${colors[type]}`; // 使用了新的动画类
-
-        // 5. 将处理好的最终文本设置给 toast
+        toast.className = `p-4 rounded-lg text-white shadow-lg animate-fade-in-out ${colors[type]}`;
         toast.textContent = message;
 
         this.dom.toastContainer.appendChild(toast);
         setTimeout(() => {
             toast.remove();
-        }, 3000); // 3秒后移除
+        }, 3000);
     }
 
     showIntro(index, onFinished) {
@@ -927,6 +919,67 @@ class UIManager {
             });
         });
     }
+
+    // 在 UIManager 类中新增
+    openChapterSelectModal() {
+        const LANG = this.languageManager.getCurrentLanguageData();
+        const modal = this.dom.chapterSelectModal;
+        const contentEl = modal.querySelector('#chapter-select-content');
+        const template = document.getElementById('chapter-card-template');
+
+        contentEl.innerHTML = ''; // 清空旧内容
+
+        Object.entries(gameData.chapterSelectData).forEach(([chapterNum, chapterData]) => {
+            const card = template.content.cloneNode(true);
+            card.querySelector('.chapter-image').src = chapterData.image;
+            card.querySelector('.chapter-title').textContent = LANG[chapterData.titleKey];
+            card.querySelector('.chapter-desc').textContent = LANG[chapterData.descKey];
+
+            const startButton = card.querySelector('.chapter-start-button');
+            startButton.onclick = () => this.game.startChapter(parseInt(chapterNum, 10));
+
+            contentEl.appendChild(card);
+        });
+
+        this.dom.modalOverlay.classList.remove('hidden');
+        modal.classList.remove('hidden');
+    }
+
+    // 在 UIManager 类中，修改 closeModal，让它也能关闭新弹窗
+    closeModal() {
+        this.dom.modalOverlay.classList.add('hidden');
+        this.dom.genericModal.classList.add('hidden');
+        this.dom.tetrisModal.classList.add('hidden');
+        this.closeHostManagementModal();
+        // ▼▼▼ 在此新增 ▼▼▼
+        if (this.dom.chapterSelectModal) {
+            this.dom.chapterSelectModal.classList.add('hidden');
+        }
+        // ▲▲▲ 新增结束 ▲▲▲
+    }
+
+    // 在 UIManager 类中新增
+    openImportSlotSelectModal(importedData) {
+        const LANG = this.languageManager.getCurrentLanguageData();
+        const title = LANG['modal_title_import_slot_select'];
+
+        this.openModal(title, (contentEl) => {
+            const container = document.createElement('div');
+            container.className = 'space-y-4';
+
+            for (let i = 1; i <= NUM_SAVE_SLOTS; i++) {
+                const button = this.createActionButton(`${LANG['save_slot_prefix']} ${i}`, 'bg-indigo-600', () => {
+                    localStorage.setItem(`parasite_save_v8_${i}`, JSON.stringify(importedData));
+                    this.closeModal();
+                    this.showMessage(LANG['toast_import_success'].replace('{SLOT}', i), 'success');
+                    // 重新打开存档界面以刷新显示
+                    this.game.openSaveLoadModal('load');
+                });
+                container.appendChild(button);
+            }
+            contentEl.appendChild(container);
+        });
+    }
 }
 
 class SkillManager {
@@ -936,17 +989,51 @@ class SkillManager {
         this.languageManager = languageManager;
     }
 
+    // 在 SkillManager 类中，完全替换 getSkillRank 函数
     getSkillRank(skillId, hostId) {
         const state = this.stateManager.getState();
-        if (gameData.skillsData.slime.skills[skillId]) {
-            return state.slime.skills.global[skillId] || 0;
+
+        // ▼▼▼ 【核心修复】改进的技能读取逻辑 ▼▼▼
+        console.log(`正在查询技能: ${skillId}, 宿主: ${hostId || state.activeHostId}`);
+
+        // 确保skillsData访问正确
+        const skillsData = window.gameData?.skillsData || gameData?.skillsData;
+        if (!skillsData) {
+            console.error("skillsData未找到!");
+            return 0;
         }
-        if (gameData.skillsData.erosion.skills[skillId]) {
+
+        // 确保技能数据结构存在
+        if (!state.slime?.skills) {
+            console.error("state.slime.skills不存在!");
+            return 0;
+        }
+
+        // 检查全局技能（史莱姆技能）
+        if (skillsData.slime?.skills?.[skillId]) {
+            const globalSkills = state.slime.skills.global || {};
+            const rank = globalSkills[skillId] || 0;
+            console.log(`全局技能 ${skillId}: ${rank} (从 globalSkills:`, globalSkills, ')');
+            return rank;
+        }
+
+        // 检查宿主特定技能（侵蚀技能）  
+        if (skillsData.erosion?.skills?.[skillId]) {
             const currentHostId = hostId || state.activeHostId;
-            if (!currentHostId || !state.slime.skills[currentHostId]) return 0;
-            return state.slime.skills[currentHostId][skillId] || 0;
+            if (!currentHostId) {
+                console.log(`宿主特定技能 ${skillId}: 无当前宿主ID`);
+                return 0;
+            }
+
+            const hostSkills = state.slime.skills[currentHostId] || {};
+            const rank = hostSkills[skillId] || 0;
+            console.log(`宿主技能 ${skillId} (${currentHostId}): ${rank} (从 hostSkills:`, hostSkills, ')');
+            return rank;
         }
+
+        console.log(`技能 ${skillId} 在技能定义中未找到`);
         return 0;
+        // ▲▲▲ 修复结束 ▲▲▲
     }
 
     getTotalErosionRanks(hostId) {
@@ -2208,9 +2295,7 @@ class Game {
 
     beginNewGame() {
         this.dom.startMenu.classList.add('hidden');
-        this.dom.gameContainer.classList.remove('hidden');
-        this.stateManager.resetState();
-        this.uiManager.showIntro(0, () => this.init());
+        this.uiManager.openChapterSelectModal(); // 不再直接开始游戏，而是打开章节选择
     }
 
     continueGame() {
@@ -2340,7 +2425,14 @@ class Game {
 
         // --- 模态框与特殊UI ---
         this.dom.modalCloseButton.onclick = () => this.uiManager.closeModal();
-        this.dom.hostModalCloseButton.onclick = () => this.uiManager.closeModal();
+
+        // ▼▼▼ 【核心修复】修改此处的点击事件 ▼▼▼
+        this.dom.chapterSelectCloseButton.onclick = () => {
+            this.uiManager.closeModal(); // 首先关闭章节选择弹窗
+            this.showMainMenu();      // 然后显示主菜单
+        };
+        // ▲▲▲ 修复结束 ▲▲▲
+
         this.dom.modalOverlay.onclick = () => { this.uiManager.closeModal(); this.uiManager.hideConfirm(); };
         this.dom.taskButton.onclick = () => this.openTaskModal();
         this.dom.enterHostButton.onclick = () => this.enterHost();
@@ -2349,9 +2441,7 @@ class Game {
             if (state.controlState === 'SLIME_DETACHED') this.enterHost();
             else this.detachFromHost();
         };
-
-        // 语言切换按钮是通过 HTML 的 onclick 绑定的，这里不需要
-        // this.dom.langSwitchButton.onclick = () => this.switchLanguage();
+        this.dom.importSaveButton.onclick = () => this.importSave();
     }
 
     handleAction(actionId) {
@@ -2493,21 +2583,35 @@ class Game {
         });
     }
 
+    // 在 game.js 的 Game 类中
     checkGameState() {
         const state = this.stateManager.getState();
         const activeHost = this.stateManager.getActiveHost();
+
+        // ▼▼▼ 【核心修改】重写怀疑值满的判断逻辑 ▼▼▼
         if (state.slime.suspicion >= 200) {
-            let reason = 'SLIME';
-            if (state.controlState === 'SLIME_DETACHED') reason = 'SLIME_ALONE_CONTAINED';
-            else if (state.activeHostId === 'song_xin') {
-                reason = state.hosts.song_wei.wasEverPossessed ? 'SONG_XIN_AND_SONG_WEI_LOST' : 'SONG_XIN_CONTROLLED';
-            } else if (state.activeHostId === 'song_wei') {
-                if (state.controlState === 'PERMANENT_SLIME') reason = 'PERMANENT_SLIME';
-                else reason = 'SLIME';
+            let reason = 'SLIME'; // 设置一个默认值
+
+            // 如果是第二章，则强制使用新的结局
+            if (state.chapter === 2) {
+                reason = 'FALSE_TAKEOVER_ZH_OUTCOME';
             }
+            // 否则，执行原来的第一章结局逻辑
+            else {
+                if (state.controlState === 'SLIME_DETACHED') reason = 'SLIME_ALONE_CONTAINED';
+                else if (state.activeHostId === 'song_xin') {
+                    reason = state.hosts.song_wei.wasEverPossessed ? 'SONG_XIN_AND_SONG_WEI_LOST' : 'SONG_XIN_CONTROLLED';
+                } else if (state.activeHostId === 'song_wei') {
+                    if (state.controlState === 'PERMANENT_SLIME') reason = 'PERMANENT_SLIME';
+                    else reason = 'SLIME';
+                }
+            }
+
             this.uiManager.showGameOver(reason);
             return true;
         }
+        // ▲▲▲ 修改结束 ▲▲▲
+
         if (activeHost && activeHost.sanity <= 0 && state.controlState === 'HOST') {
             const canTakeover = this.skillManager.getSkillRank('cuckoos_nest', state.activeHostId) > 0;
             this.uiManager.toggleTakeoverScreen(true, canTakeover, activeHost);
@@ -2631,48 +2735,106 @@ class Game {
             }]
         });
     }
-
+    // 在 Game 类中
     openSaveLoadModal(mode) {
         const LANG = this.languageManager.getCurrentLanguageData();
         const title = mode === 'save' ? LANG['modal_title_save'] : LANG['modal_title_load'];
+
+        this.dom.modalExtraButtons.classList.add('hidden');
+
         this.uiManager.openModal(title, (contentEl) => {
             const container = document.createElement('div');
-            container.className = 'space-y-4';
+            container.className = 'space-y-6';
 
-            // ▼▼▼ 【核心修改】将循环的上限从写死的 3 改为我们定义的常量 ▼▼▼
+            const importWrapper = document.createElement('div');
+            importWrapper.className = 'flex justify-center';
+            const importButton = this.uiManager.createActionButton(LANG['btn_import_save'], 'bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-lg');
+            importButton.onclick = () => this.importSave();
+            importWrapper.appendChild(importButton);
+            container.appendChild(importWrapper);
+
+            const saveSlotsContainer = document.createElement('div');
+            saveSlotsContainer.className = 'space-y-4';
+
             for (let i = 1; i <= NUM_SAVE_SLOTS; i++) {
                 const slotKey = `parasite_save_v8_${i}`;
                 const data = localStorage.getItem(slotKey);
-                const button = document.createElement('button');
-                button.className = 'w-full text-left p-4 rounded-lg flex justify-between items-center transition-colors';
 
-                let info = `<span class="font-bold">${LANG['save_slot_prefix']} ${i}</span>`;
+                const slotCard = document.createElement('div');
+                slotCard.className = 'bg-gray-800/60 rounded-lg p-3 border-2 border-gray-700 hover:border-purple-500 transition-colors flex flex-col space-y-2';
+
+                // ▼▼▼ 【核心修改】交换按钮位置 ▼▼▼
+
+                // 1. 主信息和【导出】按钮
+                const topRow = document.createElement('div');
+                topRow.className = 'flex justify-between items-center';
+
+                let infoHtml = `<span class="font-bold text-lg">${LANG['save_slot_prefix']} ${i}</span>`;
                 if (data) {
                     const parsed = JSON.parse(data);
-                    info += `<span>Day ${parsed.time.day} | ${parsed.time.segment}</span>`;
-                    button.classList.add('bg-gray-700', 'hover:bg-gray-600');
+                    const timeOfDay = parsed.time.segment.split('-')[0];
+                    const timeOfDayText = LANG['time_segment'][timeOfDay] || timeOfDay;
+                    infoHtml += `<span class="text-gray-300">Day ${parsed.time.day} | ${timeOfDayText}</span>`;
                 } else {
-                    info += `<span>${LANG['save_slot_empty']}</span>`;
-                    button.classList.add('bg-gray-900', 'hover:bg-gray-700');
+                    infoHtml += `<span class="text-gray-500">${LANG['save_slot_empty']}</span>`;
                 }
-                button.innerHTML = info;
 
-                button.onclick = () => {
-                    this.uiManager.closeModal();
-                    if (mode === 'save') {
-                        if (this.stateManager.saveState(i)) this.uiManager.showMessage(LANG['toast_save_success'].replace('{SLOT}', i), 'success');
-                        else this.uiManager.showMessage(LANG['toast_save_fail'], 'warning');
-                    } else {
-                        if (this.stateManager.loadState(i)) {
-                            this.uiManager.showMessage(LANG['toast_load_success'].replace('{SLOT}', i), 'success');
-                            this.init();
-                        } else this.uiManager.showMessage(LANG['toast_load_fail'].replace('{SLOT}', i), 'warning');
+                const infoWrapper = document.createElement('div');
+                infoWrapper.className = 'flex-grow flex justify-between items-center pr-4';
+                infoWrapper.innerHTML = infoHtml;
+
+                const exportButton = this.uiManager.createActionButton(LANG['btn_export_save'], 'bg-sky-600 hover:bg-sky-700', () => this.exportSave(i));
+                exportButton.classList.remove('w-full');
+                exportButton.classList.add('w-auto', 'flex-shrink-0');
+                if (!data) {
+                    exportButton.disabled = true;
+                    exportButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+
+                topRow.appendChild(infoWrapper);
+                topRow.appendChild(exportButton); // 将导出按钮放在顶部行
+                slotCard.appendChild(topRow);
+
+                // 2. 【保存/读取】按钮 (现在放在下方)
+                const actionButton = this.uiManager.createActionButton(
+                    mode === 'save' ? LANG['btn_save_game'] : LANG['btn_load_game'],
+                    'bg-indigo-600 hover:bg-indigo-700 w-full mt-2',
+                    () => {
+                        this.uiManager.closeModal();
+                        if (mode === 'save') {
+                            if (this.stateManager.saveState(i)) this.uiManager.showMessage(LANG['toast_save_success'].replace('{SLOT}', i), 'success');
+                            else this.uiManager.showMessage(LANG['toast_save_fail'], 'warning');
+                        } else {
+                            if (data) {
+                                if (this.stateManager.loadState(i)) {
+                                    this.uiManager.showMessage(LANG['toast_load_success'].replace('{SLOT}', i), 'success');
+                                    this.init();
+                                } else this.uiManager.showMessage(LANG['toast_load_fail'].replace('{SLOT}', i), 'warning');
+                            } else {
+                                this.uiManager.showMessage(LANG['toast_load_fail_empty_slot'], 'warning');
+                            }
+                        }
                     }
-                };
-                container.appendChild(button);
+                );
+
+                if (mode === 'load' && !data) {
+                    actionButton.disabled = true;
+                    actionButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                slotCard.appendChild(actionButton); // 将主按钮放在下方
+
+                // ▲▲▲ 修改结束 ▲▲▲
+
+                saveSlotsContainer.appendChild(slotCard);
             }
+            container.appendChild(saveSlotsContainer);
             contentEl.appendChild(container);
         });
+
+        this.dom.modalCloseButton.onclick = () => {
+            this.dom.modalExtraButtons.classList.add('hidden');
+            this.uiManager.closeModal();
+        };
     }
 
     // 在 Game 类中
@@ -2761,64 +2923,84 @@ class Game {
         else { this.uiManager.showConfirm(LANG['confirm_reset_title'], LANG['confirm_reset_text'], action); }
     }
 
-    // 文件: game.js
-
+    // 在 UIManager 类中
     openTaskModal() {
         const LANG = this.languageManager.getCurrentLanguageData();
+        const state = this.stateManager.getState();
+
         this.uiManager.openModal(LANG['modal_title_task_details'], (contentEl) => {
-            const state = this.stateManager.getState();
+            contentEl.innerHTML = `
+                <div class="flex border-b border-gray-700 mb-4">
+                    <button id="task-tab-button" class="px-4 py-2 text-lg font-bold border-b-2 border-purple-400 text-white">${LANG['tab_title_tasks']}</button>
+                    <button id="log-tab-button" class="px-4 py-2 text-lg font-bold text-gray-500 border-b-2 border-transparent">${LANG['tab_title_logs']}</button>
+                </div>
+                <div id="task-tab-content"></div>
+                <div id="log-tab-content" class="hidden text-sm space-y-2 max-h-[60vh] overflow-y-auto pr-2"></div>
+            `;
+
+            const taskTabButton = contentEl.querySelector('#task-tab-button');
+            const logTabButton = contentEl.querySelector('#log-tab-button');
+            const taskTabContent = contentEl.querySelector('#task-tab-content');
+            const logTabContent = contentEl.querySelector('#log-tab-content');
+
+            taskTabButton.addEventListener('click', () => {
+                taskTabContent.classList.remove('hidden');
+                logTabContent.classList.add('hidden');
+                taskTabButton.classList.add('border-purple-400', 'text-white');
+                taskTabButton.classList.remove('border-transparent', 'text-gray-500');
+                logTabButton.classList.add('border-transparent', 'text-gray-500');
+                logTabButton.classList.remove('border-purple-400', 'text-white');
+            });
+
+            logTabButton.addEventListener('click', () => {
+                logTabContent.classList.remove('hidden');
+                taskTabContent.classList.add('hidden');
+                logTabButton.classList.add('border-purple-400', 'text-white');
+                logTabButton.classList.remove('border-transparent', 'text-gray-500');
+                taskTabButton.classList.add('border-transparent', 'text-gray-500');
+                taskTabButton.classList.remove('border-purple-400', 'text-white');
+            });
+
             const quest = state.story.mainQuest ? gameData.taskData[state.story.mainQuest] : null;
             let questContentHtml = '';
-
             if (!quest) {
                 questContentHtml = `<p class="text-center text-gray-400">${LANG['task_none']}</p>`;
             } else {
-                let stepsHtml = '';
-                if (quest.steps && Array.isArray(quest.steps)) {
-                    stepsHtml = quest.steps
-                        .filter(step => !step.isVisible || step.isVisible(state))
-                        .map(step =>
-                            `<li class="mb-2 ${step.isDone(state) ? 'text-green-400 line-through' : 'text-gray-300'}">${step.isDone(state) ? '✓' : '✗'} ${LANG[step.textKey]}</li>`
-                        ).join('');
-                }
+                let stepsHtml = (quest.steps || []).filter(step => !step.isVisible || step.isVisible(state)).map(step =>
+                    `<li class="mb-2 ${step.isDone(state) ? 'text-green-400 line-through' : 'text-gray-300'}">${step.isDone(state) ? '✓' : '✗'} ${LANG[step.textKey]}</li>`
+                ).join('');
                 questContentHtml = `
-                <h2 class="text-2xl font-bold text-amber-400 mb-2">${LANG[quest.titleKey]}</h2>
-                <p class="text-gray-300 mb-4">${LANG[quest.descriptionKey]}</p>
-                <h3 class="text-xl font-bold border-b border-gray-600 pb-2 mb-3">${LANG['task_current_objectives']}</h3>
-                <ul class="list-none pl-2">${stepsHtml}</ul>
-            `;
+                    <h2 class="text-2xl font-bold text-amber-400 mb-2">${LANG[quest.titleKey]}</h2>
+                    <p class="text-gray-300 mb-4">${LANG[quest.descriptionKey]}</p>
+                    <h3 class="text-xl font-bold border-b border-gray-600 pb-2 mb-3">${LANG['task_current_objectives']}</h3>
+                    <ul class="list-none pl-2">${stepsHtml}</ul>`;
             }
-
-            // ▼▼▼ 核心修正部分 ▼▼▼
-            let allVisibleHints = [];
-            if (quest && quest.hintsKeys && Array.isArray(quest.hintsKeys)) {
-                const questHints = quest.hintsKeys
-                    // 1. 筛选：新旧格式都能正确处理
-                    .filter(hint => {
-                        if (typeof hint === 'string') return true; // 旧格式 (字符串) 总是显示
-                        return !hint.condition || hint.condition(state); // 新格式 (对象) 按条件显示
-                    })
-                    // 2. 提取Key：新旧格式都能正确提取
-                    .map(hint => typeof hint === 'string' ? hint : hint.key);
-                allVisibleHints.push(...questHints);
-            }
-
-            if (gameData.generalHints && Array.isArray(gameData.generalHints)) {
-                allVisibleHints.push(...gameData.generalHints);
-            }
-
+            let allVisibleHints = (quest?.hintsKeys || []).filter(hint => typeof hint === 'string' ? true : (!hint.condition || hint.condition(state))).map(hint => typeof hint === 'string' ? hint : hint.key);
+            allVisibleHints.push(...(gameData.generalHints || []));
             const hintsListHtml = allVisibleHints.map(key => `<li>${LANG[key] || key}</li>`).join('');
-            // ▲▲▲ 修正结束 ▲▲▲
-
             const hintsHtml = `
-            <div class="mt-6 pt-4 border-t border-gray-600">
-                <h3 class="text-xl font-bold text-cyan-400 mb-3">${LANG['task_game_hints']}</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-400 text-sm">
-                    ${hintsListHtml}
-                </ul>
-            </div>
-        `;
-            contentEl.innerHTML = questContentHtml + hintsHtml;
+                <div class="mt-6 pt-4 border-t border-gray-600">
+                    <h3 class="text-xl font-bold text-cyan-400 mb-3">${LANG['task_game_hints']}</h3>
+                    <ul class="list-disc list-outside pl-4 space-y-2 text-gray-400 text-sm">
+                        ${hintsListHtml}
+                    </ul>
+                </div>
+            `;
+            taskTabContent.innerHTML = questContentHtml + hintsHtml;
+
+            // ▼▼▼ 【核心修复】修改日志的HTML和CSS类 ▼▼▼
+            const logColors = { info: 'text-blue-300', success: 'text-green-300', warning: 'text-yellow-300', error: 'text-red-300' };
+            if (state.logs.length === 0) {
+                logTabContent.innerHTML = `<p class="text-gray-500">暂无日志记录。</p>`;
+            } else {
+                logTabContent.innerHTML = state.logs.slice().reverse().map(log =>
+                    `<div class="flex items-start border-b border-white/10 pb-1 mb-1">
+                        <span class="flex-shrink-0 font-bold text-gray-400 whitespace-nowrap">[${log.timestamp}]</span>
+                        <span class="ml-2 ${logColors[log.type] || 'text-gray-200'}">${log.message}</span>
+                    </div>`
+                ).join('');
+            }
+            // ▲▲▲ 修复结束 ▲▲▲
         });
     }
 
@@ -3031,13 +3213,25 @@ class Game {
         }
         content.innerHTML = '';
 
+        // ▼▼▼ 【核心修改】调整排序逻辑 ▼▼▼
         const sortedHosts = Object.entries(state.hosts).sort(([, a], [, b]) => {
-            const aDisconnected = a.status === 'DISCONNECTED';
-            const bDisconnected = b.status === 'DISCONNECTED';
-            if (aDisconnected && !bDisconnected) return 1;
-            if (!aDisconnected && bDisconnected) return -1;
+            const isA_Active = (a.name === state.hosts[state.activeHostId]?.name);
+            const isB_Active = (b.name === state.hosts[state.activeHostId]?.name);
+            const isA_Disconnected = a.status === 'DISCONNECTED';
+            const isB_Disconnected = b.status === 'DISCONNECTED';
+
+            // 1. 将当前控制的宿主置顶
+            if (isA_Active) return -1;
+            if (isB_Active) return 1;
+
+            // 2. 将断联的宿主置底
+            if (isA_Disconnected && !isB_Disconnected) return 1;
+            if (!isA_Disconnected && isB_Disconnected) return -1;
+
+            // 3. 其他情况保持原顺序
             return 0;
         });
+        // ▲▲▲ 修改结束 ▲▲▲
 
         sortedHosts.forEach(([hostId, hostData]) => {
             let shouldShow = false;
@@ -3097,12 +3291,10 @@ class Game {
             const stamina = (state.controlState === 'PERMANENT_SLIME' && hostId === state.activeHostId) ? '∞' : Math.round(hostData.stamina);
             staminaElement.textContent = `${stamina} / 100`;
 
-            // ▼▼▼ 核心修正代码开始 ▼▼▼
             const sanityElement = panel.querySelector('.stat-sanity');
             const isCurrentlyControlled = (hostId === state.activeHostId && state.controlState !== 'HOST');
             const sanity = isCurrentlyControlled ? 0 : Math.round(hostData.sanity);
             sanityElement.textContent = `${sanity} / 100`;
-            // ▲▲▲ 核心修正代码结束 ▲▲▲
 
             const currentLocationElement = panel.querySelector('.location-current');
             const currentChapterLocations = this.getCurrentChapterLocations();
@@ -3187,26 +3379,23 @@ class Game {
     }
 
     // 在 Game 类中
-    // ▼▼▼ 使用这个【最终数据驱动版】，完整替换掉旧的 detachFromHost 函数 ▼▼▼
-
     detachFromHost() {
         const LANG = this.languageManager.getCurrentLanguageData();
-        if (this.skillManager.getSkillRank('golden_cicada_shell', 'song_wei') === 0) return;
+        const state = this.stateManager.getState(); // <-- 【新增】获取state
+        // ▼▼▼ 【核心修复】将 'song_wei' 修改为 state.activeHostId ▼▼▼
+        if (this.skillManager.getSkillRank('golden_cicada_shell', state.activeHostId) === 0) return;
 
-        const state = this.stateManager.getState();
         const activeHost = this.stateManager.getActiveHost();
         if (!activeHost) return;
 
         const detachedHostId = state.activeHostId;
 
-        // ▼▼▼ 【核心重构】在这里就读取事件元数据 ▼▼▼
         const hostEvents = activeHost.events;
         if (!hostEvents || !hostEvents.detachImage) {
             console.error(`Detach event metadata not found for host: ${detachedHostId}`);
             return;
         }
 
-        // --- 状态变更逻辑 (保持不变) ---
         state.slime.detachedHostData = { id: detachedHostId, name: activeHost.name, stamina: activeHost.stamina, sanity: activeHost.sanity };
         state.controlState = 'SLIME_DETACHED';
         state.slime.currentLocationId = activeHost.currentLocationId;
@@ -3214,7 +3403,6 @@ class Game {
         state.activeHostId = null;
         state.hosts[detachedHostId].expectedLocationId = state.hosts[detachedHostId].currentLocationId;
 
-        // --- 动态内容生成逻辑 (完全由数据驱动) ---
         const isPuppet = state.hosts[detachedHostId].isPuppet;
         const bgImage = isPuppet ? hostEvents.detachImage.puppet : hostEvents.detachImage.normal;
         let descriptionKey = isPuppet ? 'event_detach_desc_puppet' : 'event_detach_desc_normal';
@@ -3226,7 +3414,6 @@ class Game {
             description = description.replace('{LOCATION_NAME}', locationName);
         }
 
-        // --- 事件UI调用 (保持不变) ---
         this.uiManager.openEventModal({
             title: LANG['event_detach_title'],
             description: description,
@@ -3361,6 +3548,91 @@ class Game {
         this.timeManager.advanceSegment();
     }
 
+    // 在 Game 类中
+    startChapter(chapter) {
+        const LANG = this.languageManager.getCurrentLanguageData();
+        const title = LANG['confirm_chapter_start_title'];
+        const text = LANG[`confirm_chapter_${chapter}_start_text`];
+
+        // ▼▼▼ 【核心修复】先关闭章节选择，再弹出确认框 ▼▼▼
+        this.uiManager.closeModal();
+
+        this.uiManager.showConfirm(title, text, () => {
+            this.dom.gameContainer.classList.remove('hidden');
+            this.stateManager.resetState();
+
+            if (chapter === 1) {
+                this.uiManager.showIntro(0, () => this.init());
+            } else if (chapter === 2) {
+                this.startChapter2Preset();
+            }
+        });
+    }
+
+    // 在 Game 类中新增
+    startChapter2Preset() {
+        // 1. 获取一个干净的游戏状态
+        const state = this.stateManager.getState();
+
+        // 2. 【核心修复】手动设置第二章的精确开局状态
+        state.chapter = 2;
+        state.time.day = 14;
+        state.time.dayOfWeek = (14 - 1) % 7 + 1; // 自动计算星期
+        state.time.segment = 'morning-1';
+
+        state.activeHostId = 'song_xin'; // 切换当前控制角色为宋欣
+        state.controlState = 'PERMANENT_SLIME'; // 宋欣已经是傀儡状态
+
+        // 设置角色状态和位置
+        state.hosts.song_wei.status = 'DISCONNECTED'; // 宋薇断联
+        state.hosts.song_xin.currentLocationId = 'huili_home_your_bedroom'; // 宋欣的初始位置
+        state.hosts.song_xin.wasEverPossessed = true;
+        state.hosts.song_xin.isPuppet = true;
+        state.npcs.song_xin.met = true;
+
+        // 设置主线任务和倒计时
+        state.story.mainQuest = gameData.chapterSetupData[2].mainQuest;
+        state.story.countdown = gameData.chapterSetupData[2].initialCountdown;
+
+        // 3. 预设技能 (这部分逻辑保持不变)
+        const skillsToSet = {
+            global: {
+                'memory_plunder': 1,
+                'cuckoos_nest': 1,
+                'gene_mutation': 2,
+                'neural_integration': 1,
+                'hyper_excitement': 2
+            },
+            hostSpecific: {
+                'song_wei': ['total_possession', 'golden_cicada_shell', 'basics', 'socialization', 'domestication'],
+                'song_xin': ['total_possession', 'golden_cicada_shell', 'basics', 'socialization', 'domestication']
+            }
+        };
+
+        for (const [skillId, rank] of Object.entries(skillsToSet.global)) {
+            state.slime.skills.global[skillId] = rank;
+            state.slime.totalRanks += rank;
+        }
+
+        // ▼▼▼ 【核心修复】将 Object.values 修改为 Object.keys ▼▼▼
+        for (const hostId of Object.keys(skillsToSet.hostSpecific)) {
+            if (!state.slime.skills[hostId]) state.slime.skills[hostId] = {};
+            Object.keys(gameData.skillsData.erosion.skills).forEach(skillId => {
+                const skill = gameData.skillsData.erosion.skills[skillId];
+                const currentRank = state.slime.skills[hostId][skillId] || 0;
+                const rankToAdd = skill.maxRank - currentRank;
+                state.slime.skills[hostId][skillId] = skill.maxRank;
+                state.slime.totalRanks += rankToAdd;
+            });
+        }
+
+        console.log("Chapter 2 preset applied. Starting game.");
+
+        // 4. 初始化并渲染游戏
+        this.updateDynamicTexts();
+        this.init();
+    }
+
     // ▼▼▼ 新增：特殊区域事件检查函数 ▼▼▼
     checkSpecialLocationEvents(locationId) {
         const state = this.stateManager.getState();
@@ -3382,177 +3654,102 @@ class Game {
         // }
     }
     // ▲▲▲ 新增函数结束 ▲▲▲
-
-    // 在 Game 类中...
-    purchaseStoreItem(itemId) {
-        const state = this.stateManager.getState();
-        const itemData = gameData.storeItemsData[itemId];
+    // 在 Game 类中新增
+    exportSave(slot) {
         const LANG = this.languageManager.getCurrentLanguageData();
+        const slotKey = `parasite_save_v8_${slot}`;
+        const data = localStorage.getItem(slotKey);
 
-        if (!itemData || itemData.isPurchased(state) || state.slime.mutationPoints < itemData.cost) {
-            this.uiManager.showMessage(LANG['toast_not_enough_mutation_points'], 'warning');
+        if (!data) {
+            this.uiManager.showMessage(LANG['toast_no_save_to_export'], 'warning');
             return;
         }
 
-        // 扣除点数
-        state.slime.mutationPoints -= itemData.cost;
-
-        // 执行效果
-        itemData.effect(this);
-
-        // 重新打开商店并更新UI
-        this.uiManager.openStoreModal();
-        this.update();
-    }
-    // 怀疑值计算控制台反馈
-    debugSuspicionCalculation() {
-        const state = this.stateManager.getState();
-        const activeHost = this.stateManager.getActiveHost();
-
-        if (!activeHost) {
-            console.log("❌ 没有活跃宿主");
-            return;
-        }
-
-        console.log("=".repeat(60));
-        console.log("🔍 怀疑值计算规则检查");
-        console.log("=".repeat(60));
-
-        // 基础信息
-        console.log("📊 基础状态信息:");
-        console.log(`  当前宿主: ${activeHost.name} (${state.activeHostId})`);
-        console.log(`  控制模式: ${state.controlState}`);
-        console.log(`  当前怀疑值: ${state.slime.suspicion}/200`);
-        console.log(`  今日NSFW次数: ${state.story.nsfwActsToday}`);
-        console.log("");
-
-        // 地点信息
-        const currentLocation = this.getCurrentChapterLocations()[activeHost.currentLocationId];
-        console.log("🏠 地点信息:");
-        console.log(`  当前地点ID: ${activeHost.currentLocationId}`);
-        console.log(`  地点名称: ${currentLocation ? this.languageManager.getCurrentLanguageData()[currentLocation.nameKey] : '未知'}`);
-        console.log(`  是否公共场所: ${currentLocation?.isPublic ? '是' : '否'}`);
-        console.log(`  地区权重系数: ${currentLocation?.suspicionModifier || 1.0}`);
-        console.log("");
-
-        // 技能信息
-        const memoryPlunderRank = this.skillManager.getSkillRank('memory_plunder', state.activeHostId);
-        const hormoneAllureRank = this.skillManager.getSkillRank('hormone_allure', state.activeHostId);
-
-        console.log("🛡️ 相关技能等级:");
-        console.log(`  记忆侵夺: ${memoryPlunderRank}级 (减少${memoryPlunderRank * 20}%个人怀疑值)`);
-        console.log(`  激素诱惑: ${hormoneAllureRank}级 (减少${hormoneAllureRank * 20}%公共怀疑值)`);
-        console.log("");
-
-        // NSFW数据分析
-        const hostNsfwData = gameData.allNsfwData[state.activeHostId];
-        if (hostNsfwData) {
-            console.log("💋 NSFW行为怀疑值数据:");
-            console.log("  【自慰行为】:");
-            if (hostNsfwData.self) {
-                const selfEffects = hostNsfwData.self.baseEffects;
-                console.log(`    基础个人怀疑值: ${selfEffects.baseSuspicion || 0}`);
-                console.log(`    触发条件: 每日第4次+ & 宿主模式`);
-            }
-
-            console.log("  【互动行为】:");
-            if (hostNsfwData.partnered) {
-                Object.entries(hostNsfwData.partnered).forEach(([key, data]) => {
-                    const npcName = state.npcs[data.npcId]?.name || data.npcId;
-                    console.log(`    与${npcName}(${key}):`);
-                    console.log(`      基础个人怀疑值: ${data.effects.baseSuspicion || 0}`);
-                    console.log(`      互动风险怀疑值: ${data.effects.interactionSuspicion || 0}`);
-                    console.log(`      突变几率: ${(data.effects.mutationChance || 0) * 100}%`);
-                });
-            }
-            console.log("");
-        }
-
-        // 计算示例
-        console.log("🧮 怀疑值计算示例 (模拟自慰行为):");
-        this.simulateSuspicionCalculation('self');
-        console.log("");
-
-        if (hostNsfwData && hostNsfwData.partnered) {
-            const firstPartner = Object.keys(hostNsfwData.partnered)[0];
-            if (firstPartner) {
-                console.log(`🧮 怀疑值计算示例 (模拟互动行为 - ${firstPartner}):`);
-                this.simulateSuspicionCalculation('partnered', firstPartner);
-            }
-        }
-
-        console.log("=".repeat(60));
-        console.log("使用方法: 在控制台输入 game.debugSuspicionCalculation()");
-        console.log("=".repeat(60));
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `parasite-slime-save-slot-${slot}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
-    // 怀疑值计算模拟
-    simulateSuspicionCalculation(nsfwType, interactionKey = null) {
-        const state = this.stateManager.getState();
-        const activeHost = this.stateManager.getActiveHost();
-        const currentLocation = this.getCurrentChapterLocations()[activeHost.currentLocationId];
-        const hostNsfwData = gameData.allNsfwData[state.activeHostId];
+    // 在 Game 类中新增
+    importSave() {
+        const fileInput = this.dom.importFileInput;
+        fileInput.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
 
-        const memoryPlunderRank = this.skillManager.getSkillRank('memory_plunder', state.activeHostId);
-        const hormoneAllureRank = this.skillManager.getSkillRank('hormone_allure', state.activeHostId);
-        const isInPublic = currentLocation && currentLocation.isPublic;
-        const locationModifier = currentLocation?.suspicionModifier || 1;
-        const controlState = state.controlState.includes('SLIME') ? 'SLIME' : 'HOST';
+            const reader = new FileReader();
+            // 在 Game 类中，替换 importSave() 函数中的 reader.onload 部分
+            reader.onload = (event) => {
+                try {
+                    const rawData = event.target.result;
+                    console.log("Raw file content length:", rawData.length);
+                    console.log("First 100 characters:", rawData.substring(0, 100));
 
-        let baseSuspicion = 0;
-        let interactionSuspicion = 0;
+                    const importedData = JSON.parse(rawData);
+                    console.log("Parsed data keys:", Object.keys(importedData));
+                    console.log("Version:", importedData.version, "Type:", typeof importedData.version);
+                    console.log("Has hosts:", !!importedData.hosts, "Hosts type:", typeof importedData.hosts);
 
-        if (nsfwType === 'self' && hostNsfwData.self) {
-            baseSuspicion = hostNsfwData.self.baseEffects.baseSuspicion || 0;
-        } else if (nsfwType === 'partnered' && interactionKey && hostNsfwData.partnered[interactionKey]) {
-            const data = hostNsfwData.partnered[interactionKey];
-            baseSuspicion = data.effects.baseSuspicion || 0;
-            interactionSuspicion = data.effects.interactionSuspicion || 0;
-        }
+                    // 改进的验证逻辑
+                    const validationErrors = [];
 
-        // A. 计算个人怀疑度
-        let personalSuspicion = 0;
+                    if (!importedData || typeof importedData !== 'object') {
+                        validationErrors.push("根对象无效");
+                    }
 
-        // A1. 个人基础怀疑度（只在每日第4次NSFW+HOST模式下计算）
-        let basePersonalSuspicion = 0;
-        if (baseSuspicion > 0 && state.story.nsfwActsToday > 3 && controlState === 'HOST') {
-            basePersonalSuspicion = baseSuspicion;
-            console.log(`  个人基础怀疑值: ${baseSuspicion} (今日第${state.story.nsfwActsToday + 1}次, ${controlState}模式)`);
-        } else {
-            console.log(`  个人基础怀疑值: 0 (今日第${state.story.nsfwActsToday + 1}次, ${controlState}模式, 不满足触发条件)`);
-        }
+                    if (importedData.version === undefined || importedData.version === null) {
+                        validationErrors.push("缺少版本信息");
+                    }
 
-        // A2. 互动风险怀疑度
-        if (interactionSuspicion > 0) {
-            console.log(`  互动风险怀疑值: ${interactionSuspicion}`);
-            personalSuspicion += interactionSuspicion;
-        }
+                    if (!importedData.hosts || typeof importedData.hosts !== 'object') {
+                        validationErrors.push("缺少或无效的宿主数据");
+                    } else if (Object.keys(importedData.hosts).length === 0) {
+                        validationErrors.push("宿主数据为空");
+                    }
 
-        personalSuspicion += basePersonalSuspicion;
+                    // 检查核心必需字段
+                    const requiredFields = ['controlState', 'activeHostId', 'chapter', 'slime', 'time', 'story', 'npcs'];
+                    for (const field of requiredFields) {
+                        if (importedData[field] === undefined) {
+                            validationErrors.push(`缺少必需字段: ${field}`);
+                        }
+                    }
 
-        // A3. 应用记忆侵夺技能减免
-        let finalPersonalSuspicion = personalSuspicion;
-        if (personalSuspicion > 0) {
-            const memoryReduction = 1 - (memoryPlunderRank * 0.2);
-            finalPersonalSuspicion = Math.round(personalSuspicion * memoryReduction * locationModifier);
-            console.log(`  记忆侵夺减免: ${personalSuspicion} × ${memoryReduction.toFixed(1)} × ${locationModifier} = ${finalPersonalSuspicion}`);
-        }
+                    if (validationErrors.length > 0) {
+                        console.error("Validation errors:", validationErrors);
+                        throw new Error(`存档文件验证失败: ${validationErrors.join(', ')}`);
+                    }
 
-        // B. 计算公共场所怀疑度
-        let publicSuspicion = 0;
-        if (isInPublic) {
-            publicSuspicion = 50; // 公共场所基础怀疑度
-            const hormoneReduction = 1 - (hormoneAllureRank * 0.2);
-            publicSuspicion = Math.round(publicSuspicion * hormoneReduction * locationModifier);
-            console.log(`  公共场所怀疑值: 50 × ${hormoneReduction.toFixed(1)} × ${locationModifier} = ${publicSuspicion}`);
-        } else {
-            console.log(`  公共场所怀疑值: 0 (非公共场所)`);
-        }
+                    console.log("Validation passed, opening slot selection modal");
+                    this.uiManager.closeModal(); // 关闭当前的存档界面
+                    this.uiManager.openImportSlotSelectModal(importedData);
 
-        // C. 合并最终怀疑度
-        const totalSuspicion = finalPersonalSuspicion + publicSuspicion;
-        console.log(`  → 总计怀疑值增加: ${totalSuspicion} (个人${finalPersonalSuspicion} + 公共${publicSuspicion})`);
-        console.log(`  → 怀疑值变化: ${state.slime.suspicion} → ${Math.min(200, state.slime.suspicion + totalSuspicion)}`);
+                } catch (error) {
+                    console.error("Import error details:", error);
+                    const LANG = this.languageManager.getCurrentLanguageData();
+
+                    let errorMessage = LANG['toast_import_fail_invalid_file'] || '导入失败：文件格式无效';
+
+                    // 提供更详细的错误信息
+                    if (error.name === 'SyntaxError') {
+                        errorMessage = '导入失败：JSON格式错误 - ' + error.message;
+                    } else if (error.message.includes('存档文件验证失败')) {
+                        errorMessage = error.message;
+                    }
+
+                    this.uiManager.showMessage(errorMessage, 'error');
+                }
+            };
+            reader.readAsText(file);
+            fileInput.value = ''; // 清空输入，以便下次可以选择同一个文件
+        };
+        fileInput.click();
     }
 }
 
