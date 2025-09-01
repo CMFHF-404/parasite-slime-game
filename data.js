@@ -31,68 +31,74 @@ const allLocationData = {
     1: {
         'home_bedroom': {
             nameKey: 'location_home_bedroom',
-            descriptionKey: 'daily_work_m1', // 保留宿主默认描述
-            slimeDescriptionKey: 'slime_desc_home_bedroom', // 【新增】
+            descriptionKey: 'daily_work_m1',
+            slimeDescriptionKey: 'slime_desc_home_bedroom',
             category: 'home',
             isPublic: false,
-            image: "image/环境/卧室.png",
+            dayImage: "image/环境/第一章/卧室_白天.png",
+            nightImage: "image/环境/第一章/卧室_夜晚.png",
             accessTags: ['song_wei_home'],
             slimeRisk: 10
         },
         'home_livingroom': {
             nameKey: 'location_home_livingroom',
-            descriptionKey: 'daily_work_e1', // 保留宿主默认描述
-            slimeDescriptionKey: 'slime_desc_home_livingroom', // 【新增】
+            descriptionKey: 'daily_work_e1',
+            slimeDescriptionKey: 'slime_desc_home_livingroom',
             category: 'home',
             isPublic: false,
-            image: "image/环境/客厅.png",
+            dayImage: "image/环境/第一章/客厅_白天.png",
+            nightImage: "image/环境/第一章/客厅_夜晚.png",
             accessTags: ['song_wei_home', 'guest'],
             slimeRisk: 5
         },
         'home_bathroom': {
             nameKey: 'location_home_bathroom',
-            descriptionKey: 'daily_work_e2', // 保留宿主默认描述
-            slimeDescriptionKey: 'slime_desc_home_bathroom', // 【新增】
+            descriptionKey: 'daily_work_e2',
+            slimeDescriptionKey: 'slime_desc_home_bathroom',
             category: 'home',
             isPublic: false,
-            image: "image/环境/浴室.png",
+            dayImage: "image/环境/第一章/浴室_白天.png",
+            nightImage: "image/环境/第一章/浴室_白天.png",
             accessTags: ['song_wei_home'],
             slimeRisk: 10
         },
         'commute_subway': {
             nameKey: 'location_commute_subway',
-            descriptionKey: 'daily_work_m2', // 保留宿主默认描述
-            slimeDescriptionKey: 'slime_desc_commute_subway', // 【新增】
+            descriptionKey: 'daily_work_m2',
+            slimeDescriptionKey: 'slime_desc_commute_subway',
             category: 'public',
             isPublic: true,
-            image: "image/环境/地铁.png",
+            dayImage: "image/环境/第一章/地铁_白天.png",
+            nightImage: "image/环境/第一章/地铁_夜晚.png",
             accessTags: ['work'],
             slimeRisk: 30
         },
         'work_office': {
             nameKey: 'location_work_office',
-            descriptionKey: 'daily_work_n1', // 保留宿主默认描述
-            slimeDescriptionKey: 'slime_desc_work_office', // 【新增】
+            descriptionKey: 'daily_work_n1',
+            slimeDescriptionKey: 'slime_desc_work_office',
             category: 'work',
             isPublic: true,
-            image: "image/环境/办公室.png",
+            dayImage: "image/环境/第一章/办公室_白天.png",
+            nightImage: "image/环境/第一章/办公室_白天.png",
             accessTags: ['public', 'guest'],
             slimeRisk: 50
         },
         'work_bathroom': {
             nameKey: 'location_work_bathroom',
-            descriptionKey: 'daily_work_n2', // 保留宿主默认描述
-            slimeDescriptionKey: 'slime_desc_work_bathroom', // 【新增】
+            descriptionKey: 'daily_work_n2',
+            slimeDescriptionKey: 'slime_desc_work_bathroom',
             category: 'work',
             isPublic: false,
-            image: "image/环境/公司厕所.png",
+            dayImage: "image/环境/第一章/公司厕所_白天.png",
+            nightImage: "image/环境/第一章/公司厕所_夜晚.png",
             accessTags: ['work'],
             slimeRisk: 25
         },
     },
-    // 第二章...
-    // 文件: data.js
-
+    // ===================================
+    // 第二章的地点数据 (已重构)
+    // ===================================
     2: {
         'huili_home_your_bedroom': {
             nameKey: 'location_huili_home_your_bedroom',
@@ -100,9 +106,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_huili_your_bedroom',
             category: 'huili_home',
             isPublic: false,
-            image: "image/环境/乡村卧室.png",
-            accessTags: ['song_xin'],
-            slimeRisk: 5 // 安全区，风险低
+            dayImage: "image/环境/第二章/乡村卧室_白天.png",
+            nightImage: "image/环境/第二章/乡村卧室_夜晚.png",
+            accessTags: ['song_xin', 'zhang_huili'],
+            suspicionModifier: 1.5,//怀疑权重
+            slimeRisk: 5
         },
         'huili_home_huili_bedroom': {
             nameKey: 'location_huili_home_huili_bedroom',
@@ -110,9 +118,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_huili_her_bedroom',
             category: 'huili_home',
             isPublic: false,
-            image: "image/环境/张慧丽卧室.png",
+            dayImage: "image/环境/第二章/张慧丽卧室_白天.png",
+            nightImage: "image/环境/第二章/张慧丽卧室_夜晚.png",
             accessTags: ['zhang_huili'],
-            slimeRisk: 10 // 有一定风险
+            suspicionModifier: 1.5,//怀疑权重
+            slimeRisk: 10
         },
         'huili_home_livingroom': {
             nameKey: 'location_huili_home_livingroom',
@@ -120,9 +130,10 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_huili_livingroom',
             category: 'huili_home',
             isPublic: false,
-            image: "image/环境/乡村客厅.png",
-            // ▼▼▼ 核心修正：添加 'guest' 标签 ▼▼▼
+            dayImage: "image/环境/第二章/乡村客厅_白天.png",
+            nightImage: "image/环境/第二章/乡村客厅_夜晚.png",
             accessTags: ['song_xin', 'zhang_huili', 'guest'],
+            suspicionModifier: 1.5,//怀疑权重
             slimeRisk: 15
         },
         'huili_home_bathroom': {
@@ -131,9 +142,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_huili_bathroom',
             category: 'huili_home',
             isPublic: false,
-            image: "image/环境/乡村厕所.png",
+            dayImage: "image/环境/第二章/乡村厕所_白天.png",
+            nightImage: "image/环境/第二章/乡村厕所_白天.png",
             accessTags: ['song_xin', 'zhang_huili'],
-            slimeRisk: 5 // 安全区
+            suspicionModifier: 1.5,//怀疑权重
+            slimeRisk: 5
         },
         'liumin_home_bedroom': {
             nameKey: 'location_liumin_home_bedroom',
@@ -141,10 +154,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_liumin_bedroom',
             category: 'liumin_home',
             isPublic: false,
-            image: "image/环境/刘敏卧室.png",
+            dayImage: "image/环境/第二章/刘敏卧室_白天.png",
+            nightImage: "image/环境/第二章/刘敏卧室_夜晚.png",
             accessTags: ['liu_min'],
             unlockFlag: 'chapter2.quests.liumin_home_unlocked',
-            slimeRisk: 25 // 风险较高
+            slimeRisk: 25
         },
         'liumin_home_bathroom': {
             nameKey: 'location_liumin_home_bathroom',
@@ -152,10 +166,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_liumin_bathroom',
             category: 'liumin_home',
             isPublic: false,
-            image: "image/环境/刘敏厕所.png",
+            dayImage: "image/环境/第二章/刘敏厕所_白天.png",
+            nightImage: "image/环境/第二章/刘敏厕所_夜晚.png",
             accessTags: ['liu_min'],
             unlockFlag: 'chapter2.quests.liumin_home_unlocked',
-            slimeRisk: 20 // 风险较高
+            slimeRisk: 20
         },
         'village_square': {
             nameKey: 'location_village_square',
@@ -163,9 +178,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_village_square',
             category: 'village_in',
             isPublic: true,
-            image: "image/环境/村广场.png",
+            dayImage: "image/环境/第二章/村广场_白天.png",
+            nightImage: "image/环境/第二章/村广场_夜晚.png",
             accessTags: ['public', 'guest'],
-            slimeRisk: 40 // 高风险
+            suspicionModifier: 1.5,//怀疑权重
+            slimeRisk: 40
         },
         'village_office': {
             nameKey: 'location_village_office',
@@ -173,9 +190,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_village_office',
             category: 'village_in',
             isPublic: true,
-            image: "image/环境/办事处.png",
+            dayImage: "image/环境/第二章/办事处_白天.png",
+            nightImage: "image/环境/第二章/办事处_白天.png",
             accessTags: ['public', 'guest'],
-            slimeRisk: 50 // 极高风险
+            suspicionModifier: 1.5,//怀疑权重
+            slimeRisk: 50
         },
         'village_lake': {
             nameKey: 'location_village_lake',
@@ -183,9 +202,11 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_village_lake',
             category: 'village_out',
             isPublic: true,
-            image: "image/环境/湖泊.png",
+            dayImage: "image/环境/第二章/湖泊_白天.png",
+            nightImage: "image/环境/第二章/湖泊_夜晚.png",
             accessTags: ['public'],
-            slimeRisk: 20 // 中等风险
+            suspicionModifier: 1.5,//怀疑权重
+            slimeRisk: 20
         },
         'special_store': {
             nameKey: 'location_special_store',
@@ -193,9 +214,10 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_special_store',
             category: 'village_out',
             isPublic: false,
-            image: "image/环境/特殊商店.png",
-            accessTags: ['slime_only'], // 只有史莱姆单体能去
-            slimeRisk: 0 // 安全区
+            dayImage: "image/环境/第二章/特殊商店_白天.png",
+            nightImage: "image/环境/第二章/特殊商店_夜晚.png",
+            accessTags: ['slime_only'],
+            slimeRisk: 0
         },
         'abandoned_warehouse': {
             nameKey: 'location_abandoned_warehouse',
@@ -203,12 +225,20 @@ const allLocationData = {
             slimeDescriptionKey: 'slime_desc_abandoned_warehouse',
             category: 'village_out',
             isPublic: false,
-            image: "image/环境/废弃仓库.png",
-            accessTags: ['jane','liu_min'],
+            dayImage: "image/环境/第二章/废弃仓库_白天.png",
+            nightImage: "image/环境/第二章/废弃仓库_夜晚.png",
+            accessTags: ['jane', 'liu_min'],
             unlockFlag: 'chapter2.quests.warehouse_found',
-            slimeRisk: 0 
+            slimeRisk: 0
         },
     }
+};
+
+const TIME_SEGMENTS = {
+    'morning': { isNight: false },
+    'noon': { isNight: false },
+    'afternoon': { isNight: false },
+    'evening': { isNight: true },
 };
 
 const allDailyFlows = {
@@ -364,14 +394,13 @@ const allEventData = {
             image: "image/事件/城市封锁.png",
             choices: [{
                 textKey: 'event_continue_ellipsis',
+                // ▼▼▼ 【核心修复】在这里补上 isVisible: true ▼▼▼
                 action: [
-                    { type: 'setFlag', path: 'story.flags.chapter2.quests.forest_entered', value: true },
-                    { type: 'setFlag', path: 'story.flags.chapter2.quests.warehouse_found', value: true },
-                    // ▼▼▼ 核心修正：使用我们新增的移动指令 ▼▼▼
-                    { type: 'moveActiveHost', locationId: 'abandoned_warehouse' },
-                    { type: 'showMessage', key: 'toast_warehouse_unlocked', messageType: 'success' },
+                    { type: 'setFlag', path: 'story.mainQuest', value: 'health_check_main' },
+                    { type: 'setFlag', path: 'story.countdown', value: { key: 'health_check_main', days: 14, isVisible: true } },
                     { type: 'advanceTime' }
                 ]
+                // ▲▲▲ 修复结束 ▲▲▲
             }]
         }]
     },
@@ -521,7 +550,7 @@ const allEventData = {
                 textKey: 'event_convince_zc_sx_choice',  // 修正
                 action: [
                     { type: 'setFlag', path: 'story.flags.chapter1.main_quest_escape.escapePlanFinalized', value: true },
-                    { type: 'showMessage', key: 'toast_escape_plan_finalized', messageType: 'success' },
+                    { type: 'showMessage', key: 'toast_task_complete_escape_ready', messageType: 'success' },
                     { type: 'advanceTime' }
                 ]
             }]
@@ -868,18 +897,24 @@ const allEventData = {
         pages: [
             {
                 textKey: 'event_false_takeover_zh_p1',
-                image: 'image/CG/第二章事件/假夺取/第一张.png' // 假设图片路径
+                image: 'image/第二章事件/假夺取/第一张.png' // 假设图片路径
             },
             {
                 textKey: 'event_false_takeover_zh_p2',
-                image: 'image/CG/第二章事件/假夺取/第二张.png' // 假设图片路径
+                image: 'image/第二章事件/假夺取/第二张.png' // 假设图片路径
             },
             {
                 textKey: 'event_false_takeover_zh_p3',
-                image: 'image/CG/第二章事件/假夺取/第三张.png', // 假设图片路径
+                image: 'image/第二章事件/假夺取/第三张.png', // 假设图片路径
                 choices: [{
                     textKey: 'event_false_takeover_zh_choice',
-                    action: [{ type: 'showGameOver', outcome: 'FALSE_TAKEOVER_ZH_OUTCOME' }] // 触发游戏结束
+                    // ▼▼▼ 【核心修复】将 action 的类型从事件系统调用改为直接的UI调用 ▼▼▼
+                    action: (game) => {
+                        game.uiManager.closeEventModal();
+                        setTimeout(() => {
+                            game.uiManager.showGameOver('FALSE_TAKEOVER_ZH_OUTCOME');
+                        }, 0);
+                    }
                 }]
             }
         ]
@@ -1109,7 +1144,7 @@ const allEventData = {
             // 迷宫阶段 1
             {
                 textKey: 'event_forest_maze_p1',
-                image: 'image/事件/森林迷宫/阶段1.png',
+                image: 'image/第二章事件/森林迷宫/阶段1.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'advanceMaze', stage: 2 }] }, // 正确答案
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1120,7 +1155,7 @@ const allEventData = {
             // 迷宫阶段 2
             {
                 textKey: 'event_forest_maze_p2',
-                image: 'image/事件/森林迷宫/阶段2.png',
+                image: 'image/第二章事件/森林迷宫/阶段2.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'failMaze' }] },
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1131,7 +1166,7 @@ const allEventData = {
             // 迷宫阶段 3
             {
                 textKey: 'event_forest_maze_p3',
-                image: 'image/事件/森林迷宫/阶段3.png',
+                image: 'image/第二章事件/森林迷宫/阶段3.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'advanceMaze', stage: 4 }] }, // 正确答案
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1142,7 +1177,7 @@ const allEventData = {
             // 迷宫阶段 4
             {
                 textKey: 'event_forest_maze_p4',
-                image: 'image/事件/森林迷宫/阶段4.png',
+                image: 'image/第二章事件/森林迷宫/阶段4.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'failMaze' }] },
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1153,7 +1188,7 @@ const allEventData = {
             // 成功
             {
                 textKey: 'event_forest_maze_success',
-                image: 'image/事件/森林迷宫/成功.png',
+                image: 'image/第二章事件/森林迷宫/成功.png',
                 choices: [{
                     textKey: 'event_continue_ellipsis',
                     action: [
@@ -1599,6 +1634,21 @@ const allNsfwData = {
                 descriptions: { HOST: "zhangchao_nsfw_desc_host", SLIME: "zhangchao_nsfw_desc_slime" },
                 effects: { favorability: 15, stamina: -50, sanity: -40, baseSuspicion: 15, interactionSuspicion: 10, mutationChance: 0.5, mutationPoints: 2 }
             },
+            'song_xin_kiss': {
+                npcId: 'song_xin',
+                buttonTextKey: 'nsfw_choice_kiss_song_xin',
+                condition: (state) =>
+                    state.chapter === 1 &&
+                    state.npcs.song_xin.isPresent &&
+                    state.hosts.song_wei.isPuppet &&
+                    state.hosts.song_xin.isPuppet &&
+                    state.activeHostId === 'song_wei' &&
+                    state.hosts.song_wei.currentLocationId === 'home_livingroom',
+                titleKey: 'nsfw_title_sisters_kiss',
+                images: { SLIME: "image/CG/宋薇/接管模式/与宋欣舌吻.png" }, // 新增的图片路径
+                descriptions: { SLIME: "nsfw_desc_sv_kiss_sx" }, // <-- 修改这里
+                effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
+            }
         },
     },
 
@@ -1678,8 +1728,23 @@ const allNsfwData = {
                 images: { SLIME: "image/CG/宋欣/第二章/与赵齐民MS.png" },
                 descriptions: { SLIME: "zq_nsfw_desc_sx_slime_MS" },
                 effects: { favorability: 30, stamina: -50, baseSuspicion: 25, interactionSuspicion: 35, mutationChance: 0.7, mutationPoints: 3 }
+            },
+             'song_wei_kiss': {
+                npcId: 'song_wei', // 从宋欣视角看，宋薇此时是“在场的NPC”
+                buttonTextKey: 'nsfw_choice_kiss_song_wei',
+                condition: (state) =>
+                    state.chapter === 1 &&
+                    state.npcs.song_wei.isPresent &&
+                    state.hosts.song_wei.isPuppet &&
+                    state.hosts.song_xin.isPuppet &&
+                    state.activeHostId === 'song_xin' &&
+                    state.hosts.song_xin.currentLocationId === 'home_livingroom',
+                titleKey: 'nsfw_title_sisters_kiss',
+                descriptions: { SLIME: "nsfw_desc_sx_kiss_sv" }, // <-- 修改这里
+                images: { SLIME: "image/CG/宋欣/与宋薇舌吻.png" }, // 新增的图片路径
+                effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
             }
-        }
+        },       
     },
 
     // ===================================
@@ -1743,6 +1808,22 @@ const allNsfwData = {
                 images: { HOST: "image/CG/张慧丽/宿主模式/与刘敏LP.png", SLIME: "image/CG/张慧丽/接管模式/与刘敏LP.png" }, // 注意：这里复用了之前的图片
                 descriptions: { HOST: "nsfw_desc_huili_liumin_lp_livingroom_host", SLIME: "nsfw_desc_huili_liumin_lp_livingroom_slime" },
                 effects: { favorability: 20, stamina: -40, baseSuspicion: 0, interactionSuspicion: 35, mutationChance: 0.4, mutationPoints: 1 }
+            },
+            // ... (zhang_huili已有的 partnered 事件)
+            'liu_min_kiss': {
+                npcId: 'liu_min',
+                buttonTextKey: 'nsfw_choice_kiss_liu_min',
+                condition: (state) =>
+                    state.chapter === 2 &&
+                    state.npcs.liu_min.isPresent &&
+                    state.hosts.zhang_huili.isPuppet &&
+                    state.hosts.liu_min.isPuppet &&
+                    state.activeHostId === 'zhang_huili' &&
+                    state.hosts.zhang_huili.currentLocationId === 'huili_home_livingroom',
+                descriptions: { SLIME: "nsfw_desc_zh_kiss_lm" }, // <-- 修改这里
+                images: { SLIME: "image/CG/张慧丽/接管模式/与刘敏舌吻.png" }, // 新增的图片路径
+                descriptions: { SLIME: "nsfw_desc_puppets_kiss" },
+                effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
             }
         }
     },
@@ -1812,7 +1893,40 @@ const allNsfwData = {
                 images: { HOST: "image/CG/刘敏/宿主模式/与赵齐民MS.png", SLIME: "image/CG/刘敏/接管模式/与赵齐民MS.png" },
                 descriptions: { HOST: "zq_nsfw_desc_lm_host_MS", SLIME: "zq_nsfw_desc_lm_slime_MS" },
                 effects: { favorability: 30, stamina: -50, baseSuspicion: 25, interactionSuspicion: 40, mutationChance: 0.6, mutationPoints: 2 }
+            },
+            // ... (liu_min已有的 partnered 事件)
+            'zhang_huili_kiss': {
+                npcId: 'zhang_huili',
+                buttonTextKey: 'nsfw_choice_kiss_zhang_huili',
+                condition: (state) =>
+                    state.chapter === 2 &&
+                    state.npcs.zhang_huili.isPresent &&
+                    state.hosts.zhang_huili.isPuppet &&
+                    state.hosts.liu_min.isPuppet &&
+                    state.activeHostId === 'liu_min' &&
+                    state.hosts.liu_min.currentLocationId === 'huili_home_livingroom',
+                titleKey: 'nsfw_title_puppets_kiss',
+                images: { SLIME: "image/CG/刘敏/接管模式/与张慧丽舌吻.png" }, // 新增的图片路径
+                descriptions: { SLIME: "nsfw_desc_lm_kiss_zh" }, // <-- 修改这里
+                effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
+            },
+            // ▼▼▼ 在这里粘贴新的事件代码 ▼▼▼
+            'zhang_huili_lp': {
+                npcId: 'zhang_huili',
+                buttonTextKey: 'nsfw_choice_lm_kiss_zh',
+                condition: (state) =>
+                    state.chapter === 2 &&
+                    state.npcs.zhang_huili.isPresent &&
+                    state.hosts.zhang_huili.isPuppet &&
+                    (state.controlState === 'SLIME' || state.controlState === 'PERMANENT_SLIME') && // 确保只在SLIME模式
+                    state.activeHostId === 'liu_min' &&
+                    state.hosts.liu_min.currentLocationId === 'huili_home_livingroom',
+                titleKey: "nsfw_title_lm_kiss_zh_slime", // 直接使用SLIME模式的标题
+                images: { SLIME: "image/CG/刘敏/接管模式/刘敏舔张慧丽.png" }, // 只保留SLIME模式的图片
+                descriptions: { SLIME: "nsfw_desc_lm_kiss_zh_slime" }, // 只保留SLIME模式的描述
+                effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
             }
+            // ▲▲▲ 粘贴结束 ▲▲▲
         }
     },
     'jane': {
@@ -1935,7 +2049,8 @@ const taskData = {
             { textKey: 'task_deep_or_shallow_step2', isDone: (state) => false, isVisible: (state) => state.hosts.zhang_huili.isPuppet && state.hosts.liu_min.isPuppet && state.hosts.jane.isPuppet },
         ],
         hintsKeys: [
-            { key: 'task_deep_or_shallow_hint1', condition: (state) => true }
+            { key: 'task_deep_or_shallow_hint1', condition: (state) => true },
+             { key: 'task_deep_or_shallow_hint2', condition: (state) => true }
         ]
     },
     'bomb_countdown': {
@@ -2041,6 +2156,18 @@ const locationEventData = {
         action: (game) => { game.openNpcInteractionModal('song_xin'); }
     },
 
+    'talk_to_songwei': {
+        location: ['home_livingroom', 'home_bedroom'],
+        npcId: 'song_wei',
+        buttonTextKey: 'event_interact_with_npc_btn', // 使用通用Key
+        condition: (state) =>
+            state.chapter === 1 &&
+            state.npcs.song_wei.isPresent &&
+            state.activeHostId !== 'song_wei' &&
+            !state.hosts.song_wei.wasEverPossessed,
+        action: (game) => { game.openNpcInteractionModal('song_wei'); }
+    },
+
     'confirm_escape': {
         location: 'work_office',
         buttonTextKey: 'event_confirm_escape_btn',
@@ -2055,22 +2182,23 @@ const locationEventData = {
     },
 
     // === 张慧丽相关事件 ===
-    //假夺取事件
+    // 假夺取“入口”——只负责打开事件，不直接 Game Over
     'attempt_false_takeover_zhang_huili': {
-        location: 'huili_home_huili_bedroom', // 张慧丽卧室
-        buttonTextKey: 'event_attempt_false_takeover_zh_btn',
-        condition: (state) => state.controlState === 'SLIME_DETACHED' && !state.hosts.zhang_huili.wasEverPossessed && state.time.segment.startsWith('evening'),
-        // ▼▼▼ 将 action 对象修改为函数 ▼▼▼
-        action: (game) => { game.eventManager.triggerEvent('false_takeover_zhang_huili'); }
-        // ▲▲▲ 修改结束 ▲▲▲
-    },
-    //宿主解锁
-    'takeover_huili_fake': {
         location: 'huili_home_huili_bedroom',
-        buttonTextKey: 'event_takeover_sx_btn', // 复用夺取宋欣的按钮文本
-        condition: (state) => !state.story.flags.chapter2.investigation.plan_made,
-        action: (game) => { game.uiManager.showGameOver('WILLING_HOOK'); }
+        buttonTextKey: 'event_attempt_false_takeover_zh_btn',
+        condition: (state) =>
+            state.controlState === 'SLIME_DETACHED' &&
+            !state.hosts.zhang_huili.wasEverPossessed &&
+            state.time.segment.startsWith('evening') &&
+            !state.story.flags.chapter2.false_takeover_triggered,   // 防重复/去重
+        action: (game) => {
+            // 记录一次，避免区域事件列表出现两个/反复出现
+            game.stateManager.getState().story.flags.chapter2.false_takeover_triggered = true;
+            // 只打开事件，不在这里 Game Over
+            game.eventManager.triggerEvent('false_takeover_zhang_huili');
+        }
     },
+
     'takeover_huili_real': {
         location: 'huili_home_bathroom',
         buttonTextKey: 'event_execute_plan_btn',
@@ -2294,7 +2422,12 @@ const chapterSetupData = {
         mainQuest: 'stranger_in_a_strange_land',
         initialCountdown: { key: 'bomb_countdown', days: 30, isVisible: false },
         hostStatusChanges: {
-            'song_wei': { status: 'DISCONNECTED' },
+            'song_wei': {
+                status: 'DISCONNECTED',
+                currentLocationId: null,
+                expectedLocationId: null,
+                isAiControlled: false
+            },
             'song_xin': { currentLocationId: 'huili_home_your_bedroom' }
         },
         initialDailyFlow: 'village_life' // 为新章节设置默认流程
@@ -2403,13 +2536,41 @@ const chapterSelectData = {
     1: {
         titleKey: "chapter_select_1_title",
         descKey: "chapter_select_1_desc",
-        image: "image/封面.png", // 使用游戏封面作为第一章图片
+        image: "image/第一章封面图.png", // 使用游戏封面作为第一章图片
     },
     2: {
         titleKey: "chapter_select_2_title",
         descKey: "chapter_select_2_desc",
-        image: "image/第二章事件/抵达乡村.png", // 使用抵达乡村作为第二章图片
+        image: "image/第二章封面图.png", // 使用抵达乡村作为第二章图片
     }
+};
+// 在 data.js 文件末尾, export 之前
+const dynamicDailyFlows = {
+    // 可以在这里为不同章节添加不同的动态规则
+    2: [
+        {
+            hostId: 'zhang_huili',
+            // 条件：当刘敏的家被解锁后
+            condition: (state) => state.story.flags.chapter2.quests.liumin_home_unlocked,
+            // 时间段：工作日的下午2/2，或者休息日的中午1/2和2/2
+            segments: ['afternoon-2@workday', 'noon-1@weekend', 'noon-2@weekend'],
+            // 目标地点
+            locationId: 'liumin_home_bedroom',
+            // 特殊旁白
+            messageKey: 'daily_huili_override_liumin'
+        },
+        {
+            hostId: 'liu_min',
+            // 条件：当废弃仓库被发现后
+            condition: (state) => state.story.flags.chapter2.quests.warehouse_found,
+            // 时间段：无论是工作日还是休息日的下午2/2
+            segments: ['afternoon-2@workday', 'afternoon-2@weekend'],
+            // 目标地点
+            locationId: 'abandoned_warehouse',
+            // 特殊旁白
+            messageKey: 'daily_liumin_override_warehouse'
+        }
+    ]
 };
 
 // 在 data.js 文件末尾
@@ -2430,5 +2591,7 @@ export {
     chapterSetupData,
     storeItemsData,
     locationTriggerEvents,
-    chapterSelectData
+    chapterSelectData,
+    dynamicDailyFlows,
+    TIME_SEGMENTS
 };
