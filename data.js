@@ -108,7 +108,7 @@ const allLocationData = {
             isPublic: false,
             dayImage: "image/环境/第二章/乡村卧室_白天.png",
             nightImage: "image/环境/第二章/乡村卧室_夜晚.png",
-            accessTags: ['song_xin', 'zhang_huili'],
+            accessTags: ['song_xin'],
             suspicionModifier: 1.5,//怀疑权重
             slimeRisk: 5
         },
@@ -656,6 +656,18 @@ const allEventData = {
         }]
     },
 
+    're_enter_jane': {
+        titleKey: 'event_reenter_jane_title',
+        pages: [{
+            textKey: 'event_reenter_jane_desc',
+            image: '{dynamic}',
+            choices: [{
+                textKey: 'btn_continue',
+                action: [{ type: 'reEnterHost', hostId: 'jane' }]
+            }]
+        }]
+    },
+
     'permanent_takeover_song_wei': {
         titleKey: 'event_perm_takeover_title',
         pages: [{
@@ -1027,13 +1039,21 @@ const allEventData = {
         titleKey: 'event_request_visit_lm_title',
         pages: [{
             textKey: 'event_request_visit_lm_desc',
-            image: 'image/第二章事件/刘敏对话.png', // 假设的对话背景图
+            image: 'image/第二章事件/刘敏对话缓和.png', // 假设的对话背景图
             choices: [{
                 textKey: 'event_request_visit_lm_choice',
                 action: [
                     { type: 'setFlag', path: 'story.flags.chapter2.quests.liumin_home_unlocked', value: true },
+                    {
+                        type: 'setFlag',
+                        path: 'hosts.zhang_huili.tags',
+                        value: (state) => {
+                            const current = state.hosts.zhang_huili.tags || [];
+                            return Array.from(new Set([...current, 'liu_min']));
+                        }
+                    },
                     { type: 'showMessage', key: 'toast_new_location_unlocked', messageType: 'success' },
-                    { type: 'advanceTime' }
+                    { type: 'advanceTime' },
                 ]
             }]
         }]
@@ -1144,7 +1164,7 @@ const allEventData = {
             // 迷宫阶段 1
             {
                 textKey: 'event_forest_maze_p1',
-                image: 'image/第二章事件/森林迷宫/阶段1.png',
+                image: 'image/第二章事件/森林迷宫/第一张.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'advanceMaze', stage: 2 }] }, // 正确答案
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1155,7 +1175,7 @@ const allEventData = {
             // 迷宫阶段 2
             {
                 textKey: 'event_forest_maze_p2',
-                image: 'image/第二章事件/森林迷宫/阶段2.png',
+                image: 'image/第二章事件/森林迷宫/第二张.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'failMaze' }] },
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1166,7 +1186,7 @@ const allEventData = {
             // 迷宫阶段 3
             {
                 textKey: 'event_forest_maze_p3',
-                image: 'image/第二章事件/森林迷宫/阶段3.png',
+                image: 'image/第二章事件/森林迷宫/第三张.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'advanceMaze', stage: 4 }] }, // 正确答案
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1177,7 +1197,7 @@ const allEventData = {
             // 迷宫阶段 4
             {
                 textKey: 'event_forest_maze_p4',
-                image: 'image/第二章事件/森林迷宫/阶段4.png',
+                image: 'image/第二章事件/森林迷宫/第四张.png',
                 choices: [
                     { textKey: 'maze_choice_north', action: [{ type: 'failMaze' }] },
                     { textKey: 'maze_choice_east', action: [{ type: 'failMaze' }] },
@@ -1243,17 +1263,7 @@ const allEventData = {
             }]
         }]
     },
-    're_enter_jane': {
-        titleKey: 'event_reenter_jane_title',
-        pages: [{
-            textKey: 'event_reenter_jane_desc',
-            image: '{dynamic}',
-            choices: [{
-                textKey: 'btn_continue',
-                action: [{ type: 'reEnterHost', hostId: 'jane' }]
-            }]
-        }]
-    },
+   
     'memory_plunder_success_jane': {
         titleKey: 'event_mem_plunder_success_jane_title',
         pages: [
@@ -1715,6 +1725,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin', // 【新增】明确NPC ID
                 buttonTextKey: 'nsfw_choice_invite_zq_BJ',
                 condition: (state, skillManager) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 15,
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: 'nsfw_event_zq_title_BJ',
                 images: { SLIME: "image/CG/宋欣/第二章/与赵齐民BJ.png" },
                 descriptions: { SLIME: "zq_nsfw_desc_sx_slime_BJ" },
@@ -1724,6 +1737,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin', // 【新增】明确NPC ID
                 buttonTextKey: 'nsfw_choice_invite_zq_MS',
                 condition: (state, skillManager) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 50,
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: 'nsfw_event_zq_title_MS',
                 images: { SLIME: "image/CG/宋欣/第二章/与赵齐民MS.png" },
                 descriptions: { SLIME: "zq_nsfw_desc_sx_slime_MS" },
@@ -1773,6 +1789,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin', // 【新增】明确NPC ID
                 buttonTextKey: 'nsfw_choice_invite_zq_BJ',
                 condition: (state, skillManager) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 15,
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: { HOST: "zq_nsfw_desc_zh_host_BJ_title", SLIME: "zq_nsfw_desc_zh_slime_BJ_title" },
                 images: { HOST: "image/CG/张慧丽/宿主模式/与赵齐民BJ.png", SLIME: "image/CG/张慧丽/接管模式/与赵齐民BJ.png" },
                 descriptions: { HOST: "zq_nsfw_desc_zh_host_BJ", SLIME: "zq_nsfw_desc_zh_slime_BJ" },
@@ -1782,6 +1801,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin', // 【新增】明确NPC ID
                 buttonTextKey: 'nsfw_choice_invite_zq_MS',
                 condition: (state, skillManager) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 50,
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: { HOST: "zq_nsfw_desc_zh_host_MS_title", SLIME: "zq_nsfw_desc_zh_slime_MS_title" },
                 images: { HOST: "image/CG/张慧丽/宿主模式/与赵齐民MS.png", SLIME: "image/CG/张慧丽/接管模式/与赵齐民MS.png" },
                 descriptions: { HOST: "zq_nsfw_desc_zh_host_MS", SLIME: "zq_nsfw_desc_zh_slime_MS" },
@@ -1791,6 +1813,9 @@ const allNsfwData = {
                 npcId: 'liu_min',
                 buttonTextKey: 'nsfw_choice_huili_liumin_lp',
                 condition: (state) => state.npcs.liu_min.isPresent && state.npcs.liu_min.favorability > 30 && state.hosts.liu_min.currentLocationId === 'liumin_home_bedroom',
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: { HOST: "nsfw_title_huili_liumin_lp_host", SLIME: "nsfw_title_huili_liumin_lp_slime" },
                 images: { HOST: "image/CG/张慧丽/宿主模式/与刘敏LP.png", SLIME: "image/CG/张慧丽/接管模式/与刘敏LP.png" },
                 descriptions: { HOST: "nsfw_desc_huili_liumin_lp_host", SLIME: "nsfw_desc_huili_liumin_lp_slime" },
@@ -1820,9 +1845,9 @@ const allNsfwData = {
                     state.hosts.liu_min.isPuppet &&
                     state.activeHostId === 'zhang_huili' &&
                     state.hosts.zhang_huili.currentLocationId === 'huili_home_livingroom',
+                titleKey: 'nsfw_title_puppets_kiss',
                 descriptions: { SLIME: "nsfw_desc_zh_kiss_lm" }, // <-- 修改这里
                 images: { SLIME: "image/CG/张慧丽/接管模式/与刘敏舌吻.png" }, // 新增的图片路径
-                descriptions: { SLIME: "nsfw_desc_puppets_kiss" },
                 effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
             }
         }
@@ -1880,6 +1905,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin',
                 buttonTextKey: 'nsfw_choice_invite_zq_BJ',
                 condition: (state) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 15,
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: { HOST: "zq_nsfw_desc_lm_host_BJ_title", SLIME: "zq_nsfw_desc_lm_slime_BJ_title" },
                 images: { HOST: "image/CG/刘敏/宿主模式/与赵齐民BJ.png", SLIME: "image/CG/刘敏/接管模式/与赵齐民BJ.png" },
                 descriptions: { HOST: "zq_nsfw_desc_lm_host_BJ", SLIME: "zq_nsfw_desc_lm_slime_BJ" },
@@ -1889,6 +1917,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin',
                 buttonTextKey: 'nsfw_choice_invite_zq_MS',
                 condition: (state) => state.npcs.zhao_qimin.isPresent && state.npcs.zhao_qimin.favorability > 50,
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: { HOST: "zq_nsfw_desc_lm_host_MS_title", SLIME: "zq_nsfw_desc_lm_slime_MS_title" },
                 images: { HOST: "image/CG/刘敏/宿主模式/与赵齐民MS.png", SLIME: "image/CG/刘敏/接管模式/与赵齐民MS.png" },
                 descriptions: { HOST: "zq_nsfw_desc_lm_host_MS", SLIME: "zq_nsfw_desc_lm_slime_MS" },
@@ -1922,7 +1953,7 @@ const allNsfwData = {
                     state.activeHostId === 'liu_min' &&
                     state.hosts.liu_min.currentLocationId === 'huili_home_livingroom',
                 titleKey: "nsfw_title_lm_kiss_zh_slime", // 直接使用SLIME模式的标题
-                images: { SLIME: "image/CG/刘敏/接管模式/刘敏舔张慧丽.png" }, // 只保留SLIME模式的图片
+                images: { SLIME: "image/CG/刘敏/接管模式/与张慧丽LP.png" }, // 只保留SLIME模式的图片
                 descriptions: { SLIME: "nsfw_desc_lm_kiss_zh_slime" }, // 只保留SLIME模式的描述
                 effects: { favorability: 0, stamina: 0, baseSuspicion: 0, interactionSuspicion: 0, mutationChance: 0.5, mutationPoints: 2 }
             }
@@ -1949,6 +1980,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin',
                 buttonTextKey: 'nsfw_choice_invite_zq_BJ',
                 condition: (state) => state.npcs.zhao_qimin.isPresent, // 无好感度要求
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: "nsfw_title_jane_zq_bj",
                 images: { SLIME: "image/CG/Jane/与赵齐民BJ.png" },
                 descriptions: { SLIME: "nsfw_desc_jane_zq_bj_slime" },
@@ -1958,6 +1992,9 @@ const allNsfwData = {
                 npcId: 'zhao_qimin',
                 buttonTextKey: 'nsfw_choice_invite_zq_MS',
                 condition: (state) => state.npcs.zhao_qimin.isPresent, // 无好感度要求
+                check: (state, skillManager) => !state.controlState.includes('SLIME') ||
+                    skillManager.getSkillRank('socialization', state.activeHostId) > 0,
+                failAction: { type: 'showMessage', key: 'toast_need_socialization', messageType: 'warning' },
                 titleKey: "nsfw_title_jane_zq_ms",
                 images: { SLIME: "image/CG/Jane/与赵齐民MS.png" },
                 descriptions: { SLIME: "nsfw_desc_jane_zq_ms_slime" },
@@ -2544,34 +2581,37 @@ const chapterSelectData = {
         image: "image/第二章封面图.png", // 使用抵达乡村作为第二章图片
     }
 };
-// 在 data.js 文件末尾, export 之前
+// ===== dynamicDailyFlows：第 2 章（唯一定义） =====
+// 说明：张慧丽只看“刘敏家是否解锁”；刘敏只看“废弃仓库是否发现”。
+// 放在 data.js 末尾、export 之前；确保全文件只保留这一个定义。
 const dynamicDailyFlows = {
-    // 可以在这里为不同章节添加不同的动态规则
     2: [
+        // 张慧丽 → 刘敏家（独立于废弃仓库）
         {
             hostId: 'zhang_huili',
-            // 条件：当刘敏的家被解锁后
-            condition: (state) => state.story.flags.chapter2.quests.liumin_home_unlocked,
-            // 时间段：工作日的下午2/2，或者休息日的中午1/2和2/2
+            condition: (state) => state.story.flags.chapter2?.quests?.liumin_home_unlocked === true,
             segments: ['afternoon-2@workday', 'noon-1@weekend', 'noon-2@weekend'],
-            // 目标地点
             locationId: 'liumin_home_bedroom',
-            // 特殊旁白
-            messageKey: 'daily_huili_override_liumin'
+            messageKey: 'daily_huili_override_liumin',
+            // 主界面旁白优先用这个 key（配合你已替换的 renderHostMode）
+            storyTextKey: 'daily_huili_override_liumin'
         },
+
+        // 刘敏 → 废弃仓库（独立于是否去刘敏家）
         {
             hostId: 'liu_min',
-            // 条件：当废弃仓库被发现后
-            condition: (state) => state.story.flags.chapter2.quests.warehouse_found,
-            // 时间段：无论是工作日还是休息日的下午2/2
+            condition: (state) => state.story.flags.chapter2?.quests?.warehouse_found === true,
             segments: ['afternoon-2@workday', 'afternoon-2@weekend'],
-            // 目标地点
             locationId: 'abandoned_warehouse',
-            // 特殊旁白
-            messageKey: 'daily_liumin_override_warehouse'
+            messageKey: 'daily_liumin_override_warehouse',
+            storyTextKey: 'daily_liumin_override_warehouse'   // ← 旁白用这个 key
         }
     ]
 };
+// ===== dynamicDailyFlows 结束 =====
+
+
+
 
 // 在 data.js 文件末尾
 export {
