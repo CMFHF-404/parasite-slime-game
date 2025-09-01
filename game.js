@@ -204,8 +204,8 @@ class StateManager {
                         initialTakeoverEvent: 'takeover_host_jane_event',
                         sanityLossImage: "image/CG/Jane/失去理智.png",
                         detachImage: {
-                            normal: "image/CG/Jane/常规脱离.png",
-                            puppet: "image/CG/Jane/永久接管脱离.png"
+                            normal: "image/CG/Jane/常规返回躯体",
+                            puppet: "image/CG/Jane/永久接管脱离躯体" // ★ 修改为此链接
                         },
                         reEnterImage: {
                             normal: "image/CG/Jane/常规返回躯体.png",
@@ -430,10 +430,11 @@ class UIManager {
 
         const isControlled = state.controlState === 'SLIME' || state.controlState === 'PERMANENT_SLIME';
 
-        if (state.controlState === 'SLIME_DETACHED' && state.slime.detachedHostData) {
-            hostName = state.slime.detachedHostData.name;
-            stamina = Math.round(state.slime.detachedHostData.stamina);
-            sanity = Math.round(state.slime.detachedHostData.sanity);
+        if (state.controlState === 'SLIME_DETACHED') {
+            // 脱离形态下，不显示上一个宿主的信息
+            hostName = (LANG['status_no_host'] || '—'); // 若没有语言键，就用破折号
+            stamina = '—';
+            sanity = '—';
         } else if (activeHost) {
             hostName = activeHost.name;
             stamina = (state.controlState === 'PERMANENT_SLIME' ? '∞' : Math.round(activeHost.stamina));
@@ -512,80 +513,112 @@ class UIManager {
         }
     }
 
-    // 在 game.js 的 UIManager 类中
-    // ▼▼▼ 使用这个【优化版】的函数，完整替换掉旧的 renderHostMode 函数 ▼▼▼
-
+    // 放在 class UIManager { ... } 里，确保全文件只有这一处 renderHostMode 定义
     renderHostMode(state, game, activeHost, LANG) {
+        // --- 显示宿主模式的基础区域 ---
         this.dom.choicesDisplay.classList.remove('hidden');
         this.dom.extraActionsContainer.classList.remove('hidden');
         this.dom.enterHostButton.classList.add('hidden');
 
-        let storyTextContent = ""; // 初始化旁白文本
-        const hostFlows = game.getActiveHostFlows();
+        // -------- 旁白：动态优先，其次日程，再次地点，最后兜底 --------
+        const replaceVars = (txt) => String(txt || '')
+            .replace(/\{HOST_NAME\}/g, activeHost?.name || '')
+            .replace(/\{NPC_NAME\}/g, activeHost?.name || '')
+            .replace(/\{TARGET_NAME\}/g, activeHost?.name || '');
 
-        // --- 【核心】使用统一的动态旁白逻辑 ---
-        // (这部分旁白逻辑保持不变)
-        if (hostFlows && state.story.dailyFlow !== 'none') {
-            const flow = hostFlows[state.story.dailyFlow];
-            if (flow && flow[state.time.segment] && flow[state.time.segment].textKey) {
-                storyTextContent = LANG[flow[state.time.segment].textKey];
-            }
+        let storyTextContent = '';
+
+        // 1) 动态旁白（来自 TimeManager.updateOnTimePassage 记录的 dynNarration）
+        const dyn = state.temp?.dynNarration?.[state.activeHostId];
+        if (dyn && dyn.key && dyn.day === state.time.day && dyn.segment === state.time.segment) {
+            storyTextContent = LANG[dyn.key] || '';
         }
+
+        // 2) 常规日程文本
         if (!storyTextContent) {
-            const currentLocationData = game.getCurrentChapterLocations()[activeHost.currentLocationId];
-            if (currentLocationData && currentLocationData.descriptionKey) {
-                storyTextContent = LANG[currentLocationData.descriptionKey];
+            const hostFlows = game.getActiveHostFlows && game.getActiveHostFlows();
+            if (hostFlows && state.story.dailyFlow !== 'none') {
+                const flow = hostFlows[state.story.dailyFlow];
+                const seg = flow?.[state.time.segment];
+                if (seg?.textKey && LANG[seg.textKey]) storyTextContent = LANG[seg.textKey];
             }
         }
+
+        // 3) 地点描述
         if (!storyTextContent) {
-            if (state.story.dailyFlow === 'none') {
-                storyTextContent = LANG['story_new_day_text'];
-            } else {
-                storyTextContent = LANG['story_free_time_text'] || "自由活动时间。";
+            const loc = game.getCurrentChapterLocations?.()[activeHost.currentLocationId];
+            if (loc?.descriptionKey && LANG[loc.descriptionKey]) {
+                storyTextContent = LANG[loc.descriptionKey];
             }
         }
+
+        // 4) 兜底
+        if (!storyTextContent) {
+            storyTextContent = (state.story.dailyFlow === 'none')
+                ? (LANG['story_new_day_text'] || '')
+                : (LANG['story_free_time_text'] || '自由活动时间。');
+        }
+
+        // 客厅同居的特殊覆盖（保持原逻辑）
         if (activeHost.currentLocationId === 'home_livingroom') {
-            if (state.activeHostId === 'song_wei' && state.npcs.song_xin.isPresent) {
-                storyTextContent = state.hosts.song_xin.wasEverPossessed ? LANG['story_text_sx_present_puppet'] : LANG['story_text_sx_present_normal'];
-            } else if (state.activeHostId === 'song_xin' && state.hosts.song_wei.currentLocationId === 'home_livingroom') {
-                storyTextContent = state.hosts.song_wei.isAiControlled ? LANG['story_text_sw_present_puppet'] : LANG['story_text_sw_present_normal'];
+            if (state.activeHostId === 'song_wei' && state.npcs?.song_xin?.isPresent) {
+                storyTextContent = state.hosts?.song_xin?.wasEverPossessed
+                    ? LANG['story_text_sx_present_puppet']
+                    : LANG['story_text_sx_present_normal'];
+            } else if (state.activeHostId === 'song_xin' && state.hosts?.song_wei?.currentLocationId === 'home_livingroom') {
+                storyTextContent = state.hosts?.song_wei?.isAiControlled
+                    ? LANG['story_text_sw_present_puppet']
+                    : LANG['story_text_sw_present_normal'];
             }
         }
-        this.dom.storyText.innerHTML = storyTextContent.replace('{HOST_NAME}', activeHost.name);
 
+        this.dom.storyText.innerHTML = replaceVars(storyTextContent);
 
-        // --- 【核心优化】统一按钮渲染逻辑 ---
-
-        // 检查是否为第一章且需要进行“上班/请假”的特殊选择
-        const isChapter1PlanningChoice = (
-            state.story.dailyFlow === 'none' &&
+        // -------- 按钮区：第1章清晨(计划) 或 常规(继续/欲望) --------
+        const hostFlowsForPlan = game.getActiveHostFlows && game.getActiveHostFlows();
+        const isChapter1PlanningChoice =
             state.chapter === 1 &&
-            hostFlows && hostFlows.workday
-        );
+            state.story.dailyFlow === 'none' &&
+            !!hostFlowsForPlan && !!hostFlowsForPlan.workday;
+
+        this.dom.choicesContainer.innerHTML = '';
 
         if (isChapter1PlanningChoice) {
-            // **情况A：第一章的特殊计划选择**
-            // 只有在这种情况下，才显示“上班/请假”选项，且不显示“欲望激荡”
+            // A) 第 1 章清晨：上班 / 请假
             this.dom.choicesTitle.textContent = LANG['story_plan_prompt'];
-            this.dom.choicesContainer.innerHTML = '';
-            this.dom.choicesContainer.appendChild(this.createActionButton(LANG['action_go_to_work'], 'bg-blue-600', () => game.handleAction('go_to_work')));
-            this.dom.choicesContainer.appendChild(this.createActionButton(LANG['action_ask_for_leave'], 'bg-yellow-600', () => game.handleAction('ask_for_leave')));
+            this.dom.choicesContainer.appendChild(
+                this.createActionButton(LANG['action_go_to_work'], 'bg-blue-600',
+                    () => game.handleAction('go_to_work'))
+            );
+            this.dom.choicesContainer.appendChild(
+                this.createActionButton(LANG['action_ask_for_leave'], 'bg-yellow-600',
+                    () => game.handleAction('ask_for_leave'))
+            );
         } else {
-            // **情况B：所有其他情况 (包括第二章的早晨和所有章节的行动阶段)**
-            // 统一显示“继续”和“欲望激荡”按钮
+            // B) 其他时间：继续 + 欲望激荡
+            this.dom.choicesTitle.textContent =
+                (state.story.dailyFlow === 'none') ? LANG['story_plan_prompt'] : LANG['choices_title_host'];
 
-            // 根据是否在计划阶段，显示不同的标题
-            this.dom.choicesTitle.textContent = (state.story.dailyFlow === 'none')
-                ? LANG['story_plan_prompt'] // 早晨显示“今天的计划是？”
-                : LANG['choices_title_host'];  // 其他时间显示“要做什么？”
+            this.dom.choicesContainer.appendChild(
+                this.createActionButton(LANG['action_continue'], 'bg-blue-600',
+                    () => game.handleAction('continue'))
+            );
 
-            this.dom.choicesContainer.innerHTML = '';
-            this.dom.choicesContainer.appendChild(this.createActionButton(LANG['action_continue'], 'bg-blue-600', () => game.handleAction('continue')));
-            const nsfwButton = this.createActionButton(LANG['action_lust_surge'], 'bg-pink-600', () => game.handleAction('open_nsfw_modal'));
-            nsfwButton.disabled = activeHost.nsfwUsedThisSegment;
-            this.dom.choicesContainer.appendChild(nsfwButton);
+            const nsfwBtn = this.createActionButton(
+                LANG['action_lust_surge'], 'bg-pink-600',
+                () => game.handleAction('open_nsfw_modal')
+            );
+            nsfwBtn.disabled = !!activeHost?.nsfwUsedThisSegment;
+            this.dom.choicesContainer.appendChild(nsfwBtn);
+        }
+
+        // （可选）如果你有单独的“额外动作”渲染函数，顺手调用一次，保证“区域事件/移动”等正常出现
+        if (typeof this.renderExtraActions === 'function') {
+            this.renderExtraActions(state, game);
         }
     }
+
+
 
     renderSlimeDetachedMode(state, game, LANG) {
         const currentChapterLocations = game.getCurrentChapterLocations();
@@ -732,39 +765,76 @@ class UIManager {
         button.onclick = onClick;
         return button;
     }
-    // 在 UIManager 类中
-    // 用这个函数【替换】掉旧的 showMessage 函数
-    showMessage(messageKey, type = 'info', replacements = {}) {
-        const LANG = this.languageManager.getCurrentLanguageData();
-        let message = LANG[messageKey] || messageKey;
+    // UIManager 内：完整替换 showMessage
+    showMessage(keyOrText, type = 'info', replacements = null) {
+        // 1) 取文案（既支持传 key，也支持直接传文本）
+        const LANG = this.languageManager.getCurrentLanguageData?.() || {};
+        let text = LANG[keyOrText] || keyOrText;
 
-        for (const key in replacements) {
-            message = message.replace(`{${key}}`, replacements[key]);
+        // 2) （可选）数据驱动的“屏蔽老提示”——如果你在别处把待屏蔽 key 放到了 state.temp.suppressToastKeys
+        try {
+            const s = this.game?.stateManager?.getState?.();
+            if (s?.temp?.suppressToastKeys instanceof Set && typeof keyOrText === 'string') {
+                if (s.temp.suppressToastKeys.has(keyOrText)) return;
+            }
+
+            // 3) 占位替换 {FOO} → replacements.FOO（全量替换）
+            if (replacements && typeof replacements === 'object') {
+                for (const [k, v] of Object.entries(replacements)) {
+                    text = String(text).split(`{${k}}`).join(String(v));
+                }
+            }
+
+            // 4) 记录到日志（最多保留100条，防止存档膨胀）
+            if (s) {
+                if (!Array.isArray(s.logs)) s.logs = [];
+                const t = s.time || {};
+                const segKey = (t.segment || '').split('-')[0]; // e.g. 'noon', 'afternoon'
+                const segName = (LANG['time_segment'] && LANG['time_segment'][segKey]) || segKey || '';
+                const dayPart = (typeof t.day === 'number') ? `Day ${t.day}` : 'Day ?';
+                const timestamp = segName ? `${dayPart} - ${segName}` : dayPart;
+                s.logs.push({ timestamp, message: text, type });
+                if (s.logs.length > 100) s.logs.splice(0, s.logs.length - 100);
+            }
+        } catch (e) {
+            // 日志/屏蔽失败不影响 toast 展示
+            console.warn('showMessage logging/suppress error:', e);
         }
 
-        // --- 【新增】日志记录逻辑 ---
-        const state = this.game.stateManager.getState();
-        const time = state.time;
-        const timeOfDayText = LANG['time_segment'][time.segment.split('-')[0]];
-        const timestamp = `Day ${time.day} - ${timeOfDayText}`;
+        // 5) 渲染 toast
+        const colors = {
+            info: 'bg-blue-500',
+            success: 'bg-green-500',
+            warning: 'bg-yellow-500',
+            error: 'bg-red-500'
+        };
 
-        state.logs.push({ timestamp, message, type });
-        // 为了防止存档过大，只保留最新的100条日志
-        if (state.logs.length > 100) {
-            state.logs.shift();
+        // 确保容器存在
+        let container = this.dom?.toastContainer;
+        if (!container) {
+            container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.style.position = 'fixed';
+                container.style.top = '20px';
+                container.style.right = '20px';
+                container.style.zIndex = '9999';
+                document.body.appendChild(container);
+            }
+            if (this.dom) this.dom.toastContainer = container;
         }
-        // --- 新增逻辑结束 ---
 
-        const colors = { info: 'bg-blue-500', success: 'bg-green-500', warning: 'bg-yellow-500', error: 'bg-red-500' };
         const toast = document.createElement('div');
-        toast.className = `p-4 rounded-lg text-white shadow-lg animate-fade-in-out ${colors[type]}`;
-        toast.textContent = message;
+        toast.className = `p-4 rounded-lg text-white shadow-lg animate-fade-in-out ${colors[type] || colors.info}`;
 
-        this.dom.toastContainer.appendChild(toast);
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
+        // 如需支持富文本（<br>, <strong>），把下一行换成：toast.innerHTML = text;
+        toast.textContent = text;
+
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
     }
+
 
     showIntro(index, onFinished) {
         const LANG = this.languageManager.getCurrentLanguageData();
@@ -1328,106 +1398,90 @@ class TimeManager {
         this.onTimeAdvanced();
     }
 
-    // 在 game.js 的 TimeManager 类中
+    // ===== game.js -> TimeManager -> updateOnTimePassage (最终正确版 V2) =====
     updateOnTimePassage(isNewDay = false) {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
 
-        Object.values(state.hosts).forEach(host => {
-            host.nsfwUsedThisSegment = false;
-        });
+        state.temp = state.temp || {};
+        Object.values(state.hosts).forEach(h => h.nsfwUsedThisSegment = false);
 
-        // ▼▼▼ 【核心修改】全新的、完全数据驱动的AI行动规划逻辑 ▼▼▼
         Object.keys(state.hosts).forEach(hostId => {
-            if (hostId !== state.activeHostId &&
-                state.hosts[hostId].isAiControlled &&
-                state.hosts[hostId].status !== 'DISCONNECTED') {
-                const host = state.hosts[hostId];
-                let locationOverridden = false;
+            const host = state.hosts[hostId];
+            if (!host || host.status === 'DISCONNECTED') return;
 
-                // --- 1. 检查是否存在动态日程并应用 ---
-                const chapterDynamicFlows = gameData.dynamicDailyFlows[state.chapter];
-                if (chapterDynamicFlows) {
-                    for (const rule of chapterDynamicFlows) {
-                        if (rule.hostId === hostId && rule.condition(state)) {
-                            const isWorkday = state.time.dayOfWeek <= 5;
-                            const currentSegmentKey = `${state.time.segment}@${isWorkday ? 'workday' : 'weekend'}`;
+            let locationOverridden = false;
 
-                            if (rule.segments.includes(currentSegmentKey)) {
-                                host.expectedLocationId = rule.locationId;
-                                this.uiManager.showMessage(rule.messageKey, 'info');
-                                locationOverridden = true;
-                                break; // 找到匹配的规则后，就不再检查其他规则
-                            }
-                        }
+            // 1. 最高优先级：处理动态日程规则 (特殊移动)
+            const rules = gameData.dynamicDailyFlows[state.chapter];
+            if (Array.isArray(rules)) {
+                for (const rule of rules) {
+                    if (rule.hostId !== hostId) continue;
+                    if (!rule.condition(state)) continue;
+
+                    // 规则1: 如果AI自身是傀儡，则不执行特殊路线
+                    if (host.isPuppet) continue;
+
+                    // ★ 核心规则：当玩家处于接管/傀儡模式时，其他AI不执行特殊路线
+                    if ((state.controlState === 'SLIME' || state.controlState === 'PERMANENT_SLIME') && hostId !== state.activeHostId) {
+                        continue;
                     }
-                }
 
-                // --- 2. 如果路线未被覆写，则执行常规日程 ---
-                if (!locationOverridden) {
-                    if (host.isPuppet) {
-                        const standbyLocation = gameData.chapterData[state.chapter].puppetStandbyLocationId;
-                        host.expectedLocationId = standbyLocation;
-                    } else {
-                        const chapterFlows = this.game.getCurrentChapterFlows();
-                        if (chapterFlows && chapterFlows[hostId]) {
-                            const hostFlows = chapterFlows[hostId];
-                            let flowKey = hostFlows.defaultFlow || (state.time.dayOfWeek <= 5 ? 'workday' : 'weekend');
-                            const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
-                            if (flow && flow[state.time.segment]) {
-                                host.expectedLocationId = flow[state.time.segment].locationId;
-                            }
+                    const isWorkday = state.time.dayOfWeek <= 5;
+                    const segKey = `${state.time.segment}@${isWorkday ? 'workday' : 'weekend'}`;
+                    if (!rule.segments.includes(segKey)) continue;
+
+                    // 执行特殊移动的提示和决策
+                    const dedupeKey = `dynmove_${hostId}_${state.time.day}_${state.time.segment}_${rule.locationId}`;
+                    if (!state.temp[dedupeKey]) {
+                        state.temp[dedupeKey] = true;
+                        const npcName = LANG[`host_name_${hostId}`] || host.name;
+                        const locationName = LANG[this.game.getCurrentChapterLocations()[rule.locationId]?.nameKey] || rule.locationId;
+                        this.uiManager.showMessage('toast_npc_moving_to', 'info', { NPC_NAME: npcName, LOCATION_NAME: locationName });
+                    }
+
+                    host.expectedLocationId = rule.locationId;
+                    state.temp = state.temp || {};
+                    state.temp.locationLocks = state.temp.locationLocks || {};
+                    state.temp.locationLocks[hostId] = `${state.time.day}:${state.time.segment}`;
+                    state.temp.dynNarration = state.temp.dynNarration || {};
+                    state.temp.dynNarration[hostId] = {
+                        key: rule.storyTextKey || null,
+                        day: state.time.day,
+                        segment: state.time.segment
+                    };
+
+                    locationOverridden = true;
+                    break;
+                }
+            }
+
+            // 2. 如果没有被特殊移动覆盖，则处理常规日程
+            if (!locationOverridden) {
+                if (host.isPuppet) {
+                    const standby = gameData.chapterData[state.chapter].puppetStandbyLocationId;
+                    host.expectedLocationId = standby;
+                } else {
+                    const chapterFlows = this.game.getCurrentChapterFlows?.();
+                    if (chapterFlows && chapterFlows[hostId] && Object.keys(chapterFlows[hostId]).length > 0) {
+                        const hostFlows = chapterFlows[hostId];
+
+                        let flowKey = hostFlows.defaultFlow || (state.time.dayOfWeek <= 5 ? 'workday' : 'weekend');
+
+                        if (state.story.dailyFlow && hostFlows[state.story.dailyFlow] && hostId === state.activeHostId) {
+                            flowKey = state.story.dailyFlow;
+                        }
+
+                        const seg = hostFlows[flowKey]?.[state.time.segment];
+                        if (seg?.locationId) {
+                            host.expectedLocationId = seg.locationId;
                         }
                     }
                 }
             }
         });
-
-        // --- 后续逻辑保持不变 ---
-        Object.values(state.hosts).forEach(host => {
-            if (host.isAiControlled &&
-                host.status !== 'DISCONNECTED' &&
-                host.currentLocationId !== host.expectedLocationId) {
-                host.currentLocationId = host.expectedLocationId;
-            }
-        });
-
-
-        const activeHost = this.stateManager.getActiveHost();
-        if (activeHost && state.controlState === 'HOST') {
-            const isNewPeriod = state.time.segment.endsWith('-1');
-            if (isNewPeriod && !isNewDay) {
-                if (activeHost.sanity > 0) {
-                    activeHost.sanity = Math.min(100, activeHost.sanity + 15);
-                    this.uiManager.showMessage(LANG['toast_new_period_sanity_recovered'], 'success');
-                }
-                const staminaRecovery = 20 + (this.skillManager.getSkillRank('hyper_excitement', state.activeHostId) * 20);
-                activeHost.stamina = Math.min(100, activeHost.stamina + staminaRecovery);
-                this.uiManager.showMessage(LANG['toast_stamina_recovered'].replace('{AMOUNT}', staminaRecovery), 'success');
-            }
-        }
-
-        if (this.updateControlCost()) {
-            this.onTimeAdvanced({ gameEvent: 'force_return_control' });
-        }
     }
 
-    updateControlCost() {
-        const LANG = this.languageManager.getCurrentLanguageData();
-        const state = this.stateManager.getState();
-        const activeHost = this.stateManager.getActiveHost();
-        if (activeHost && state.controlState === 'SLIME') {
-            if (state.activeHostId === 'song_xin') return false;
-            const cost = 15; activeHost.stamina -= cost;
-            this.uiManager.showMessage(LANG['toast_control_cost'].replace('{COST}', cost), 'warning');
-            if (activeHost.stamina <= 0) {
-                activeHost.stamina = 0;
-                this.uiManager.showMessage(LANG['toast_control_lost_energy'], 'error');
-                return true;
-            }
-        }
-        return false;
-    }
 }
 
 
@@ -1440,6 +1494,8 @@ class EventManager {
         this.uiManager = uiManager;
         this.game = game;
         this.languageManager = game.languageManager;
+        this.currentEventId = null;
+        this.currentEventPageIndex = 0;
     }
 
     // ==========================================================
@@ -1452,10 +1508,17 @@ class EventManager {
      */
     triggerEvent(eventName, context = {}) {
         const eventData = gameData.allEventData[eventName];
-        if (!eventData) {
-            console.error(`Event data not found for event: ${eventName}`);
+        if (!eventData) {                     // ✅ 加上大括号，防止无条件 return
+            console.error('Unknown event:', eventName);
             return;
         }
+
+        // 这里 isShowing 表达“当前弹窗是否显示中”，建议取反隐藏类名
+        const isShowing = !this.uiManager.dom.eventModal.classList.contains('hidden');
+        if (isShowing && this.currentEventId === eventName) return;
+
+        this.currentEventId = eventName;
+        this.currentEventPageIndex = 0;
         this.showEventPage(eventData, 0, context);
     }
 
@@ -1466,6 +1529,7 @@ class EventManager {
      * @param {object} context - 用于传递动态数据的上下文对象（如动态图片）。
      */
     showEventPage(eventData, pageIndex, context = {}) {
+        this.currentEventPageIndex = pageIndex;
         const LANG = this.languageManager.getCurrentLanguageData();
         const page = eventData.pages[pageIndex];
         const uiChoices = [];
@@ -1514,6 +1578,8 @@ class EventManager {
             return;
         };
         this.uiManager.closeEventModal();
+        this.currentEventId = null;
+        this.currentEventPageIndex = 0;
         const state = this.stateManager.getState();
         let calculatedData = {}; // 用于存储计算结果，供后续action使用
 
@@ -1682,6 +1748,11 @@ class EventManager {
         const canvas = document.getElementById('tetris-canvas');
 
         const onTetrisComplete = (success) => {
+            // 清理：防止后续意外再次触发
+            this.uiManager.dom.tetrisSkipButton.onclick = null;
+            if (this.tetrisManager) { this.tetrisManager.stop(); }
+            this.tetrisManager = null;
+
             this.uiManager.closeModal();
             if (success) {
                 let successEventName = '';
@@ -1957,6 +2028,20 @@ class NpcManager {
                         }
 
                         const button = this.uiManager.createActionButton(buttonText, 'bg-pink-600', () => {
+                            // —— 二次验证：仅当互动数据里定义了 check 才检查 —— 
+                            if (typeof interactionData.check === 'function') {
+                                const ok = interactionData.check(state, this.skillManager);
+                                if (!ok) {
+                                    // 失败反馈（可自定义）
+                                    const f = interactionData.failAction;
+                                    if (f?.type === 'showMessage') {
+                                        this.uiManager.showMessage(f.key, f.messageType || 'warning', f.replacements);
+                                    } else {
+                                        this.uiManager.showMessage('toast_need_socialization', 'warning');
+                                    }
+                                    return; // 阻止继续
+                                }
+                            }
                             this.uiManager.closeModal();
                             this.showNsfwEvent('partnered', interactionKey);
                         });
@@ -2405,25 +2490,39 @@ class Game {
 
         const activeHost = this.stateManager.getActiveHost();
 
-        // 1. 玩家控制的宿主，根据日程更新期望地点
+        // 1. 玩家控制的宿主：仅在未命中动态规则锁时，才按常规日程回写 expected
         if (state.controlState === 'HOST' && activeHost) {
-            const hostFlows = this.getActiveHostFlows();
-            if (hostFlows) {
-                const flow = hostFlows[state.story.dailyFlow] || hostFlows[Object.keys(hostFlows)[0]];
-                if (flow && flow[state.time.segment]) {
-                    activeHost.expectedLocationId = flow[state.time.segment].locationId;
+            const lockMap = state.temp?.locationLocks || {};
+            const nowKey = `${state.time.day}:${state.time.segment}`;
+
+            // 命中动态规则的搬运锁 -> 不要覆盖 expected
+            if (lockMap[state.activeHostId] !== nowKey) {
+                const hostFlows = this.getActiveHostFlows();
+                if (hostFlows) {
+                    let flowKey = hostFlows.defaultFlow || (state.time.dayOfWeek <= 5 ? 'workday' : 'weekend');
+                    const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
+                    if (flow && flow[state.time.segment]) {
+                        activeHost.expectedLocationId = flow[state.time.segment].locationId;
+                    }
                 }
             }
         }
 
+
         // 2. 所有宿主执行移动（AI宿主 + 宿主模式下的玩家宿主）
         Object.entries(state.hosts).forEach(([hostId, hostData]) => {
+            // 如果宿主已断联，则不进行任何移动处理
+            if (hostData.status === 'DISCONNECTED') {
+                return;
+            }
+
             const isPlayerControlledHost = (hostId === state.activeHostId);
             const isInHostMode = state.controlState === 'HOST';
 
-            // 移动条件：是AI宿主 OR（是玩家宿主且处于宿主模式）
-            const shouldAutoMove = !isPlayerControlledHost || (isPlayerControlledHost && isInHostMode);
+            // 移动条件：是AI控制的角色，或者玩家在宿主模式下自动执行日程
+            const shouldAutoMove = hostData.isAiControlled || (isPlayerControlledHost && isInHostMode);
 
+            // ★ 核心移动逻辑：如果期望地点和当前地点不同，则更新当前地点
             if (shouldAutoMove && hostData.currentLocationId !== hostData.expectedLocationId) {
                 hostData.currentLocationId = hostData.expectedLocationId;
             }
@@ -2467,7 +2566,28 @@ class Game {
                 case 'health_check_failed': this.eventManager.triggerEvent('health_check_failure'); break;
                 case 'bomb_detonated': this.uiManager.showGameOver('BOMB_DETONATED'); break; // <-- 处理新的事件
             }
-        } else { this.update(); }
+        } else {
+            const state = this.stateManager.getState();
+            if (state.controlState === 'SLIME') {
+                const cost = 15;
+                const activeHost = this.stateManager.getActiveHost(); // ★ 您遗漏了这一行
+
+                if (activeHost) {
+                    activeHost.stamina -= cost;
+                    this.uiManager.showMessage('toast_control_cost', 'warning', { COST: cost });
+
+                    if (activeHost.stamina <= 0) {
+                        activeHost.stamina = 0;
+                        const LANG = this.languageManager.getCurrentLanguageData();
+                        this.uiManager.showMessage(LANG['toast_control_lost_energy'], 'error');
+                        this.returnControl(true);
+
+                        return;
+                    }
+                }
+            }
+            this.update();  
+        }
     }
 
     // 在 Game 类中
@@ -2575,22 +2695,24 @@ class Game {
 
         if (isDetached) {
             currentLocationId = state.slime.currentLocationId;
-            availableLocations = Object.entries(currentChapterLocations).filter(([id, data]) => isLocationUnlocked(data));
+            // 脱离态：仍按解锁判断（不看标签）
+            availableLocations = Object.entries(currentChapterLocations)
+                .filter(([id, data]) => isLocationUnlocked(data));
         } else {
             const activeHost = this.stateManager.getActiveHost();
             if (!activeHost) return;
             currentLocationId = activeHost.currentLocationId;
             const hostTags = activeHost.tags || [];
+
             availableLocations = Object.entries(currentChapterLocations).filter(([locationId, locationData]) => {
-                if (!isLocationUnlocked(locationData)) { return false; }
-                // 在这里添加针对刘敏家的特殊权限检查
-                if (locationId.startsWith('liumin_home') && state.activeHostId === 'zhang_huili' && state.npcs.liu_min.favorability > 30) {
-                    return true;
-                }
-                if (!locationData.accessTags) return false;
+                if (!isLocationUnlocked(locationData)) return false;
+                // 没有 accessTags 视为公共区域
+                if (!locationData.accessTags || locationData.accessTags.length === 0) return true;
+                // 需要标签的区域：宿主需至少命中一个
                 return hostTags.some(tag => locationData.accessTags.includes(tag));
             });
         }
+
 
         // --- 2. 打开模态框并渲染内容 ---
         this.uiManager.openModal(LANG['modal_title_move_to'], (contentEl) => {
