@@ -64,8 +64,8 @@ class StateManager {
                     wasEverPossessed: false,
                     tags: ['song_wei_home', 'work', 'public', 'guest'],
                     portraits: {
-                        normal: "image/特写/songwei_mormal.png",
-                        controlled: "image/特写/songwei_ctrol.png"
+                        normal: "image/特写/宋薇正常.png",
+                        controlled: "image/特写/宋薇控制.png"
                     },
                     events: {
                         reEnterEvent: 're_enter_song_wei',
@@ -98,7 +98,7 @@ class StateManager {
                     tags: ['guest', 'public', 'song_xin', 'song_wei_home'],
                     portraits: {
                         normal: "image/特写/宋欣正常.png",
-                        controlled: "image/特写/宋欣肖像.png"
+                        controlled: "image/特写/宋欣控制.png"
                     },
                     events: {
                         reEnterEvent: 're_enter_song_xin',
@@ -262,10 +262,12 @@ class StateManager {
                 }
             },
             npcs: {
-                'zhang_chao': { name: initialLang['npc_name_zhang_chao'], favorability: 0, isPresent: false, met: false },
+                'song_wei': { name: initialLang['host_name_song_wei'], favorability: 0, isPresent: false, met: true },
                 'song_xin': { name: initialLang['host_name_song_xin'], favorability: 0, isPresent: false, met: false },
+                'zhang_chao': { name: initialLang['npc_name_zhang_chao'], favorability: 0, isPresent: false, met: false },
                 'zhang_huili': { name: initialLang['npc_name_zhang_huili'], favorability: 0, isPresent: false, met: false },
-                'liu_min': { name: initialLang['host_name_liu_min'], favorability: 0, isPresent: false, met: false },
+                'liu_min': { name: initialLang['npc_name_liu_min'], favorability: 0, isPresent: false, met: false },
+                'jane': { name: initialLang['host_name_jane'], favorability: 0, isPresent: false, met: false },
                 'zhao_qimin': { name: initialLang['npc_name_zhao_qimin'], favorability: 0, isPresent: false, met: false }
             },
             logs: [],
@@ -289,29 +291,21 @@ class StateManager {
         } catch (e) { console.error("Save failed:", e); return false; }
     }
 
-    // 在 game.js 的 StateManager 类中
     loadState(slot) {
         const data = localStorage.getItem(`parasite_save_v8_${slot}`);
         if (data) {
             try {
                 let loadedState = JSON.parse(data);
 
-                // 【最终修复】定义一个健壮的存档合并/修补函数
                 const deepMerge = (target, source) => {
-                    let output = Array.isArray(target) ? [] : {};
-
-                    Object.assign(output, target);
-
+                    let output = { ...target };
                     if (typeof target === 'object' && target !== null && typeof source === 'object' && source !== null) {
                         Object.keys(source).forEach(key => {
-                            const sourceValue = source[key];
-                            const targetValue = target[key];
-
-                            if (sourceValue !== undefined) {
-                                if (typeof targetValue === 'object' && targetValue !== null && typeof sourceValue === 'object' && sourceValue !== null && !Array.isArray(targetValue)) {
-                                    output[key] = deepMerge(targetValue, sourceValue);
+                            if (source[key] !== undefined) {
+                                if (typeof target[key] === 'object' && target[key] !== null && typeof source[key] === 'object' && source[key] !== null && !Array.isArray(target[key])) {
+                                    output[key] = deepMerge(target[key], source[key]);
                                 } else {
-                                    output[key] = sourceValue;
+                                    output[key] = source[key];
                                 }
                             }
                         });
@@ -331,7 +325,18 @@ class StateManager {
                 }
 
                 let freshState = JSON.parse(JSON.stringify(this.initialState));
-                this.state = deepMerge(freshState, loadedState);
+                let patchedState = deepMerge(freshState, loadedState);
+
+                // ▼▼▼ 【核心修复-2】采用更健壮的NPC数据修复逻辑 ▼▼▼
+                Object.keys(this.initialState.npcs).forEach(npcId => {
+                    if (!patchedState.npcs[npcId]) {
+                        console.log(`Patching old save: Adding missing NPC '${npcId}'.`);
+                        patchedState.npcs[npcId] = this.initialState.npcs[npcId];
+                    }
+                });
+                // ▲▲▲ 修复结束 ▲▲▲
+
+                this.state = patchedState;
                 this.state.version = GAME_VERSION;
 
                 if (!Array.isArray(this.state.logs)) {
@@ -356,10 +361,14 @@ class UIManager {
         this.dom = this.getDOMElements();
         this.languageManager = languageManager;
     }
+
     getDOMElements() {
         const ids = [
             // --- 新增的主菜单元素ID ---
             'start-menu', 'start-new-game-button', 'continue-game-button',
+            // ▼▼▼ 在这里新增ID ▼▼▼
+            'start-menu-lang-switch',
+            // ▲▲▲ 新增结束 ▲▲▲
             'game-container', 'char-image', 'control-status-display', 'control-status-text', 'main-content', 'time-display', 'story-text',
             'choices-display', 'choices-title', 'choices-container', 'modal-overlay', 'generic-modal', 'modal-title', 'modal-content', 'modal-close-button',
             'confirm-modal', 'confirm-title', 'confirm-text', 'confirm-yes', 'confirm-no', 'takeover-screen', 'takeover-title', 'takeover-description', 'takeover-choices',
@@ -456,16 +465,25 @@ class UIManager {
         }
     }
 
+    // 在 game.js 的 UIManager 类中
     renderScene(state, game, LANG) {
         const activeHost = game.stateManager.getActiveHost();
         const isDetached = state.controlState === 'SLIME_DETACHED';
         const currentLocationId = isDetached ? state.slime.currentLocationId : activeHost.currentLocationId;
 
-        // 【修复】从 game 对象获取当前章节的地点数据
         const currentChapterLocations = game.getCurrentChapterLocations();
         const location = currentChapterLocations[currentLocationId];
 
         if (!location) { console.error(`Location data not found for ID: ${currentLocationId} in chapter ${state.chapter}`); return; }
+
+        // ▼▼▼ 【核心修复】在这里实现昼夜背景切换 ▼▼▼
+        const isNight = game.timeManager.isNightTime();
+        const backgroundImage = (isNight && location.nightImage) ? location.nightImage : location.dayImage;
+
+        if (this.dom.mainContent.style.backgroundImage !== `url("${backgroundImage}")`) {
+            this.dom.mainContent.style.backgroundImage = `url("${backgroundImage}")`;
+        }
+        // ▲▲▲ 修复结束 ▲▲▲
 
         const dayOfWeek = LANG['time_weekday'][state.time.dayOfWeek - 1];
         const [timeOfDay, segment] = state.time.segment.split('-');
@@ -476,9 +494,8 @@ class UIManager {
         if (isDetached) timeText = `<span class="slime-mode-text">${LANG['detached_mode_prefix']}</span> ${timeText}`;
 
         this.dom.timeDisplay.innerHTML = timeText;
-        this.dom.mainContent.style.backgroundImage = `url('${location.image}')`;
 
-        let newCharImage = 'https://placehold.co/400x400/1a202c/ffffff?text=Error'; // 默认错误图片
+        let newCharImage = 'https://placehold.co/400x400/1a202c/ffffff?text=Error';
         if (isDetached) {
             newCharImage = "image/特写/史莱姆特写.png";
         } else if (activeHost && activeHost.portraits) {
@@ -802,13 +819,24 @@ class UIManager {
         }
     }
 
-    showConfirm(title, text, onYes) {
+    // 在 UIManager 类中
+    showConfirm(title, text, onYes, onNo) { // <-- 新增 onNo 参数
         this.dom.modalOverlay.classList.remove('hidden');
         this.dom.confirmModal.classList.remove('hidden');
         this.dom.confirmTitle.textContent = title;
         this.dom.confirmText.textContent = text;
-        this.dom.confirmYes.onclick = () => { this.hideConfirm(); onYes(); };
-        this.dom.confirmNo.onclick = () => this.hideConfirm();
+        this.dom.confirmYes.onclick = () => {
+            this.hideConfirm();
+            onYes();
+        };
+        // ▼▼▼ 【核心修复】为“取消”按钮增加回调功能 ▼▼▼
+        this.dom.confirmNo.onclick = () => {
+            this.hideConfirm();
+            if (onNo) {
+                onNo(); // 如果有 onNo 函数，就执行它
+            }
+        };
+        // ▲▲▲ 修复结束 ▲▲▲
     }
 
     hideConfirm() {
@@ -920,14 +948,14 @@ class UIManager {
         });
     }
 
-    // 在 UIManager 类中新增
+    // 在 UIManager 类中
     openChapterSelectModal() {
         const LANG = this.languageManager.getCurrentLanguageData();
         const modal = this.dom.chapterSelectModal;
         const contentEl = modal.querySelector('#chapter-select-content');
         const template = document.getElementById('chapter-card-template');
 
-        contentEl.innerHTML = ''; // 清空旧内容
+        contentEl.innerHTML = '';
 
         Object.entries(gameData.chapterSelectData).forEach(([chapterNum, chapterData]) => {
             const card = template.content.cloneNode(true);
@@ -936,6 +964,11 @@ class UIManager {
             card.querySelector('.chapter-desc').textContent = LANG[chapterData.descKey];
 
             const startButton = card.querySelector('.chapter-start-button');
+
+            // ▼▼▼ 【核心修复】在这里手动设置按钮的文本 ▼▼▼
+            startButton.textContent = LANG['btn_confirm_chapter_select'];
+            // ▲▲▲ 修复结束 ▲▲▲
+
             startButton.onclick = () => this.game.startChapter(parseInt(chapterNum, 10));
 
             contentEl.appendChild(card);
@@ -1181,6 +1214,14 @@ class TimeManager {
     // 在 game.js 的 TimeManager 类中
     // ▼▼▼ 使用这个【修正版】的代码，完整替换掉旧的 advanceSegment 函数 ▼▼▼
 
+    isNightTime() {
+        const state = this.stateManager.getState();
+        const currentSegment = state.time.segment.split('-')[0]; // 获取 'morning', 'evening' 等
+        // ▼▼▼ 【新增方法】判断当前是否为夜晚 ▼▼▼
+        return gameData.TIME_SEGMENTS[currentSegment]?.isNight || false;
+        // ▲▲▲ 新增方法结束 ▲▲▲
+    }
+
     advanceSegment() {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
@@ -1271,8 +1312,10 @@ class TimeManager {
         // ▼▼▼ 核心修正：修复傀儡保养收益的计算逻辑 ▼▼▼
         const maintenanceLevel = state.story.flags.chapter2.upgrades.puppet_maintenance_level || 0;
         if (maintenanceLevel > 0) {
-            const puppetCount = Object.values(state.hosts).filter(h => h.isPuppet).length;
-            // 正确的公式：每个傀儡的产量 = 保养等级
+            // 只统计：是傀儡 && 未断联 && 不是当前玩家控制的宿主
+            const puppetCount = Object.entries(state.hosts)
+                .filter(([id, h]) => h.isPuppet && h.status !== 'DISCONNECTED' && id !== state.activeHostId)
+                .length;
             const pointsGained = puppetCount * maintenanceLevel;
             if (pointsGained > 0) {
                 state.slime.mutationPoints += pointsGained;
@@ -1285,58 +1328,71 @@ class TimeManager {
         this.onTimeAdvanced();
     }
 
-    // 文件: game.js
-
+    // 在 game.js 的 TimeManager 类中
     updateOnTimePassage(isNewDay = false) {
         const LANG = this.languageManager.getCurrentLanguageData();
         const state = this.stateManager.getState();
 
-        // 1. 重置所有宿主的 nsfw 标记
         Object.values(state.hosts).forEach(host => {
             host.nsfwUsedThisSegment = false;
         });
 
-        // ▼▼▼ 核心修正：重构AI行动规划逻辑 ▼▼▼
-        // 2. AI 宿主行动规划 (只更新期望地点)
+        // ▼▼▼ 【核心修改】全新的、完全数据驱动的AI行动规划逻辑 ▼▼▼
         Object.keys(state.hosts).forEach(hostId => {
-            // 只规划非玩家当前控制的AI宿主
-            if (hostId !== state.activeHostId && state.hosts[hostId].isAiControlled) {
+            if (hostId !== state.activeHostId &&
+                state.hosts[hostId].isAiControlled &&
+                state.hosts[hostId].status !== 'DISCONNECTED') {
                 const host = state.hosts[hostId];
-                if (host.isPuppet) {
-                    // 如果是傀儡，规划前往待机地点
-                    const standbyLocation = gameData.chapterData[state.chapter].puppetStandbyLocationId;
-                    host.expectedLocationId = standbyLocation;
-                } else {
-                    // 如果是正常的AI，按日程规划
-                    const chapterFlows = this.game.getCurrentChapterFlows(); // 使用辅助函数
-                    if (chapterFlows && chapterFlows[hostId]) {
-                        const hostFlows = chapterFlows[hostId];
+                let locationOverridden = false;
 
-                        // 修正后的日程表选择逻辑
-                        let flowKey = hostFlows.defaultFlow; // 首先尝试读取默认日程
-                        if (!flowKey) { // 如果没有默认，则根据日期判断
-                            flowKey = state.time.dayOfWeek <= 5 ? 'workday' : 'weekend';
+                // --- 1. 检查是否存在动态日程并应用 ---
+                const chapterDynamicFlows = gameData.dynamicDailyFlows[state.chapter];
+                if (chapterDynamicFlows) {
+                    for (const rule of chapterDynamicFlows) {
+                        if (rule.hostId === hostId && rule.condition(state)) {
+                            const isWorkday = state.time.dayOfWeek <= 5;
+                            const currentSegmentKey = `${state.time.segment}@${isWorkday ? 'workday' : 'weekend'}`;
+
+                            if (rule.segments.includes(currentSegmentKey)) {
+                                host.expectedLocationId = rule.locationId;
+                                this.uiManager.showMessage(rule.messageKey, 'info');
+                                locationOverridden = true;
+                                break; // 找到匹配的规则后，就不再检查其他规则
+                            }
                         }
-                        // 确保我们使用的flowKey在数据中真实存在
-                        const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
+                    }
+                }
 
-                        if (flow && flow[state.time.segment]) {
-                            host.expectedLocationId = flow[state.time.segment].locationId;
+                // --- 2. 如果路线未被覆写，则执行常规日程 ---
+                if (!locationOverridden) {
+                    if (host.isPuppet) {
+                        const standbyLocation = gameData.chapterData[state.chapter].puppetStandbyLocationId;
+                        host.expectedLocationId = standbyLocation;
+                    } else {
+                        const chapterFlows = this.game.getCurrentChapterFlows();
+                        if (chapterFlows && chapterFlows[hostId]) {
+                            const hostFlows = chapterFlows[hostId];
+                            let flowKey = hostFlows.defaultFlow || (state.time.dayOfWeek <= 5 ? 'workday' : 'weekend');
+                            const flow = hostFlows[flowKey] || hostFlows[Object.keys(hostFlows)[0]];
+                            if (flow && flow[state.time.segment]) {
+                                host.expectedLocationId = flow[state.time.segment].locationId;
+                            }
                         }
                     }
                 }
             }
         });
-        // ▲▲▲ 修正结束 ▲▲▲
 
-        // 3. AI 宿主行动执行 (在这里统一移动)
+        // --- 后续逻辑保持不变 ---
         Object.values(state.hosts).forEach(host => {
-            if (host.isAiControlled && host.currentLocationId !== host.expectedLocationId) {
+            if (host.isAiControlled &&
+                host.status !== 'DISCONNECTED' &&
+                host.currentLocationId !== host.expectedLocationId) {
                 host.currentLocationId = host.expectedLocationId;
             }
         });
 
-        // 4. 玩家控制的宿主恢复体力/理智 (逻辑不变)
+
         const activeHost = this.stateManager.getActiveHost();
         if (activeHost && state.controlState === 'HOST') {
             const isNewPeriod = state.time.segment.endsWith('-1');
@@ -1351,7 +1407,6 @@ class TimeManager {
             }
         }
 
-        // 5. 检查并扣除控制消耗 (逻辑不变)
         if (this.updateControlCost()) {
             this.onTimeAdvanced({ gameEvent: 'force_return_control' });
         }
@@ -1416,21 +1471,25 @@ class EventManager {
         const uiChoices = [];
 
         if (page.choices) {
-            // 如果当前页有预设的选项
+            // 同时兼容：action 为“数组”（旧写法）或“函数”（新写法）
             page.choices.forEach(choiceData => {
+                const handler = (typeof choiceData.action === 'function')
+                    ? () => { try { choiceData.action(this.game); } catch (e) { console.error(e); } }
+                    : () => this.processActionEffects(choiceData.action);
+
                 uiChoices.push({
                     text: LANG[choiceData.textKey],
                     color: choiceData.color || 'bg-indigo-600',
-                    action: () => this.processActionEffects(choiceData.action)
+                    action: handler
                 });
             });
         } else if (pageIndex < eventData.pages.length - 1) {
-            // 如果不是最后一页，自动创建“继续”按钮
             uiChoices.push({
                 text: LANG['btn_continue'] || 'Continue...',
                 action: () => this.showEventPage(eventData, pageIndex + 1, context)
             });
         }
+
 
         const image = page.image === '{dynamic}' ? context.dynamicImage : page.image;
 
@@ -1448,6 +1507,8 @@ class EventManager {
      */
     processActionEffects(actions) {
         if (!actions) {
+            if (typeof actions === 'function') { actions(this.game); return; }
+            if (!Array.isArray(actions)) { actions = [actions]; }
             this.uiManager.closeEventModal();
             this.game.update();
             return;
@@ -1826,14 +1887,18 @@ class NpcManager {
         // 逻辑：如果一个宿主当前由AI控制，并且玩家和TA在同一个地方，那么TA就作为NPC“在场”
         Object.entries(state.hosts).forEach(([hostId, hostData]) => {
             if (state.npcs[hostId]) {
-                // 【优化后逻辑】只要 NPC 已见面、和玩家在同一地点，并且她不是玩家当前控制的角色，就应该视为在场。
-                const isNotPlayerCharacter = (hostId !== state.activeHostId);
+                // 隐藏：第二章“断联”的宿主不参与 NPC 在场判定（位置视为未知/隐藏）
+                if (hostData.status === 'DISCONNECTED') return;
 
-                if (state.npcs[hostId].met && isNotPlayerCharacter && hostData.currentLocationId === currentLocation) {
+                const isNotPlayerCharacter = (hostId !== state.activeHostId);
+                if (state.npcs[hostId].met &&
+                    isNotPlayerCharacter &&
+                    hostData.currentLocationId === currentLocation) {
                     state.npcs[hostId].isPresent = true;
                 }
             }
         });
+
     }
 
     openNsfwChoiceModal() {
@@ -2421,6 +2486,9 @@ class Game {
         // --- 主菜单按钮 ---
         this.dom.startNewGameButton.onclick = () => this.beginNewGame();
         this.dom.continueGameButton.onclick = () => this.continueGame();
+        // ▼▼▼ 在这里新增事件监听 ▼▼▼
+        this.dom.startMenuLangSwitch.onclick = () => this.switchLanguage();
+        // ▲▲▲ 新增结束 ▲▲▲
         this.dom.gameoverRestartButton.onclick = () => this.showMainMenu();
 
         // --- 模态框与特殊UI ---
@@ -2430,6 +2498,12 @@ class Game {
         this.dom.chapterSelectCloseButton.onclick = () => {
             this.uiManager.closeModal(); // 首先关闭章节选择弹窗
             this.showMainMenu();      // 然后显示主菜单
+        };
+        // ▲▲▲ 修复结束 ▲▲▲
+        // ▼▼▼ 【核心修复】为宿主管理面板的关闭按钮绑定更直接的操作 ▼▼▼
+        this.dom.hostModalCloseButton.onclick = () => {
+            this.uiManager.closeHostManagementModal();
+            this.uiManager.dom.modalOverlay.classList.add('hidden');
         };
         // ▲▲▲ 修复结束 ▲▲▲
 
@@ -3320,6 +3394,11 @@ class Game {
         const host = state.hosts[hostId];
         if (!host) return { name: LANG['location_unknown'] };
 
+        // ★ 新增：断联的宿主不做任何日程预测，直接显示未知
+        if (host.status === 'DISCONNECTED') {
+            return { name: LANG['location_unknown'] };
+        }
+
         const chapterLocations = this.getCurrentChapterLocations();
         const chapterFlows = this.getCurrentChapterFlows();
 
@@ -3399,7 +3478,9 @@ class Game {
         state.slime.detachedHostData = { id: detachedHostId, name: activeHost.name, stamina: activeHost.stamina, sanity: activeHost.sanity };
         state.controlState = 'SLIME_DETACHED';
         state.slime.currentLocationId = activeHost.currentLocationId;
-        Object.values(state.hosts).forEach(h => h.isAiControlled = true);
+        Object.values(state.hosts).forEach(h => {
+            if (h.status !== 'DISCONNECTED') h.isAiControlled = true;
+        });
         state.activeHostId = null;
         state.hosts[detachedHostId].expectedLocationId = state.hosts[detachedHostId].currentLocationId;
 
@@ -3449,6 +3530,72 @@ class Game {
             });
         }
     }
+
+    // 放进 class Game 内部
+    purchaseStoreItem(itemId) {
+        const LANG = this.languageManager.getCurrentLanguageData();
+        const state = this.stateManager.getState();
+        const item = gameData.storeItemsData[itemId];
+        if (!item) return;
+
+        // 计算当前购买次数 / 等级
+        const levelKey = `${itemId}_level`;
+        const maxPurchases = item.maxPurchases || 1;
+        const currentPurchases = state.story.flags.chapter2.upgrades[levelKey] || 0;
+
+        // 一次性道具“是否已购”判定（如果数据里提供了 isPurchased，就尊重它）
+        const alreadyPurchased = typeof item.isPurchased === 'function'
+            ? item.isPurchased(state)
+            : (currentPurchases >= maxPurchases);
+
+        // 达到上限或已购
+        if (alreadyPurchased || currentPurchases >= maxPurchases) {
+            this.uiManager.showMessage('store_btn_acquired', 'info');
+            return;
+        }
+
+        // 点数不足
+        if (state.slime.mutationPoints < item.cost) {
+            this.uiManager.showMessage('toast_not_enough_mutation_points', 'warning');
+            return;
+        }
+
+        // 扣费
+        state.slime.mutationPoints -= item.cost;
+
+        // 执行道具效果（data.js 的 effect 内部会做自增/设置flag/弹提示）
+        try {
+            item.effect(this);
+        } catch (e) {
+            console.error('purchaseStoreItem effect error:', e);
+        }
+
+        // 安全钳制：保养服务最高 6 级
+        if (itemId === 'puppet_maintenance') {
+            const cur = state.story.flags.chapter2.upgrades.puppet_maintenance_level || 0;
+            state.story.flags.chapter2.upgrades.puppet_maintenance_level = Math.min(cur, 6);
+        }
+
+        // 可叠加型（有 maxPurchases>1）若未在 effect 内自增，则在这里兜底自增
+        if (maxPurchases > 1) {
+            state.story.flags.chapter2.upgrades[levelKey] =
+                (state.story.flags.chapter2.upgrades[levelKey] || 0);
+            // 如果 effect 已经自增了就不重复；这里仅在没增时补一次
+            // （容错：保持不超过 maxPurchases）
+            state.story.flags.chapter2.upgrades[levelKey] =
+                Math.min(state.story.flags.chapter2.upgrades[levelKey], maxPurchases);
+        }
+
+        // 购买后刷新 UI（余额/按钮/等级）
+        this.uiManager.closeModal();
+        this.uiManager.openStoreModal();
+
+        // 若你的主循环依赖 update，这里顺带触发
+        this.update && this.update();
+    }
+
+
+
 
     // 在 Game 类中
     // ▼▼▼ 替换此函数 ▼▼▼
@@ -3554,10 +3701,10 @@ class Game {
         const title = LANG['confirm_chapter_start_title'];
         const text = LANG[`confirm_chapter_${chapter}_start_text`];
 
-        // ▼▼▼ 【核心修复】先关闭章节选择，再弹出确认框 ▼▼▼
-        this.uiManager.closeModal();
+        // ▼▼▼ 【核心修复】重写整个函数的逻辑流程 ▼▼▼
 
-        this.uiManager.showConfirm(title, text, () => {
+        // 定义“确认”后要执行的操作
+        const onYes = () => {
             this.dom.gameContainer.classList.remove('hidden');
             this.stateManager.resetState();
 
@@ -3566,7 +3713,19 @@ class Game {
             } else if (chapter === 2) {
                 this.startChapter2Preset();
             }
-        });
+        };
+
+        // 定义“取消”后要执行的操作
+        const onNo = () => {
+            this.uiManager.openChapterSelectModal(); // 重新打开章节选择界面
+        };
+
+        // 1. 首先关闭当前的“章节选择”弹窗
+        this.uiManager.closeModal();
+        // 2. 然后打开“二次确认”弹窗，并传入我们刚刚定义好的 onYes 和 onNo 操作
+        this.uiManager.showConfirm(title, text, onYes, onNo);
+
+        // ▲▲▲ 修复结束 ▲▲▲
     }
 
     // 在 Game 类中新增
