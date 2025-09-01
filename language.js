@@ -14,6 +14,7 @@ const LANGS = {
         
 
         // Left Sidebar UI
+        "status_no_host": "无宿主",
         "ui_host_status": "宿主状态",
         "stat_name": "姓名:",
         "stat_stamina": "体力:",
@@ -601,7 +602,7 @@ const LANGS = {
         "task_scent_of_woman_step3": "和刘敏打好关系 (好感度 >= 80)",
         "task_scent_of_woman_step4": "想办法侵蚀刘敏",
         "task_scent_of_woman_step5": "读取刘敏的记忆",
-        "task_scent_of_woman_hint1": "刘敏只在晚上出现在村广场。你需要以“张慧丽”的身份，在接管模式下与她接触。",
+        "task_scent_of_woman_hint1": "刘敏行踪诡秘，巧用【宿主管理】发现她的位置。你需要以“张慧丽”的身份，在接管模式下与她接触。",
         "task_scent_of_woman_hint2": "也许和对方打好关系，可以进一步接近她的生活……",
         // --- 好奇心害死猫 ---
         "task_curiosity_kills_the_cat_title": "好奇心害死猫",
@@ -636,7 +637,7 @@ const LANGS = {
 
         // 5. 调查湖泊
         "event_investigate_lake_c2_title": "湖对岸的阴影",
-        "event_investigate_lake_c2_desc": "湖边的风带着一丝水汽的腥味。你眺望湖对岸，在茂密的树林掩映下，隐约可以看到一个巨大的人造建筑的轮廓——那似乎是一个被废弃的大型仓库或棚屋。它像一头沉默的巨兽，静静地蛰伏在那里，与宁静的湖光山色格格不入。",
+        "event_investigate_lake_c2_desc": "湖边的风带着一丝水汽的腥味。你眺望湖对岸，在茂密的树林掩映下，隐约可以看到一个巨大的人造建筑的轮廓——那似乎是一个被废弃的大型仓库或棚屋。它像一头沉默的巨兽，静静地蛰伏在那里，与宁静的湖光山色格格不入。<br><br><strong>忽然，你感觉到有什么在召唤你，但是隔着人类的肉体，这种召唤断断续续的。</strong>",
 
         // 6. 制定计划
         "event_make_plan_c2_title": "收网之时",
@@ -746,9 +747,9 @@ const LANGS = {
 
         // --- 张慧丽记忆侵蚀 ---
         "event_mem_plunder_success_zh_title": "记忆深处的囚笼",
-        "event_mem_plunder_success_zh_p1": "你驱使着史莱姆的意识沉入这具躯壳的更深处。无数纤细的触手沿着神经束向下探索，试图找出她为何如此“听话”的根源。当你的意识触及连接脊髓的脑干时，你“看”到了一个异物——一个冰冷的、闪着金属光泽的植入体。它像一只恶毒的寄生虫，盘踞在所有生命信号的中枢。",
-        "event_mem_plunder_success_zh_p2": "一段被深埋的记忆被强制唤醒。在那个黑暗的手术室里，一个男人冷漠的声音响起：‘脑干的改造完成了。这是<strong>混沌分裂者</strong>的最新技术，紧急情况下，它可以瞬间释放高热，将整个大脑融毁，把里面的‘东西’永久封死在这个物理空壳里。’另一个男人确认道：‘为了给它腾出空间，我们切除了她一小部分的小脑和边缘系统，这样她就不会有多余的动作和情绪了。完美的容器。’",
-        "event_mem_plunder_success_zh_p3": "画面扭曲，但一个轻佻而有些耳熟的声音钻入你的脑海：‘嘿，我说，为了个实验品就毁了这么个美人儿，也太可惜了吧？随便找个长相普通的女人不就好了？’另一个声音冷酷地打断他：‘如果鱼饵不够鲜美，你觉得那条大鱼会咬钩吗？记住，<strong>混沌分裂者</strong>给我们的时间只有<strong>30天</strong>。30天一到，不管成不成功，她都只是块没用的烂肉罢了。’",
+        "event_mem_plunder_success_zh_p1": "你驱使着史莱姆的意识深入躯壳。触手顺着神经束下潜，直到脑干——一枚金属植入体盘踞其上。壳体边缘蚀刻着三裂旋臂的徽记。你认得它：混沌分裂者。",
+        "event_mem_plunder_success_zh_p2": "记忆被粗暴拉回。手术灯下，冷漠的声音说：“脑干改造完成。Igniter 模组可在紧急时瞬间释放高热，融毁整个大脑，把里面的‘东西’永远封死。”另一个人接话：“为了给它腾出空间，我们切除了部分小脑和边缘系统。不会有多余的动作和情绪了。完美的容器。”你在器材铭牌上看到熟悉的编号习惯——混沌分裂者的工艺。",
+        "event_mem_plunder_success_zh_p3": "画面扭曲，一个轻佻的声音笑道：“为了个实验品就毁了这么个美人儿，太可惜了吧？”冷酷的声音截断他：“鱼饵要够鲜。上面只给<strong>30天</strong>。时间一到，不论成不成，她都只是块没用的肉。”你把所有线索串联起来——幕后正是混沌分裂者。",
         "toast_mem_plunder_success_zh": "你发现了一个针对自己的、致命的陷阱！",
 
         // --- 张慧丽与刘敏互动事件文本 ---
@@ -935,7 +936,7 @@ const LANGS = {
         "event_final_confrontation_zhao_p1_revised": "办事处里，赵齐民惊恐地看着你身后的三个女人：迷茫的张慧丽、冷酷的刘敏，以及面无表情的简。“你，你们这是要干什么？”他的声音因为恐惧而颤抖。",
         "event_final_confrontation_zhao_p2": "“赵齐民，”你操控着张慧丽的身体，用她那柔弱的声音说，“你看，我给你带来了三位‘姐妹’，她们都很‘想念’你呢。只要你乖乖合作，我们保证不会伤害你。”",
         "event_final_confrontation_zhao_p3": "“别听她的鬼话，”你切换到刘敏的身体，用她那冰冷而专业的语气说道，“赵齐民，我知道你的任务。交出你的安全指令，这是你唯一的活路。否则，我不介意在这里把你‘处理’掉。”",
-        "event_final_confrontation_zhao_p4": "“呵呵……”你切换到宋欣的身体，发出一阵天真的娇笑，“超哥哥~别那么紧张嘛，大家都是‘自己人’，不是吗？只要你听话，姐姐们会好好‘疼’你的哦~”",
+        "event_final_confrontation_zhao_p4": "“呵呵……”你切换到宋欣的身体，发出一阵天真的娇笑，“齐民哥哥~别那么紧张嘛，大家都是‘自己人’，不是吗？只要你听话，姐姐们会好好‘疼’你的哦~”",
         "event_final_confrontation_zhao_p5": "最后，你操控着简的身体上前一步，用她那不带任何感情的、留声机般的声音，说出了最后的通牒：“赵齐民，我知道你需要我的安全指令才能离开。把你的那一份交出来，我们可以合作。你不仅能活命，还能得到这四个女人。为什么不接受？”",
         "event_final_confrontation_zhao_p6_revised": "就在赵齐民的心理防线即将崩溃时，他手腕上的通讯器突然发出了急促的警报声。他看了一眼屏幕，脸色瞬间变得惨白。与此同时，窗外传来一阵骚动。你看到一群装备精良的SCP特工正在村广场上部署着什么，他们中间押送着的，正是你在第一章抛弃的宿主——宋薇！她的双眼紧闭，似乎失去了意识，身上连接着某种闪烁着微光的精密仪器……",
         "to_be_continued": "（未完待续...）",
@@ -1004,6 +1005,7 @@ const LANGS = {
         "nsfw_title_lm_kiss_zh_slime": "傀儡的侍奉",
         "nsfw_desc_lm_kiss_zh_slime": "史莱姆的意志流淌在你当前所操控的“刘敏”体内。它命令眼前这个已经脱线的傀儡——张慧丽——温顺地分开双腿。然后，你操控着刘敏的身体跪在她身前，用唇舌进行着服务。史莱姆冷静地记录着两个容器在互动时产生的能量波动。原来，让一个傀儡为另一个自己操控的傀儡服务，是一种高效且有趣的能量传导方式。",
 
+        "toast_npc_moving_to": "{NPC_NAME} 正在前往 {LOCATION_NAME}。",
     },  
     'en': {
         // Meta
@@ -1015,6 +1017,7 @@ const LANGS = {
         "btn_continue_game": "Continue Game",
 
         // Left Sidebar UI
+        "status_no_host": "None",
         "ui_host_status": "Host Status",
         "stat_name": "Name:",
         "stat_stamina": "Stamina:",
@@ -1587,7 +1590,7 @@ const LANGS = {
         "task_scent_of_woman_step3": "Build a good relationship with Liu Min (Favorability >= 80)",
         "task_scent_of_woman_step4": "Find a way to erode Liu Min",
         "task_scent_of_woman_step5": "Read Liu Min's memories",
-        "task_scent_of_woman_hint1": "Liu Min only appears in the village square at night. You need to approach her as 'Zhang Huili' while in control mode.",
+        "task_scent_of_woman_hint1": "Liu Min moves covertly—use [Host Management] to locate her. You need to approach her as 'Zhang Huili' while in Control Mode.",
         "task_scent_of_woman_hint2": "Perhaps building a good relationship with her could allow you to get closer to her life...",
 
         // --- New Quest ---
@@ -1621,7 +1624,8 @@ const LANGS = {
 
         // 5. Investigate Lake
         "event_investigate_lake_c2_title": "Shadow Across the Lake",
-        "event_investigate_lake_c2_desc": "The wind by the lake carries a damp, fishy smell. You gaze across the water and, nestled among the dense trees, you can vaguely make out the silhouette of a large, man-made structure—it looks like an abandoned warehouse or a large shed. It sits there like a silent beast, completely at odds with the tranquil scenery.",
+        "event_investigate_lake_c2_desc": "The wind by the lake carries a faint, briny dampness. Gazing across the water, you can just make out the silhouette of a massive man-made structure half-hidden by dense trees—perhaps an abandoned warehouse or shed. Like a silent behemoth, it lies in wait, ill at ease with the lake’s tranquil scenery.<br><br><strong>Suddenly, you feel something calling to you, but filtered through human flesh, the call comes in broken, intermittent pulses.</strong>",
+
 
         // 6. Formulate Plan
         "event_make_plan_c2_title": "Closing the Net",
@@ -1727,9 +1731,10 @@ const LANGS = {
 
         // --- Zhang Huili Memory Plunder ---
         "event_mem_plunder_success_zh_title": "The Cage in Deep Memory",
-        "event_mem_plunder_success_zh_p1": "You drive the slime's consciousness deeper into this vessel. Countless slender tentacles explore downwards along the neural bundles, trying to find the root cause of her 'obedience'. As your consciousness touches the brainstem connecting to the spinal cord, you 'see' a foreign object—a cold, metallic implant. It clings there like a venomous parasite, right at the hub of all vital signals.",
-        "event_mem_plunder_success_zh_p2": "A deeply buried memory is forcibly awakened. In that dark operating room, a man's indifferent voice echoes: 'The brainstem modification is complete. This is the latest technology from the <strong>Chaos Insurgency</strong>. In an emergency, it can instantly release intense heat, melting the entire brain to permanently seal 'the thing' inside this physical shell.' Another man confirms: 'To make room for it, we removed a small portion of her cerebellum and limbic system. She won't have any unnecessary movements or emotions now. A perfect vessel.'",
-        "event_mem_plunder_success_zh_p3": "The vision distorts, but a slick, somewhat familiar voice slides into your mind: 'Hey, I gotta say, ruining a beauty like this for an experiment is a real shame, don't you think? Couldn't we have just picked some plain-looking woman?' The other voice cuts him off coldly: 'If the bait isn't enticing enough, do you really think the big fish will bite? Remember, the <strong>Chaos Insurgency</strong> only gave us <strong>30 days</strong>. Once 30 days are up, successful or not, she's just a useless piece of meat.'",
+        "event_mem_plunder_success_zh_p1": "You drive the slime’s consciousness deeper into the host. Tendrils track the nerve bundles downward to the brainstem—where a metal implant squats. Along the rim of its casing an etched, three-lobed spiral emblem glints. You recognize it: the Chaos Splitters.",
+        "event_mem_plunder_success_zh_p2": "The memory is wrenched open. Under the surgical light, a cool voice says: \"Brainstem modification complete. The Igniter module can, in an emergency, flash-heat and destroy the entire brain, sealing whatever's inside in this shell forever.\" Another voice follows: \"To make room, we removed portions of the cerebellum and limbic system. No unnecessary movement or emotion. A perfect vessel.\" On the equipment nameplates you spot a familiar numbering scheme—the handiwork of the Chaos Splitters.",
+        "event_mem_plunder_success_zh_p3": "The image warps. A flippant, faintly familiar voice laughs: \"All this for a test subject, and you ruin a beauty like this? What a waste.\" The cold voice cuts him off: \"The bait has to be fresh. The higher-ups gave us only <strong>30 days</strong>. When time’s up, success or not, she’s just useless meat.\" You string the clues together—the ones behind it are the Chaos Splitters.",
+
         "toast_mem_plunder_success_zh": "You've discovered a deadly trap set specifically for you!",
 
         // ---Zhang hui li & Liumin Event Texts ---
@@ -1932,7 +1937,7 @@ const LANGS = {
         "event_final_confrontation_zhao_p1_revised": "In the office, Zhao Qimin stares in terror at the three women behind you: a dazed Zhang Huili, a cold Liu Min, and an expressionless Jane. 'What... what are you all doing?' His voice trembles with fear.",
         "event_final_confrontation_zhao_p2": "'Zhao Qimin,' you say, controlling Zhang Huili's body with her soft voice, 'Look, I've brought you three 'sisters'. They've 'missed' you dearly. Be a good boy and cooperate, and we promise not to hurt you.'",
         "event_final_confrontation_zhao_p3": "'Don't listen to her nonsense,' you switch to Liu Min's body, her tone icy and professional. 'Zhao Qimin, I know your mission. Hand over your security code. It's your only way out. Otherwise, I don't mind 'neutralizing' you right here.'",
-        "event_final_confrontation_zhao_p4": "'Hehe...' you switch to Song Xin's body, letting out an innocent giggle. 'Brother Chao~ Don't be so tense. We're all 'family' here, aren't we? If you behave, the sisters will take good 'care' of you~'",
+        "event_final_confrontation_zhao_p4": "'Hehe...' you switch to Song Xin's body, letting out an innocent giggle. 'Brother Qi~ Don't be so tense. We're all 'family' here, aren't we? If you behave, the sisters will take good 'care' of you~'",
         "event_final_confrontation_zhao_p5": "Finally, controlling Jane's body, you take a step forward. Using her emotionless, phonograph-like voice, you deliver the ultimatum: 'Zhao Qimin, I know you need my security command to leave. Hand over your part, and we can cooperate. You'll not only live, but you'll also get these four women. Why refuse?'",
         "event_final_confrontation_zhao_p6_revised": "Just as Zhao Qimin's mental defenses are about to crumble, a sharp alarm suddenly blares from the communicator on his wrist. He glances at the screen, and his face instantly turns deathly pale. At the same moment, a commotion erupts outside. You see a squad of heavily armed SCP agents deploying something in the village square. Held captive in their midst is the host you abandoned in Chapter 1—Song Wei! Her eyes are tightly shut as if she's unconscious, and her body is connected to some kind of precise, faintly glowing instrument...",
         "to_be_continued": "(To be continued...)",
@@ -1999,6 +2004,8 @@ const LANGS = {
         "nsfw_choice_lm_kiss_zh": "Command Zhang Huili",
         "nsfw_title_lm_kiss_zh_slime": "The Puppet's Service",
         "nsfw_desc_lm_kiss_zh_slime": "The slime's will flows through the 'Liu Min' vessel you currently control. It commands the offline puppet before you—Zhang Huili—to obediently part her legs. Then, you direct Liu Min's body to kneel before her and provide service with her lips and tongue. The slime calmly records the energy fluctuations during the interaction. It turns out that having one puppet service another vessel you control is an efficient and amusing way to transfer energy.",
+
+        "toast_npc_moving_to": "{NPC_NAME} is heading to {LOCATION_NAME}.",
     }
 }
 export { LANGS };
