@@ -11,6 +11,7 @@ const LANGS = {
         // Main Menu
         "btn_new_game": "开始新游戏",
         "btn_continue_game": "继续游戏",
+        
 
         // Left Sidebar UI
         "ui_host_status": "宿主状态",
@@ -281,7 +282,7 @@ const LANGS = {
         "confirm_escape_text": "这将是不可逆转的决定。你确定要立即和张超离开这座城市吗？",
 
         // Game Class Texts
-        "chapter_2_title": "第二章：身在他乡为异客",
+        "chapter_2_title": "第二章：田园牧歌",
         "toast_erosion_activated": "侵蚀能力已激活，为躯壳恢复了 {STAMINA} 能量。",
         "toast_control_taken": "躯壳控制权已夺取。开始分析当前生理指标...",
         "toast_control_released": "控制已归还。宿主恢复了部分理智，但她的眼神更加迷茫了。",
@@ -474,7 +475,6 @@ const LANGS = {
         "event_leave_city_title": "逃离H市",
         "event_leave_city_desc_1": "<p class=\"mb-2\">黑色的轿车在乡间公路上平稳地行驶着，窗外的高楼大厦早已被连绵的田野与绿树所取代。驾驶座上的张超看了一眼后视镜里沉默不语的“宋欣”，忽然状似无意地开口了。</p><p class=\"mb-2\">“欣欣，说实话，你姐姐是不是骗我说顺路啊？”他自顾自地笑了笑，“她其实就是想让你赶紧离开H市，对吧？真是的，把我当成什么人了。”</p><p class=\"mb-2\">史莱姆操控着宋欣的身体，没有回答。这具年轻躯壳的眼睛只是静静地看着窗外飞速倒退的风景，那份不属于这个年龄的沉默，让车内的空气都显得有些凝重。张超自讨没趣地耸了耸肩，不再追问。</p>",
         "event_leave_city_desc_2": "<p class=\"mb-2\">车子最终在一栋看起来很普通的二层小楼前停下。一个和你年龄相仿的年轻女人从屋里走了出来，应该就是张超口中的‘亲戚’张慧丽。她同样有着姣好的面容，但眼神却有些涣散，表情也有些呆滞，像是没睡醒一样，对你们的到来只是迟缓地点了点头。</p><p class=\"mb-2\">“别担心，”张超轻松地说道，似乎对女人的状态毫不在意，“她就是我姐张慧丽。你先安心住下，就住我以前那间卧室。”</p><p class=\"mb-2\">他一边从后备箱卸下你的行李，一边补充道：“我明天得先去S市办点急事，等H市解封了，我再回来接你。有事就找我姐，她人很好的。”</p>",
-        "chapter_2_title": "第二章：身在他乡为异客",
         "chapter_2_intro_desc": "随着张超的汽车绝尘而去，你正式在这个名为“落坡村”的陌生之地开始了新的“生活”。张慧丽——这个和你一样年轻却精神恍惚的女人，她身上似乎藏着秘密。张超的离去也显得过于匆忙。这个偏僻的村庄，似乎并不像它表面上看起来那么宁静……",
 
         //新增地点
@@ -565,6 +565,8 @@ const LANGS = {
         "daily_liumin_all_e2": "回到家，她冲了一个战斗澡，水珠顺着她光洁的皮肤滑落，短暂地洗去了一天的疲惫。随后，她再次回到她的情报世界中，紧盯着屏幕上的异动。窗外月色如水，映照着她专注的侧脸，带着一丝不自知的性感，和一丝被命运玩弄的悲剧。",
         "daily_liumin_weekend_n1": "周末的中午，办事处里只有刘敏一个人。她没有像平时一样处理公务，而是坐立不安地翻阅着一些加密的电子档案。她的眉头紧锁，似乎在寻找某个被遗漏的线索，但又像是在害怕找到什么。",
         "daily_liumin_weekend_a1": "午后的阳光斜斜地照进办公室，在地上拉出长长的影子。刘敏靠在窗边，眼神空洞地望着窗外，脸上是少有的迷茫和疲惫。在这个本应休息的日子里，某种无形的压力反而让她更加喘不过气。",
+        "daily_huili_override_liumin": "【特殊行动】大脑内的史莱姆释放了一个模糊的指令——“接近另一个容器”。张慧丽空洞的意识无法理解，但身体却开始机械地执行。她迈着鬼魅的步伐，走向了刘敏的房间，进行一次计划外的“拜访”。",
+        "daily_liumin_override_warehouse": "【特殊行动】一股不属于自己的冲动在脑海中涌起，驱使着刘敏的身体。她不知道自己为何要前往那个废弃仓库——那个让她同伴全军覆没的地方。相关的记忆已经被史莱姆剥夺，但身体的本能依然让她在靠近那里时，感受到一阵无法言喻的、源自灵魂深处的悲伤。",
 
         //---史莱姆视角动态兜底文本---
         "slime_desc_default": "【数据缺失】无法分析当前环境。",
@@ -692,7 +694,7 @@ const LANGS = {
         "store_item_destroy_cameras_1_name": "破坏隐藏摄像头",
         "store_item_destroy_cameras_1_desc": "消耗5突变点。“售货机”会悄无声息地摧毁安装在张慧丽家中的所有微型摄像头，大幅降低在此处行动被察觉的风险。",
         "store_item_destroy_cameras_2_name": "明目张胆地破坏摄像头",
-        "store_item_destroy_cameras_2_desc": "消耗13突变点。“售货机”会制造一场“意外”，摧毁村内所有公共区域的监控设备。短期内，这里将成为你的游乐场。",
+        "store_item_destroy_cameras_2_desc": "消耗13突变点。“售货机”会制造一场“意外”，摧毁村内所有公共区域的监控设备。降低怀疑权重，短期内，这里将成为你的游乐场。",
         "store_item_scp500_clone_name": "特殊基因（“万能药”SCP-500克隆体）", // 修改：为500加上前缀
         "store_item_scp500_clone_desc": "消耗25突变点。“售货机”为你提供一种万能药的基因样本，能让你暂时抵御潜在的威胁。",
         "store_item_puppet_maintenance_name": "提供“保养”服务",
@@ -923,6 +925,7 @@ const LANGS = {
         "task_deep_or_shallow_step1": "完全接管所有位于“落坡村”的宿主",
         "task_deep_or_shallow_step2": "“威逼利诱”赵齐民",
         "task_deep_or_shallow_hint1": "这是第二章最后一个任务了，尽情享受！",
+        "task_deep_or_shallow_hint2": "本章节一共出现了4个真正的SCP异常，你都找到了吗？",
 
         // --- 终局事件 ---
         "confirm_final_confrontation_title": "最终确认",
@@ -982,6 +985,25 @@ const LANGS = {
         "toast_import_success": "存档文件已成功导入至存档位 {SLOT}！",
         "toast_import_fail_invalid_file": "导入失败：无效的存档文件或文件已损坏。",
         "toast_no_save_to_export": "该存档位为空，无法导出。",
+
+        // --- 宋薇 & 宋欣 舌吻事件 ---
+        "nsfw_choice_kiss_song_xin": "和宋欣舌吻",
+        "nsfw_choice_kiss_song_wei": "和宋薇舌吻",
+        "nsfw_title_sisters_kiss": "人偶的游戏",
+        "nsfw_desc_sv_kiss_sx": "史莱姆的意志流淌在你当前所操控的“宋薇”体内。你命令眼前这个已经脱线的傀儡——她的妹妹宋欣——褪去衣物。看着这个美丽的空壳温顺地服从指令，你操控着宋薇的身体，用交缠的舌尖，去品尝另一个属于自己的“玩具”。",
+        "nsfw_desc_sx_kiss_sv": "史莱姆的意志流淌在你当前所操控的“宋欣”体内。你命令眼前这个已经脱线的傀儡——她的姐姐宋薇——褪去衣物。看着这个曾经高傲的女人如今像个人偶般顺从，你操控着宋欣的身体，用交缠的舌尖，去感受这份绝对支配的、冰冷的快感。",
+
+        // --- 刘敏 & 张慧丽 舌吻事件 ---
+        "nsfw_choice_kiss_liu_min": "和刘敏舌吻",
+        "nsfw_choice_kiss_zhang_huili": "和张慧丽舌吻",
+        "nsfw_title_puppets_kiss": "精英的余兴",
+        "nsfw_desc_zh_kiss_lm": "史莱姆的意志流淌在你当前所操控的“张慧丽”体内。你命令眼前这个已经脱线的傀儡——精英特工刘敏——褪去衣物。看着这个曾经难以接近的女人如今温顺地服从指令，你操控着张慧丽的身体，用交缠的舌尖，去品尝这份征服的“战利品”。",
+        "nsfw_desc_lm_kiss_zh": "史莱姆的意志流淌在你当前所操控的“刘敏”体内。你命令眼前这个已经脱线的傀儡——张慧丽——褪去衣物。看着这个美丽的容器像个人偶般顺从，你操控着刘敏的身体，用交缠的舌尖，去感受支配另一个“同类”所带来的、奇特的能量波动。",
+
+        "nsfw_choice_lm_kiss_zh": "命令张慧丽",
+        "nsfw_title_lm_kiss_zh_slime": "傀儡的侍奉",
+        "nsfw_desc_lm_kiss_zh_slime": "史莱姆的意志流淌在你当前所操控的“刘敏”体内。它命令眼前这个已经脱线的傀儡——张慧丽——温顺地分开双腿。然后，你操控着刘敏的身体跪在她身前，用唇舌进行着服务。史莱姆冷静地记录着两个容器在互动时产生的能量波动。原来，让一个傀儡为另一个自己操控的傀儡服务，是一种高效且有趣的能量传导方式。",
+
     },  
     'en': {
         // Meta
@@ -1260,7 +1282,7 @@ const LANGS = {
         "event_gossip_btn": "Fish for gossip",
         "event_confirm_escape_btn": "Confirm Escape",
         "confirm_escape_text": "This will be an irreversible decision. Are you sure you want to leave the city with Zhang Chao immediately?",
-        "chapter_2_title": "Chapter 2: A Stranger in a Strange Land",
+        "chapter_2_title": "Chapter 2: chapter_select_2_title",
         "toast_erosion_activated": "Erosion ability activated, restoring {STAMINA} energy to the vessel.",
         "toast_control_taken": "Control of the vessel seized. Analyzing current physiological indicators...",
         "toast_control_released": "Control returned. The host has recovered some sanity, but her eyes are more bewildered.",
@@ -1436,7 +1458,6 @@ const LANGS = {
         "event_leave_city_title": "Escaping H-City",
         "event_leave_city_desc_1": "<p class=\"mb-2\">The black sedan drove steadily along the country road, the skyscrapers of the city long replaced by rolling fields and green trees. Zhang Chao glanced at the silent 'Song Xin' in the rearview mirror and suddenly spoke, as if casually.</p><p class=\"mb-2\">\"Hey Xinxin, be honest, did your sister lie to me about this being 'on the way'?\" he chuckled to himself. \"She just wanted you to get out of H-City as soon as possible, right? Geez, what does she take me for.\"</p><p class=\"mb-2\">The slime, controlling Song Xin's body, did not answer. The young vessel's eyes just quietly watched the scenery fly by, a silence unfitting for her age that made the air in the car feel heavy. Zhang Chao shrugged awkwardly and didn't press the issue.</p>",
         "event_leave_city_desc_2": "<p class=\"mb-2\">The car finally stopped in front of an ordinary-looking two-story house. A young woman, about your age, walked out from inside; this must be Zhang Chao's 'relative,' Zhang Huili. She was also beautiful, but her gaze was unfocused, her expression dull, as if she wasn't fully awake. She merely gave a slow nod at your arrival.</p><p class=\"mb-2\">\"Don't worry,\" Zhang Chao said cheerfully, seemingly unconcerned by the woman's state. \"That's just my sister, Zhang Huili. Make yourself at home for now, you can stay in my old bedroom.\"</p><p class=\"mb-2\">As he unloaded your luggage from the trunk, he added, \"I have to go to S-City for some urgent business tomorrow. Once H-City's lockdown is over, I'll come back and get you. If you need anything, just ask my sister, she's very nice.\"</p>",
-        "chapter_2_title": "Chapter 2: A Stranger in a Strange Land",
         "chapter_2_intro_desc": "As Zhang Chao's car disappeared into the distance, you officially begin your new 'life' in this unfamiliar place called 'Luopo Village'. Zhang Huili—a young woman as beautiful as you, yet strangely dazed—seems to be hiding a secret. Zhang Chao's departure also seemed too hasty. This remote village, it seems, is not as peaceful as it appears...",
 
         //新增地点
@@ -1496,6 +1517,8 @@ const LANGS = {
         "daily_liumin_all_e2": "Returning home, she takes a combat shower; water droplets slide down her smooth skin, briefly washing away the day's fatigue. Afterward, she returns to her world of intelligence, intently watching for anomalies on the screen. Outside, the moonlight bathes her focused profile, lending her an unconscious sensuality, and a tragic sense of being played by fate.",
         "daily_liumin_weekend_n1": "On a weekend noon, Liu Min is alone in the office. She isn't handling her usual duties; instead, she restlessly scrolls through encrypted digital files. Her brow is furrowed, as if searching for a missing clue, or perhaps, fearing what she might find.",
         "daily_liumin_weekend_a1": "The afternoon sun slants into the office, casting long shadows on the floor. Liu Min leans against the window, her gaze empty, a rare look of confusion and exhaustion on her face. On this day meant for rest, an invisible pressure seems to suffocate her even more.",
+        "daily_huili_override_liumin": "[Special Action] The slime in the brain releases a vague command—'approach the other vessel'. Zhang Huili's empty consciousness cannot comprehend it, but her body begins to execute mechanically. She walks with a ghostly pace towards Liu Min's room for an unscheduled 'visit'.",
+        "daily_liumin_override_warehouse": "[Special Action] An impulse not her own surges through her mind, driving Liu Min's body. She doesn't know why she must go to the abandoned warehouse—the place where her comrades were annihilated. The relevant memories have been stripped away by the slime, but her body's instinct still makes her feel an inexplicable, soul-deep sorrow as she gets closer.",
 
         "slime_desc_default": "[DATA MISSING] Unable to analyze current environment.",
         "story_detached_host_info": "Life signal source ({HOST_NAME}) is currently at: {LOCATION}.",
@@ -1899,6 +1922,7 @@ const LANGS = {
         "task_deep_or_shallow_step1": "Gain full control over all hosts in 'Luopo Village'",
         "task_deep_or_shallow_step2": "'Negotiate' with Zhao Qimin",
         "task_deep_or_shallow_hint1": "This is the final quest of Chapter 2. Enjoy!",
+        "task_deep_or_shallow_hint2": "This chapter features a total of four genuine SCP anomalies. Did you find them all?",
 
         // --- Final Event ---
         "confirm_final_confrontation_title": "Final Confirmation",
@@ -1958,6 +1982,23 @@ const LANGS = {
         "toast_import_success": "Save file successfully imported to slot {SLOT}!",
         "toast_import_fail_invalid_file": "Import failed: Invalid or corrupted save file.",
         "toast_no_save_to_export": "This slot is empty and cannot be exported.",
+
+        // --- Song Wei & Song Xin Kissing Event ---
+        "nsfw_choice_kiss_song_xin": "French kiss Song Xin",
+        "nsfw_choice_kiss_song_wei": "French kiss Song Wei",
+        "nsfw_desc_sv_kiss_sx": "The slime's will flows through the 'Song Wei' vessel you currently control. You command the offline puppet before you—her sister, Song Xin—to undress. Watching this beautiful empty shell obediently follow your command, you direct Song Wei's body to taste your other 'toy' with intertwined tongues.",
+        "nsfw_desc_sx_kiss_sv": "The slime's will flows through the 'Song Xin' vessel you currently control. You command the offline puppet before you—her sister, Song Wei—to undress. Watching this once-proud woman now submit like a doll, you direct Song Xin's body to feel the cold pleasure of absolute domination with intertwined tongues.",
+
+        // --- Liu Min & Zhang Huili Kissing Event ---
+        "nsfw_choice_kiss_liu_min": "French kiss Liu Min",
+        "nsfw_choice_kiss_zhang_huili": "French kiss Zhang Huili",
+        "nsfw_title_puppets_kiss": "The Elites' Pastime",
+        "nsfw_desc_zh_kiss_lm": "The slime's will flows through the 'Zhang Huili' vessel you currently control. You command the offline puppet before you—the elite agent Liu Min—to undress. Watching this once-unapproachable woman now obediently follow your command, you direct Zhang Huili's body to taste the 'spoils' of your conquest with intertwined tongues.",
+        "nsfw_desc_lm_kiss_zh": "The slime's will flows through the 'Liu Min' vessel you currently control. You command the offline puppet before you—Zhang Huili—to undress. Watching this beautiful container submit like a doll, you direct Liu Min's body to feel the unique energy fluctuations that come from dominating another of your 'kind' with intertwined tongues.",
+
+        "nsfw_choice_lm_kiss_zh": "Command Zhang Huili",
+        "nsfw_title_lm_kiss_zh_slime": "The Puppet's Service",
+        "nsfw_desc_lm_kiss_zh_slime": "The slime's will flows through the 'Liu Min' vessel you currently control. It commands the offline puppet before you—Zhang Huili—to obediently part her legs. Then, you direct Liu Min's body to kneel before her and provide service with her lips and tongue. The slime calmly records the energy fluctuations during the interaction. It turns out that having one puppet service another vessel you control is an efficient and amusing way to transfer energy.",
     }
 }
 export { LANGS };
